@@ -1,4 +1,14 @@
 @import 'tailwindcss';
+:root {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
 body {
-  background-color: #fdfbce;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: oklch(97.7% 0.014 308.299);
+}
+
+#root {
+  width: 100%;
 }
