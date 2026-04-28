@@ -6,10 +6,6 @@ interface ButtonProps {
   type: 'submit' | 'button';
 }
 class Button extends Component<ButtonProps> {
-  constructor(props: ButtonProps) {
-    super(props);
-  }
-
   render() {
     return <button {...this.props}>{this.props.children}</button>;
   }

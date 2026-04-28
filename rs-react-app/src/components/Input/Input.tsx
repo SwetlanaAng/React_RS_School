@@ -9,10 +9,6 @@ interface InputProps {
   id: string;
 }
 class Input extends Component<InputProps> {
-  constructor(props: InputProps) {
-    super(props);
-  }
-
   render() {
     return (
       <>

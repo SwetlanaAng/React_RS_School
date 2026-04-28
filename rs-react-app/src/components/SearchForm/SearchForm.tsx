@@ -1,18 +1,18 @@
 import { Component } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+import { ApiService } from '../../services/apiService/apiServise';
 interface SearchFormProps {
   className?: string;
 }
 class SearchForm extends Component<SearchFormProps> {
-  constructor(props: SearchFormProps) {
-    super(props);
-  }
-
   render() {
+    const apiService = new ApiService()
     return (
       <div className="flex items-center justify-center px-4 my-4">
-        <form
+        <form onSubmit={()=>{
+          console.log('submit')
+          apiService.getAllCharacters()}}
           className={`flex w-full max-w-xl items-center gap-5 rounded-2xl 
             border border-teal-200 bg-white p-6 shadow-lg shadow-teal-100 ${this.props.className ?? ''}`}
         >
@@ -47,6 +47,7 @@ class SearchForm extends Component<SearchFormProps> {
           <Button
             onClick={(e) => {
               e.preventDefault();
+              apiService.getAllCharacters()
             }}
             type="submit"
             className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
