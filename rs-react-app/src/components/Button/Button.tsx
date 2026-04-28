@@ -21,10 +21,14 @@ class Button extends Component<ButtonProps> {
   );
 
   render() {
-    const { loading, children, className,...buttonProps } = this.props;
+    const { loading, children, className, ...buttonProps } = this.props;
 
     return (
-      <button {...buttonProps} disabled={loading} className={loading ? `${className} cursor-not-allowed` : className}>
+      <button
+        {...buttonProps}
+        disabled={loading}
+        className={loading ? `${className} cursor-not-allowed` : className}
+      >
         {loading ? this.svg : null}
         {children}
       </button>

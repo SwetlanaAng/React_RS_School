@@ -36,15 +36,22 @@ class App extends Component {
         this.setState({ error: true });
       })
       .finally(() => {
-       this.setState({ loading: false });
+        this.setState({ loading: false });
       });
   };
   render() {
     return (
       <>
-        <SearchForm loading={this.state.loading} onSubmit={this.onFormSubmit.bind(this)} />
+        <SearchForm
+          loading={this.state.loading}
+          onSubmit={this.onFormSubmit.bind(this)}
+        />
         <main>
-          {this.state.loading ? <Spinner /> : <CardsBox characters={this.state.characters} />}
+          {this.state.loading ? (
+            <Spinner />
+          ) : (
+            <CardsBox characters={this.state.characters} />
+          )}
         </main>
         <div className="flex justify-center">
           <Button
