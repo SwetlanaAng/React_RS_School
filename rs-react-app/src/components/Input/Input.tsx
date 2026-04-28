@@ -14,9 +14,11 @@ class Input extends Component<InputProps> {
   }
 
   render() {
-    return <>
-    <input {...this.props} />
-    </>;
+    return (
+      <>
+        <input {...this.props} />
+      </>
+    );
   }
 }
 

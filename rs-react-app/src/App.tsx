@@ -3,10 +3,7 @@ import SearchBox from './components/SearchForm/SearchForm';
 
 class App extends Component {
   render() {
-    return (
-<SearchBox />
-
-    );
+    return <SearchBox />;
   }
 }
 
