@@ -1,4 +1,4 @@
-import type { ResponseCharacter } from "../../shared/types";
+import type { ResponseCharacter } from '../../shared/types';
 
 export class ApiService {
   private readonly BASE_URL = 'https://rickandmortyapi.com/api';
@@ -6,7 +6,7 @@ export class ApiService {
     try {
       const res = await fetch(`${this.BASE_URL}/character`);
       const characters = await res.json();
-      console.log(characters)
+      console.log(characters);
       return characters;
     } catch {
       throw new Error('Failed to fetch characters');
