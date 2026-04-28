@@ -2,18 +2,25 @@ import { Component } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import { ApiService } from '../../services/apiService/apiServise';
+import { storageService } from '../../services/storageService/storageService';
 interface SearchFormProps {
   className?: string;
 }
 class SearchForm extends Component<SearchFormProps> {
+  private storageService = new storageService();
   render() {
     const apiService = new ApiService();
     return (
       <div className="flex items-center justify-center px-4 my-4">
         <form
-          onSubmit={() => {
-            console.log('submit');
+          onSubmit={(e) => {
+            e.preventDefault();
             apiService.getAllCharacters();
+            console.log(e.target);
+            const formData = new FormData(e.target); 
+  const search = formData.get('search');
+  this.storageService.saveSearch(String(search));
+
           }}
           className={`flex w-full max-w-xl items-center gap-5 rounded-2xl 
             border border-teal-200 bg-white p-6 shadow-lg shadow-teal-100 ${this.props.className ?? ''}`}
@@ -47,10 +54,6 @@ class SearchForm extends Component<SearchFormProps> {
             </svg>
           </div>
           <Button
-            onClick={(e) => {
-              e.preventDefault();
-              apiService.getAllCharacters();
-            }}
             type="submit"
             className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
             shadow-md transition-colors duration-300 hover:bg-purple-700 hover:text-teal-300"
