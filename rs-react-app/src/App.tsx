@@ -4,6 +4,7 @@ import CardsBox from './components/CardsBox/CardsBox';
 import type { AppState, Character } from './shared/types';
 import { ApiService } from './services/apiService/apiService';
 import Button from './components/Button/Button';
+import Spinner from './components/Spinner/Spinner';
 
 class App extends Component {
   apiService = new ApiService();
@@ -35,16 +36,15 @@ class App extends Component {
         this.setState({ error: true });
       })
       .finally(() => {
-        this.setState({ loading: false });
+       this.setState({ loading: false });
       });
   };
   render() {
-    if (this.state.loading) return <h1>Loading</h1>;
     return (
       <>
-        <SearchForm onSubmit={this.onFormSubmit.bind(this)} />
+        <SearchForm loading={this.state.loading} onSubmit={this.onFormSubmit.bind(this)} />
         <main>
-          <CardsBox characters={this.state.characters} />
+          {this.state.loading ? <Spinner /> : <CardsBox characters={this.state.characters} />}
         </main>
         <div className="flex justify-center">
           <Button
