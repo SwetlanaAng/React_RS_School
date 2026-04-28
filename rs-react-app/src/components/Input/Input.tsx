@@ -1,7 +1,7 @@
 import { Component } from 'react';
 interface InputProps {
   className?: string;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   type: 'search' | 'text';
   placeholder: string;
   value?: string;
