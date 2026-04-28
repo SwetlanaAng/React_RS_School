@@ -9,12 +9,11 @@ interface SearchFormProps {
 class SearchForm extends Component<SearchFormProps> {
   private storageService = new storageService();
   state = {
-      search: storageService.getSearch(),
-    };
-    
-  
+    search: storageService.getSearch(),
+  };
+
   render() {
-    const { onSubmit} = this.props
+    const { onSubmit } = this.props;
     return (
       <div className="flex items-center justify-center px-4 my-4">
         <form
@@ -24,7 +23,7 @@ class SearchForm extends Component<SearchFormProps> {
             const search = String(formData.get('search')).trim();
             this.setState({ search });
             this.storageService.saveSearch(search);
-            onSubmit(search)
+            onSubmit(search);
           }}
           className={`flex w-full max-w-xl items-center gap-5 rounded-2xl 
             border border-teal-200 bg-white p-6 shadow-lg shadow-teal-100 ${this.props.className ?? ''}`}
@@ -34,9 +33,11 @@ class SearchForm extends Component<SearchFormProps> {
               className="w-full rounded-xl border-2 border-teal-300 bg-fuchsia-50 py-3 pl-11 pr-4
                text-teal-700 outline-none transition-colors duration-300 placeholder:text-teal-300 
                focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {this.setState({ search: event.target.value });}}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                this.setState({ search: event.target.value });
+              }}
               type="search"
-              value={this.state.search??''}
+              value={this.state.search ?? ''}
               placeholder="Search..."
               name="search"
               id="search"

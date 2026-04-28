@@ -27,3 +27,9 @@ export interface Character {
   url: string;
   created: string;
 }
+export interface AppState {
+  search: string;
+  characters: Character[];
+  error: boolean;
+  loading: boolean;
+}
