@@ -9,7 +9,7 @@ export class ApiService {
       const search = storageService.getSearch();
       let url = `${this.BASE_URL}/character`;
       if (search) {
-        url += `?name=${search}`;
+        url += `/?name=${search}`;
       }
       const res = await fetch(url);
       if (!res.ok) {
