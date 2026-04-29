@@ -3,7 +3,7 @@ export class storageService {
   public saveSearch(search: string) {
     localStorage.setItem(storageService.STORAGE_KEY, search);
   }
-  public static getSearch(): string {
+  public static getSearch(): string | null {
     return localStorage.getItem(this.STORAGE_KEY);
   }
 }
