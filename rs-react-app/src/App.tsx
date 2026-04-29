@@ -11,14 +11,15 @@ import ErrorUI from './components/ErrorUI/ErrorUI';
 class App extends Component {
   apiService = new ApiService();
   storageService = new storageService();
+  lsSearch: string | null = storageService.getSearch();
   state: AppState = {
-    search: storageService.getSearch(),
+    search: this.lsSearch ?? '',
     characters: [],
     error: false,
     loading: false,
     searchFailed: false,
   };
-  
+
   componentDidUpdate(_: object, prevState: AppState): void {
     if (prevState.search !== this.state.search) {
       this.updateData();
