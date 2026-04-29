@@ -17,9 +17,9 @@ class Card extends Component<CardProps> {
           <div className="font-bold w-[300px] text-xl mb-2">{name}</div>
         </div>
         <div className="px-6 pt-4 pb-2 flex justify-center items-center">
-            <InfoSpan text={gender} />
-            <InfoSpan text={species} />
-            <InfoSpan text={status} />
+          <InfoSpan text={gender} />
+          <InfoSpan text={species} />
+          <InfoSpan text={status} />
         </div>
       </div>
     );

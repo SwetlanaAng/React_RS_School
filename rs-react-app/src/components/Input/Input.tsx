@@ -9,6 +9,7 @@ interface InputProps {
   id: string;
 }
 class Input extends Component<InputProps> {
+  
   render() {
     return (
       <>

@@ -3,10 +3,12 @@ import type { Character } from '../../shared/types';
 import Card from '../Card/Card';
 interface CardsBoxProps {
   characters: Character[];
+  error: boolean;
 }
 class CardsBox extends Component<CardsBoxProps> {
   render() {
-    const { characters } = this.props;
+    const { characters, error } = this.props;
+    if(error){ throw new Error('ErrorBoundary test error')};
     return (
       <div
         className="mx-3 my-4   rounded-2xl border-2 border-teal-200 bg-white 

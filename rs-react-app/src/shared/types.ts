@@ -32,4 +32,5 @@ export interface AppState {
   characters: Character[];
   error: boolean;
   loading: boolean;
+  searchFailed: boolean;
 }

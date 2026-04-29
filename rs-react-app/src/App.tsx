@@ -5,6 +5,7 @@ import type { AppState, Character } from './shared/types';
 import { ApiService } from './services/apiService/apiService';
 import Button from './components/Button/Button';
 import Spinner from './components/Spinner/Spinner';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   apiService = new ApiService();
@@ -13,6 +14,7 @@ class App extends Component {
     characters: [],
     error: false,
     loading: false,
+    searchFailed: false,
   };
   componentDidUpdate(_: object, prevState: AppState): void {
     if (prevState.search !== this.state.search) {
@@ -33,7 +35,7 @@ class App extends Component {
         this.setState({ characters: res });
       })
       .catch(() => {
-        this.setState({ error: true });
+        this.setState({ searchFailed: true });
       })
       .finally(() => {
         this.setState({ loading: false });
@@ -41,7 +43,7 @@ class App extends Component {
   };
   render() {
     return (
-      <>
+      <><ErrorBoundary>
         <SearchForm
           loading={this.state.loading}
           onSubmit={this.onFormSubmit.bind(this)}
@@ -50,11 +52,12 @@ class App extends Component {
           {this.state.loading ? (
             <Spinner />
           ) : (
-            <CardsBox characters={this.state.characters} />
+            <CardsBox error={this.state.error} characters={this.state.characters} />
           )}
         </main>
         <div className="flex justify-center">
           <Button
+          onClick={()=>{this.setState({error: true})}}
             type="button"
             className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
             shadow-md transition-colors duration-300 hover:bg-purple-700 hover:text-teal-300"
@@ -62,6 +65,8 @@ class App extends Component {
             Error Button
           </Button>
         </div>
+      </ErrorBoundary>
+        
       </>
     );
   }
