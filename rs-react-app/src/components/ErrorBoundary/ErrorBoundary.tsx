@@ -1,27 +1,38 @@
 import { Component } from 'react';
-/* interface ErrorBoundaryProps {
+import ErrorUI from '../ErrorUI/ErrorUI';
+import Button from '../Button/Button';
+
+interface State {
+  hasError: boolean;
+}
+export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
-  fallback: React.ReactNode;
-} */
-  interface State {
-    hasError: boolean;
+  fallback?: React.ReactNode;
+  errorSwitcher: (error: { error: boolean }) => void;
+}> {
+  state: State = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
   }
-export class ErrorBoundary extends Component<{children?: React.ReactNode, fallback?: React.ReactNode}> {
-    state: State = { hasError: false };
-    
-  
-    static getDerivedStateFromError(error: Error) {
-        
-      return { hasError: error };
+  onButtonClick() {
+    this.setState({ hasError: false });
+    this.props.errorSwitcher({ error: false });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <>
+          <ErrorUI errorMessage="Something went wrong">
+            <Button type="button" onClick={this.onButtonClick.bind(this)}>
+              Return
+            </Button>
+          </ErrorUI>
+        </>
+      );
     }
 
-  
-    render() {
-      if (this.state.hasError) {
-        
-        return <h1>Something went wrong.</h1>;
-      }
-  
-      return this.props.children; 
-    }
+    return this.props.children;
   }
+}

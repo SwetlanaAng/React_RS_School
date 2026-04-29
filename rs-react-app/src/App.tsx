@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import SearchForm from './components/SearchForm/SearchForm';
-import CardsBox from './components/CardsBox/CardsBox';
 import type { AppState, Character } from './shared/types';
 import { ApiService } from './services/apiService/apiService';
 import Button from './components/Button/Button';
-import Spinner from './components/Spinner/Spinner';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import MainContent from './components/MainContent/MainContent';
+import { storageService } from './services/storageService/storageService';
+import ErrorUI from './components/ErrorUI/ErrorUI';
 
 class App extends Component {
   apiService = new ApiService();
@@ -16,6 +17,7 @@ class App extends Component {
     loading: false,
     searchFailed: false,
   };
+  storageService = new storageService();
   componentDidUpdate(_: object, prevState: AppState): void {
     if (prevState.search !== this.state.search) {
       this.updateData();
@@ -26,6 +28,7 @@ class App extends Component {
   }
   onFormSubmit(string: string) {
     this.setState({ search: string });
+    this.storageService.saveSearch(string);
   }
   updateData = () => {
     this.setState({ loading: true });
@@ -33,6 +36,7 @@ class App extends Component {
       .getCharacters()
       .then((res: Character[]) => {
         this.setState({ characters: res });
+        this.setState({ searchFailed: false });
       })
       .catch(() => {
         this.setState({ searchFailed: true });
@@ -43,30 +47,37 @@ class App extends Component {
   };
   render() {
     return (
-      <><ErrorBoundary>
-        <SearchForm
-          loading={this.state.loading}
-          onSubmit={this.onFormSubmit.bind(this)}
-        />
-        <main>
-          {this.state.loading ? (
-            <Spinner />
-          ) : (
-            <CardsBox error={this.state.error} characters={this.state.characters} />
-          )}
-        </main>
-        <div className="flex justify-center">
-          <Button
-          onClick={()=>{this.setState({error: true})}}
-            type="button"
-            className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
+      <>
+        <ErrorBoundary errorSwitcher={this.setState.bind(this)}>
+          <SearchForm
+            error={this.state.error}
+            loading={this.state.loading}
+            onSubmit={this.onFormSubmit.bind(this)}
+          />
+          <main>
+            {this.state.searchFailed ? (
+              <ErrorUI errorMessage="There is no matching characters"></ErrorUI>
+            ) : (
+              <MainContent
+                loading={this.state.loading}
+                characters={this.state.characters}
+              ></MainContent>
+            )}
+          </main>
+
+          <div className="flex justify-center">
+            <Button
+              onClick={() => {
+                this.setState({ error: true });
+              }}
+              type="button"
+              className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
             shadow-md transition-colors duration-300 hover:bg-purple-700 hover:text-teal-300"
-          >
-            Error Button
-          </Button>
-        </div>
-      </ErrorBoundary>
-        
+            >
+              Error Button
+            </Button>
+          </div>
+        </ErrorBoundary>
       </>
     );
   }

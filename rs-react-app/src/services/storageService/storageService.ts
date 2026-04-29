@@ -6,4 +6,7 @@ export class storageService {
   public static getSearch(): string {
     return localStorage.getItem(this.STORAGE_KEY);
   }
+  public deleteSearch() {
+    localStorage.removeItem(storageService.STORAGE_KEY);
+  }
 }

@@ -12,6 +12,9 @@ export class ApiService {
         url += `?name=${search}`;
       }
       const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error('Search failed');
+      }
       const characters = await res.json();
       console.log(characters);
       return characters.results;
