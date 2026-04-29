@@ -71,8 +71,7 @@ class App extends Component {
                 this.setState({ error: true });
               }}
               type="button"
-              className="rounded-xl border-2 border-teal-300 bg-purple-300 px-6 py-3 font-bold text-teal-700 
-            shadow-md transition-colors duration-300 hover:bg-purple-700 hover:text-teal-300"
+              className="mb-6"
             >
               Error Button
             </Button>

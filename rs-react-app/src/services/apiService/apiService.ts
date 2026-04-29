@@ -16,7 +16,6 @@ export class ApiService {
         throw new Error('Search failed');
       }
       const characters = await res.json();
-      console.log(characters);
       return characters.results;
     } catch {
       throw new Error('Failed to fetch characters');

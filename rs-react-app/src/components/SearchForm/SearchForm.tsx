@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+import searchSVG from '../../assets/search.svg';
 import { storageService } from '../../services/storageService/storageService';
 interface SearchFormProps {
   className?: string;
@@ -47,22 +48,11 @@ class SearchForm extends Component<SearchFormProps> {
               name="search"
               id="search"
             />
-            <svg
-              className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-teal-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
+            <img
+              src={searchSVG}
+              alt="spinner"
+              className="block pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-teal-400"
+            />
           </div>
           <Button type="submit" loading={this.props.loading}>
             Click me
