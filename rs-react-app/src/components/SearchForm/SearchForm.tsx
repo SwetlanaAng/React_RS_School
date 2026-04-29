@@ -55,7 +55,7 @@ class SearchForm extends Component<SearchFormProps> {
             />
           </div>
           <Button type="submit" loading={this.props.loading}>
-            Click me
+            Search
           </Button>
         </form>
       </div>
