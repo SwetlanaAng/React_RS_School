@@ -35,10 +35,9 @@ class App extends Component {
   updateData = () => {
     this.setState({ loading: true });
     this.apiService
-      .getCharacters()
+      .getCharacters(this.state.search)
       .then((res: Character[]) => {
-        this.setState({ characters: res });
-        this.setState({ searchFailed: false });
+        this.setState({ characters: res, searchFailed: false });
       })
       .catch(() => {
         this.setState({ searchFailed: true });
@@ -47,6 +46,7 @@ class App extends Component {
         this.setState({ loading: false });
       });
   };
+ 
   render() {
     return (
       <>
@@ -55,10 +55,11 @@ class App extends Component {
             error={this.state.error}
             loading={this.state.loading}
             onSubmit={this.onFormSubmit.bind(this)}
+            search={this.state.search}
           />
           <main>
             {this.state.searchFailed ? (
-              <ErrorUI errorMessage="There is no matching characters"></ErrorUI>
+              <ErrorUI errorMessage="There is no matching characters or an error has occurred(4xx or 5xx)"></ErrorUI>
             ) : (
               <MainContent
                 loading={this.state.loading}

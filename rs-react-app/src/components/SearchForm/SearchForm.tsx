@@ -2,19 +2,16 @@ import { Component } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import searchSVG from '../../assets/search.svg';
-import { storageService } from '../../services/storageService/storageService';
 interface SearchFormProps {
   className?: string;
   onSubmit: (string: string) => void;
   loading?: boolean;
   error: boolean;
+  search: string;
+  onChange: (string: string) => void;
 }
 class SearchForm extends Component<SearchFormProps> {
-  private storageService = new storageService();
-  state = {
-    search: storageService.getSearch(),
-  };
-
+  state = { inputValue: this.props.search ?? '' };
   render() {
     if (this.props.error) {
       throw new Error('ErrorBoundary test error');
@@ -27,8 +24,6 @@ class SearchForm extends Component<SearchFormProps> {
             e.preventDefault();
             const formData = new FormData(e.target);
             const search = String(formData.get('search')).trim();
-            this.setState({ search });
-            this.storageService.saveSearch(search);
             onSubmit(search);
           }}
           className={`flex w-full max-w-xl items-center gap-5 rounded-2xl 
@@ -40,10 +35,10 @@ class SearchForm extends Component<SearchFormProps> {
                text-teal-700 outline-none transition-colors duration-300 placeholder:text-teal-300 
                focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                this.setState({ search: event.target.value });
+                this.setState({ inputValue: event.target.value });
               }}
               type="search"
-              value={this.state.search ?? ''}
+              value={this.state.inputValue}
               placeholder="Search..."
               name="search"
               id="search"
