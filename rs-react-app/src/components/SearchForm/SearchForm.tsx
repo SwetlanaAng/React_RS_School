@@ -8,7 +8,6 @@ interface SearchFormProps {
   loading?: boolean;
   error: boolean;
   search: string;
-  onChange: (string: string) => void;
 }
 class SearchForm extends Component<SearchFormProps> {
   state = { inputValue: this.props.search ?? '' };
