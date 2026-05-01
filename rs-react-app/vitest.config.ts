@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [tailwindcss(),react()],
+  plugins: [tailwindcss(), react()],
   test: {
     globals: true,
     include: ['**/*.test.tsx'],
@@ -14,8 +14,8 @@ export default defineConfig({
       include: ['src/**/**.{js,jsx,ts,tsx}'],
       exclude: [
         'src/**/*.test.{js,jsx,ts,tsx}',
-'src/**/*.spec.{js,jsx,ts,tsx}',
-'src/**/*.d.ts',
+        'src/**/*.spec.{js,jsx,ts,tsx}',
+        'src/**/*.d.ts',
         'src/index.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
       ],
