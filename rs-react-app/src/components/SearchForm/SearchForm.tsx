@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import searchSVG from '../../assets/search.svg';
-interface SearchFormProps {
+export interface SearchFormProps {
   className?: string;
   onSubmit: (string: string) => void;
   loading?: boolean;

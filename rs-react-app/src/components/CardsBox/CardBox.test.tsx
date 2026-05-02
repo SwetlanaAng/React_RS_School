@@ -5,11 +5,7 @@ import { mockCharacters } from '../../tests/mockCharacters';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {
-    render(
-      <CardsBox
-        characters={mockCharacters}
-      />
-    );
+    render(<CardsBox characters={mockCharacters} />);
     const cardImg = screen.getByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
     const cardTitle = screen.getByText('Rick Sanchez');
