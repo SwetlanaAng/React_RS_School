@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [tailwindcss(), react()],
   test: {
     globals: true,
-    include: ['**/*.test.tsx'],
+    include: ['**/*.test.tsx', '**/*.test.ts'],
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
     coverage: {

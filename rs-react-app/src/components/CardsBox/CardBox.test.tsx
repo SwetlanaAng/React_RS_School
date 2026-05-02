@@ -1,49 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import CardsBox from './CardsBox';
 import { expect } from 'vitest';
+import { mockCharacters } from '../../tests/mockCharacters';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {
     render(
-      <CardsBox characters={[{
-        id: 1,
-        name: 'Rick Sanchez',
-        image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-        status: 'Alive',
-        species: 'Human',
-        gender: 'Male',
-        type: 'Human',
-        origin: {
-          name: 'Earth',
-          url: 'https://rickandmortyapi.com/api/origin/1',
-        },
-        location: {
-          name: 'Earth',
-          url: 'https://rickandmortyapi.com/api/location/1',
-        },
-        episode: ['https://rickandmortyapi.com/api/episode/1'],
-        url: 'https://rickandmortyapi.com/api/character/1',
-        created: '2026-01-01',
-      }, {
-        id: 2,
-        name: 'Morty Smith',
-        image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-        status: 'Alive',
-        species: 'Human',
-        gender: 'Male',
-        type: 'Human',
-        origin: {
-          name: 'Earth',
-          url: 'https://rickandmortyapi.com/api/origin/2',
-        },
-        location: {
-          name: 'Earth',
-          url: 'https://rickandmortyapi.com/api/location/2',
-        },
-        episode: ['https://rickandmortyapi.com/api/episode/2'],
-        url: 'https://rickandmortyapi.com/api/character/2',
-        created: '2026-01-01',
-      }]}
+      <CardsBox
+        characters={mockCharacters}
       />
     );
     const cardImg = screen.getByAltText('Rick Sanchez');
