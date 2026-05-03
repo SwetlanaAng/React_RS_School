@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import SearchForm, { type SearchFormProps } from './SearchForm';
 import { expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { mockCharacters } from '../../tests/mockCharacters';
+import { mockCharacters } from '../../test/mockCharacters';
 import { ApiService } from '../../services/apiService/apiService';
 describe('SearchForm', () => {
   function renderSearchForm(props: SearchFormProps) {

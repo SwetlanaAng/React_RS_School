@@ -1,5 +1,5 @@
 import { ApiService } from './apiService';
-import { mockCharacters } from '../../tests/mockCharacters';
+import { mockCharacters } from '../../test/mockCharacters';
 describe('apiService', () => {
   const service = new ApiService();
   afterEach(() => {

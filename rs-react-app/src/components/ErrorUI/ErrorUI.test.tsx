@@ -8,4 +8,12 @@ describe('ErrorUI', () => {
     expect(img).toBeInTheDocument();
     expect(errorMessage).toBeInTheDocument();
   });
+  it('renders children', () => {
+    render(
+      <ErrorUI errorMessage="Error">
+        <button>Return</button>
+      </ErrorUI>
+    );
+    expect(screen.getByRole('button', { name: /return/i })).toBeInTheDocument();
+  });
 });

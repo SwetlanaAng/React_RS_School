@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import CardsBox from './CardsBox';
 import { expect } from 'vitest';
-import { mockCharacters } from '../../tests/mockCharacters';
+import { mockCharacters } from '../../test/mockCharacters';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {
