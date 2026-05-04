@@ -19,8 +19,8 @@ class Button extends Component<ButtonProps> {
         disabled={loading}
         className={
           loading
-            ? `${className} ${buttonClassName} cursor-not-allowed`
-            : `${className} ${buttonClassName}`
+            ? `${className ?? ''} ${buttonClassName} cursor-not-allowed`
+            : `${className ?? ''} ${buttonClassName}`
         }
       >
         {loading ? (
