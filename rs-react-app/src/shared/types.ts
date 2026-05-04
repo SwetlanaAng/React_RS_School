@@ -1,0 +1,36 @@
+export interface ResponseCharacter {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: Character[];
+}
+export interface Character {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  episode: string[];
+  url: string;
+  created: string;
+}
+export interface AppState {
+  search: string;
+  characters: Character[];
+  error: boolean;
+  loading: boolean;
+  searchFailed: boolean;
+}
