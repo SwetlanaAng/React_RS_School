@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import gif from './brokenRobot.gif';
-type ErrorUIProps = { errorMessage: string; children?: React.ReactNode };
+interface ErrorUIProps {
+  errorMessage: string;
+  children?: React.ReactNode;
+}
 class ErrorUI extends Component<ErrorUIProps> {
   render() {
     return (

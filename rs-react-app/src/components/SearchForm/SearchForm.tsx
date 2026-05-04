@@ -10,7 +10,7 @@ export interface SearchFormProps {
   search: string;
 }
 class SearchForm extends Component<SearchFormProps> {
-  state = { inputValue: this.props.search ?? '' };
+  state = { inputValue: this.props.search };
   render() {
     if (this.props.error) {
       throw new Error('ErrorBoundary test error');
@@ -22,7 +22,9 @@ class SearchForm extends Component<SearchFormProps> {
           onSubmit={(e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const search = String(formData.get('search')).trim();
+            const searchValue = formData.get('search');
+            const search =
+              typeof searchValue === 'string' ? searchValue.trim() : '';
             onSubmit(search);
           }}
           className={`flex w-full max-w-xl items-center gap-5 rounded-2xl 
