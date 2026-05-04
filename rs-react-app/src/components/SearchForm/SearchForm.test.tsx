@@ -9,7 +9,7 @@ describe('SearchForm', () => {
     return render(<SearchForm {...props} />);
   }
   it('renders SearchForm', () => {
-    renderSearchForm({ onSubmit: () => {}, error: false, search: '' });
+    renderSearchForm({ onSubmit: vi.fn(), error: false, search: '' });
     const input = screen.getByPlaceholderText('Search...');
     expect(input).toBeInTheDocument();
     const button = screen.getByRole('button', { name: 'Search' });
@@ -17,7 +17,7 @@ describe('SearchForm', () => {
   });
   it('throws error if error is true', () => {
     expect(() =>
-      renderSearchForm({ onSubmit: () => {}, error: true, search: '' })
+      renderSearchForm({ onSubmit: vi.fn(), error: true, search: '' })
     ).toThrow('ErrorBoundary test error');
   });
   it('calls onSubmit when form is submitted', async () => {
@@ -38,7 +38,7 @@ describe('SearchForm', () => {
   });
   it('updates input value when user types', async () => {
     const user = userEvent.setup();
-    renderSearchForm({ onSubmit: () => {}, error: false, search: '' });
+    renderSearchForm({ onSubmit: vi.fn(), error: false, search: '' });
     const input = screen.getByPlaceholderText('Search...');
     await user.type(input, 'Rick');
     expect(input).toHaveValue('Rick');
@@ -46,7 +46,7 @@ describe('SearchForm', () => {
   it('sends request to API when form is submitted', async () => {
     const user = userEvent.setup();
     const service = new ApiService();
-    renderSearchForm({ onSubmit: () => {}, error: false, search: 'Rick' });
+    renderSearchForm({ onSubmit: vi.fn(), error: false, search: 'Rick' });
 
     const button = screen.getByRole('button', { name: 'Search' });
     await user.click(button);
@@ -56,9 +56,10 @@ describe('SearchForm', () => {
 
     const mockFetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({
-        results: filteredCharacters,
-      }),
+      json: async () =>
+        Promise.resolve({
+          results: filteredCharacters,
+        }),
     } as Response);
     const result = await service.getCharacters('Rick');
     expect(mockFetch).toHaveBeenCalledWith(

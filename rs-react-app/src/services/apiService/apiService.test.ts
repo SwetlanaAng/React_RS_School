@@ -9,9 +9,10 @@ describe('apiService', () => {
   it('gets characters from API', async () => {
     const mockFetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({
-        results: mockCharacters,
-      }),
+      json: () =>
+        Promise.resolve({
+          results: mockCharacters,
+        }),
     } as Response);
     const result = await service.getCharacters('');
     expect(mockFetch).toHaveBeenCalledWith(
@@ -26,9 +27,10 @@ describe('apiService', () => {
 
     const mockFetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({
-        results: filteredCharacters,
-      }),
+      json: async () =>
+        Promise.resolve({
+          results: filteredCharacters,
+        }),
     } as Response);
     const result = await service.getCharacters('Rick');
     expect(mockFetch).toHaveBeenCalledWith(

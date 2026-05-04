@@ -3,6 +3,7 @@ import { expect } from 'vitest';
 import App from '../App';
 import { mockCharacters } from './mockCharacters';
 import userEvent from '@testing-library/user-event';
+import { storageService } from '../services/storageService/storageService';
 
 describe('App', () => {
   afterEach(() => {
@@ -11,7 +12,7 @@ describe('App', () => {
   it('renders App', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({ results: mockCharacters }),
+      json: () => Promise.resolve({ results: mockCharacters }),
     } as Response);
     render(<App />);
     const input = screen.getByPlaceholderText('Search...');
@@ -24,7 +25,7 @@ describe('App', () => {
   it('renders App with cards from API', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({ results: mockCharacters }),
+      json: () => Promise.resolve({ results: mockCharacters }),
     } as Response);
     render(<App />);
     const cardImg = await screen.findByAltText('Rick Sanchez');
@@ -37,7 +38,7 @@ describe('App', () => {
     expect(cardTitle2).toBeInTheDocument();
   });
   it('shows spinner while characters are loading', () => {
-    vi.spyOn(globalThis, 'fetch').mockReturnValue(new Promise(() => {}));
+    vi.spyOn(globalThis, 'fetch').mockReturnValue(new Promise(vi.fn()));
     render(<App />);
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
@@ -53,7 +54,7 @@ describe('App', () => {
   it('fetches characters by submitted search value', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({ results: [] }),
+      json: () => Promise.resolve({ results: [] }),
     } as Response);
     render(<App />);
     const user = userEvent.setup();
@@ -61,6 +62,7 @@ describe('App', () => {
     await user.type(input, 'Rick');
     const button = screen.getByRole('button', { name: /search/i });
     await user.click(button);
+    expect(storageService.getSearch()).toBe('Rick');
     expect(fetchMock).toHaveBeenCalledWith(
       'https://rickandmortyapi.com/api/character/?name=Rick'
     );
@@ -68,7 +70,7 @@ describe('App', () => {
   it('shows error UI when error button clicked', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: async () => ({ results: [] }),
+      json: () => Promise.resolve({ results: [] }),
     } as Response);
     render(<App />);
     const user = userEvent.setup();
