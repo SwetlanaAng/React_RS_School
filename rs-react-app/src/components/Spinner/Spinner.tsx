@@ -1,26 +1,20 @@
-import { Component } from 'react';
-interface SpinnerProps {
-  className?: string;
-}
-class Spinner extends Component<SpinnerProps> {
-  render() {
-    return (
-      <div role="status" className="flex flex-col items-center my-6">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="size-30 animate-[spin_0.8s_linear_infinite] fill-purple-400 dark:fill-teal-50"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z"
-            data-original="#000000"
-          />
-        </svg>
-        <span className="sr-only">Loading…</span>
-      </div>
-    );
-  }
+export function Spinner() {
+  return (
+    <div role="status" className="flex flex-col items-center my-6">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="size-30 animate-[spin_0.8s_linear_infinite] fill-purple-400 dark:fill-teal-50"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z"
+          data-original="#000000"
+        />
+      </svg>
+      <span className="sr-only">Loading…</span>
+    </div>
+  );
 }
 
 export default Spinner;
