@@ -7,7 +7,6 @@ export function useAppData() {
   const { saveSearch, getSearch } = useStorage();
   const [search, setSearch] = useState(getSearch() ?? '');
   const [characters, setCharacters] = useState<Character[]>([]);
-  //const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchFailed, setSearchFailed] = useState<boolean>(false);
 

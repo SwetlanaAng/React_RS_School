@@ -3,7 +3,7 @@ interface ErrorUIProps {
   errorMessage: string;
   children?: React.ReactNode;
 }
-export function ErrorUI({ errorMessage, children }: ErrorUIProps) {
+export default function ErrorUI({ errorMessage, children }: ErrorUIProps) {
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="mt-6 text-xl text-fuchsia-600">{errorMessage}</p>
@@ -12,5 +12,3 @@ export function ErrorUI({ errorMessage, children }: ErrorUIProps) {
     </div>
   );
 }
-
-export default ErrorUI;

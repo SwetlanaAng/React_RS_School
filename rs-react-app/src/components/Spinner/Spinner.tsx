@@ -1,4 +1,4 @@
-export function Spinner() {
+export default function Spinner() {
   return (
     <div role="status" className="flex flex-col items-center my-6">
       <svg
@@ -16,5 +16,3 @@ export function Spinner() {
     </div>
   );
 }
-
-export default Spinner;

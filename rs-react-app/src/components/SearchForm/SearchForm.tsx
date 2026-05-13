@@ -9,7 +9,7 @@ export interface SearchFormProps {
   error: boolean;
   search: string;
 }
-export function SearchForm({
+export default function SearchForm({
   error,
   search,
   className,
@@ -62,5 +62,3 @@ export function SearchForm({
     </div>
   );
 }
-
-export default SearchForm;

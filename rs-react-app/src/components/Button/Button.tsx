@@ -6,7 +6,7 @@ interface ButtonProps {
   type: 'submit' | 'button';
   loading?: boolean;
 }
-export function Button({
+export default function Button({
   loading,
   children,
   className,
@@ -35,5 +35,3 @@ export function Button({
     </button>
   );
 }
-
-export default Button;

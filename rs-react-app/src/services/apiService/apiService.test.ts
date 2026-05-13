@@ -1,7 +1,6 @@
-import { ApiService } from './apiService';
+import { getCharacters } from './apiService';
 import { mockCharacters } from '../../test/mockCharacters';
 describe('apiService', () => {
-  const service = new ApiService();
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -14,7 +13,7 @@ describe('apiService', () => {
           results: mockCharacters,
         }),
     } as Response);
-    const result = await service.getCharacters('');
+    const result = await getCharacters('');
     expect(mockFetch).toHaveBeenCalledWith(
       'https://rickandmortyapi.com/api/character'
     );
@@ -32,7 +31,7 @@ describe('apiService', () => {
           results: filteredCharacters,
         }),
     } as Response);
-    const result = await service.getCharacters('Rick');
+    const result = await getCharacters('Rick');
     expect(mockFetch).toHaveBeenCalledWith(
       'https://rickandmortyapi.com/api/character/?name=Rick'
     );
@@ -41,7 +40,7 @@ describe('apiService', () => {
   it('throws error if API returns 404', async () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Network error'));
 
-    await expect(service.getCharacters('')).rejects.toThrow(
+    await expect(getCharacters('')).rejects.toThrow(
       'Failed to fetch characters'
     );
   });
@@ -49,7 +48,7 @@ describe('apiService', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: false,
     } as Response);
-    await expect(service.getCharacters('')).rejects.toThrow(
+    await expect(getCharacters('')).rejects.toThrow(
       'Failed to fetch characters'
     );
   });

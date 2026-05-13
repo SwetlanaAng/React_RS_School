@@ -3,7 +3,7 @@ import Card from '../Card/Card';
 interface CardsBoxProps {
   characters: Character[];
 }
-export function CardsBox({ characters }: CardsBoxProps) {
+export default function CardsBox({ characters }: CardsBoxProps) {
   return (
     <div
       className="mx-3 my-4   rounded-2xl border-2 border-teal-200 bg-white 
@@ -19,5 +19,3 @@ export function CardsBox({ characters }: CardsBoxProps) {
     </div>
   );
 }
-
-export default CardsBox;

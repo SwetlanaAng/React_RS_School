@@ -2,7 +2,7 @@ import { useState } from 'react';
 import SearchForm from './components/SearchForm/SearchForm';
 import Button from './components/Button/Button';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
-import MainContent from './components/MainContent/MainContent';
+import { MainContent } from './components/MainContent/MainContent';
 import ErrorUI from './components/ErrorUI/ErrorUI';
 import { useAppData } from './hooks/useAppData';
 

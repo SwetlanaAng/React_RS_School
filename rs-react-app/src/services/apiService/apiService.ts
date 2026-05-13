@@ -1,7 +1,7 @@
 import type { Character } from '../../shared/types';
 import { isResponseCharacter } from '../../utils/typeGuards';
 
-const BASE_URL = 'https://rickandmortyapi.com/api';
+export const BASE_URL = 'https://rickandmortyapi.com/api';
 
 export async function getCharacters(search: string): Promise<Character[]> {
   try {

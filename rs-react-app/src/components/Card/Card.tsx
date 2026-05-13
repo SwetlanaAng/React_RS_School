@@ -6,7 +6,13 @@ interface CardProps {
   status: string;
   image: string;
 }
-export function Card({ name, gender, species, status, image }: CardProps) {
+export default function Card({
+  name,
+  gender,
+  species,
+  status,
+  image,
+}: CardProps) {
   return (
     <div className="max-w-sm h-[500px] rounded overflow-hidden shadow-lg border-2 border-purple-200">
       <img className="w-full" src={image} alt={name} />
@@ -21,5 +27,3 @@ export function Card({ name, gender, species, status, image }: CardProps) {
     </div>
   );
 }
-
-export default Card;
