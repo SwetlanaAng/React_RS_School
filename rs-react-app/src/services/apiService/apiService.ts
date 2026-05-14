@@ -17,6 +17,7 @@ export async function getCharacters(search: string): Promise<Character[]> {
     if (!isResponseCharacter(characters)) {
       throw new Error('Invalid API response');
     }
+    console.log(characters);
     return characters.results;
   } catch {
     throw new Error('Failed to fetch characters');
