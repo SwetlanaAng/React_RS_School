@@ -1,7 +1,40 @@
+import authorImage from '../assets/author.png';
 export default function About() {
   return (
-    <div role="status" className="flex flex-col items-center my-6">
-      <div className="">About</div>
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4">
+      <section
+        role="status"
+        className="flex w-full max-w-4xl flex-col items-center rounded-3xl border border-teal-100 bg-white px-8 py-12 text-center shadow-xl"
+      >
+        <div className="text-2xl text-teal-700">
+          <span>
+            This application was created by{' '}
+            <a
+              className="text-yellow-400 cursor-pointer"
+              href="https://github.com/SwetlanaAng"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Svetlana Angeliuk
+            </a>{' '}
+            as part of the{' '}
+            <a
+              className="text-yellow-400 cursor-pointer"
+              href="https://rs.school/courses/reactjs"
+              target="_blank"
+              rel="noreferrer"
+            >
+              RS School React Course
+            </a>
+            . It allows users to search for Rick and Morty characters
+          </span>
+        </div>
+        <img
+          src={authorImage}
+          alt="author"
+          className="my-8 w-full max-w-md object-contain"
+        />
+      </section>
+    </main>
   );
 }
