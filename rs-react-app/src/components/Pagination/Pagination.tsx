@@ -1,6 +1,10 @@
 import type { Info } from '../../shared/types';
 
 export default function Pagination({ prev, next, pages }: Info) {
+  const paginationButtonClassName =
+    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 bg-white font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
+  const paginationArrowClassName =
+    'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
   let one = false;
   let two = false;
   let three = false;
@@ -19,32 +23,32 @@ export default function Pagination({ prev, next, pages }: Info) {
       many = true;
   }
   return (
-    <div>
-      {prev && <button>prev</button>}
-      {one && <button>1</button>}
+    <div className="my-8 flex items-center justify-center gap-2">
+      {prev && <button className={paginationArrowClassName}>prev</button>}
+      {one && <button className={paginationButtonClassName}>1</button>}
       {two && (
         <>
-          <button>1</button>
-          <button>2</button>
+          <button className={paginationButtonClassName}>1</button>
+          <button className={paginationButtonClassName}>2</button>
         </>
       )}
       {three && (
         <>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
+          <button className={paginationButtonClassName}>1</button>
+          <button className={paginationButtonClassName}>2</button>
+          <button className={paginationButtonClassName}>3</button>
         </>
       )}
       {many && (
         <>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
+          <button className={paginationButtonClassName}>1</button>
+          <button className={paginationButtonClassName}>2</button>
+          <button className={paginationButtonClassName}>3</button>
           <span>...</span>
-          <button>{pages}</button>
+          <button className={paginationButtonClassName}>{pages}</button>
         </>
       )}
-      {next && <button>next</button>}
+      {next && <button className={paginationArrowClassName}>next</button>}
     </div>
   );
 }
