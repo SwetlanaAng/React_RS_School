@@ -1,7 +1,7 @@
 import authorImage from '../assets/author.png';
 export default function About() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4">
+    <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 p-4">
       <section
         role="status"
         className="flex w-full max-w-4xl flex-col items-center rounded-3xl border border-teal-100 bg-white px-8 py-12 text-center shadow-xl"
