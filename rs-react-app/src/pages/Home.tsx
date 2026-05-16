@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Button from '../components/Button/Button';
 import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
@@ -6,12 +6,25 @@ import { MainContent } from '../components/MainContent/MainContent';
 import ErrorUI from '../components/ErrorUI/ErrorUI';
 import { useAppData } from '../hooks/useAppData';
 import Pagination from '../components/Pagination/Pagination';
+import { useSearchParams } from 'react-router';
 
 export default function Home() {
-  const { search, characters, loading, searchFailed, onFormSubmit } =
-    useAppData();
+  const {
+    search,
+    characters,
+    loading,
+    searchFailed,
+    onFormSubmit,
+    paginationData,
+    currentPaginationPage,
+    setCurrentPaginationPage,
+  } = useAppData();
   const [error, setError] = useState<boolean>(false);
-
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get('page');
+  useEffect(() => {
+    if (currentPage) setCurrentPaginationPage(Number(currentPage));
+  }, [currentPage, setCurrentPaginationPage]);
   return (
     <>
       <ErrorBoundary errorSwitcher={setError}>
@@ -32,10 +45,12 @@ export default function Home() {
           )}
           {!loading && !searchFailed && (
             <Pagination
-              count={826}
-              pages={42}
-              next="https://rickandmortyapi.com/api/character/?page=2"
-              prev={null}
+              currentPage={currentPaginationPage}
+              setPage={setCurrentPaginationPage}
+              count={paginationData.count}
+              pages={paginationData.pages}
+              next={paginationData.next}
+              prev={paginationData.prev}
             />
           )}
         </main>

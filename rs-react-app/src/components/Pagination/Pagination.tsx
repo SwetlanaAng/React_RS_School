@@ -1,54 +1,113 @@
+import { useSearchParams } from 'react-router';
 import type { Info } from '../../shared/types';
+interface PaginationProps extends Info {
+  currentPage: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export default function Pagination({ prev, next, pages }: Info) {
+export default function Pagination({
+  prev,
+  next,
+  pages,
+  currentPage,
+  setPage,
+}: PaginationProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const buttons: number[] = [];
+  if (pages <= 5) {
+    for (let i = 1; i <= pages; i++) {
+      buttons.push(i);
+    }
+  } else {
+    buttons.push(1);
+    buttons.push(2);
+    if (currentPage > 3) {
+      buttons.push(0);
+    }
+    const start = Math.max(3, currentPage - 1);
+    const end = Math.min(pages - 1, currentPage + 1);
+    for (let i = start; i <= end; i++) {
+      buttons.push(i);
+    }
+    if (currentPage < pages - 2) {
+      buttons.push(0);
+    }
+    buttons.push(pages);
+  }
   const paginationButtonClassName =
-    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 bg-white font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
+    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
   const paginationArrowClassName =
     'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
-  let one = false;
-  let two = false;
-  let three = false;
-  let many = false;
-  switch (pages) {
-    case 1:
-      one = true;
-      break;
-    case 2:
-      two = true;
-      break;
-    case 3:
-      three = true;
-      break;
-    default:
-      many = true;
-  }
+  const activeButtonClassName = 'bg-fuchsia-200 text-fuchsia-700';
+  const defaultButtonClassName = 'bg-white text-teal-700';
+
   return (
     <div className="my-8 flex items-center justify-center gap-2">
-      {prev && <button className={paginationArrowClassName}>prev</button>}
-      {one && <button className={paginationButtonClassName}>1</button>}
-      {two && (
-        <>
-          <button className={paginationButtonClassName}>1</button>
-          <button className={paginationButtonClassName}>2</button>
-        </>
+      {prev && (
+        <button
+          type="button"
+          className={paginationArrowClassName}
+          onClick={() => {
+            setPage(currentPage - 1);
+            const currentSearch = searchParams.get('name');
+            if (currentSearch) {
+              setSearchParams({
+                name: currentSearch,
+                page: String(currentPage - 1),
+              });
+            } else {
+              setSearchParams({ page: String(currentPage - 1) });
+            }
+          }}
+        >
+          prev
+        </button>
       )}
-      {three && (
-        <>
-          <button className={paginationButtonClassName}>1</button>
-          <button className={paginationButtonClassName}>2</button>
-          <button className={paginationButtonClassName}>3</button>
-        </>
+      {buttons.map((item) => {
+        if (item === 0) return <span key={item}>...</span>;
+        return (
+          <button
+            type="button"
+            className={`${paginationButtonClassName} ${
+              currentPage === item
+                ? activeButtonClassName
+                : defaultButtonClassName
+            }`}
+            key={item}
+            onClick={() => {
+              setPage(item);
+              const currentSearch = searchParams.get('name');
+              if (currentSearch) {
+                setSearchParams({ name: currentSearch, page: String(item) });
+              } else {
+                setSearchParams({ page: String(item) });
+              }
+            }}
+          >
+            {item}
+          </button>
+        );
+      })}
+      {next && (
+        <button
+          type="button"
+          className={paginationArrowClassName}
+          onClick={() => {
+            setPage(currentPage + 1);
+            const currentSearch = searchParams.get('name');
+            if (currentSearch) {
+              setSearchParams({
+                name: currentSearch,
+                page: String(currentPage + 1),
+              });
+            } else {
+              setSearchParams({ page: String(currentPage + 1) });
+            }
+          }}
+        >
+          next
+        </button>
       )}
-      {many && (
-        <>
-          <button className={paginationButtonClassName}>1</button>
-          <button className={paginationButtonClassName}>2</button>
-          <button className={paginationButtonClassName}>3</button>
-          <span>...</span>
-          <button className={paginationButtonClassName}>{pages}</button>
-        </>
-      )}
-      {next && <button className={paginationArrowClassName}>next</button>}
     </div>
   );
 }
