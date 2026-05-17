@@ -1,20 +1,15 @@
 import { useSearchParams } from 'react-router';
-import InfoSpan from '../InfoSpan/InfoSpan';
 interface CardProps {
   name: string;
-  gender: string;
-  species: string;
-  status: string;
   image: string;
   id: number;
+  setChosenCharacter: React.Dispatch<React.SetStateAction<number | null>>;
 }
 export default function Card({
   name,
-  gender,
-  species,
-  status,
   image,
   id,
+  setChosenCharacter,
 }: CardProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   return (
@@ -34,17 +29,13 @@ export default function Card({
             details: String(id),
           });
         }
+        setChosenCharacter(id);
       }}
-      className="max-w-sm h-[500px] rounded overflow-hidden shadow-lg border-2 border-purple-200"
+      className="max-w-sm h-[450px] rounded overflow-hidden shadow-lg border-2 border-purple-200"
     >
       <img className="w-full" src={image} alt={name} />
       <div className="px-6 py-4 text-center">
         <div className="font-bold w-[300px] text-xl mb-2">{name}</div>
-      </div>
-      <div className="px-6 pt-4 pb-2 flex justify-center items-center">
-        <InfoSpan text={gender} />
-        <InfoSpan text={species} />
-        <InfoSpan text={status} />
       </div>
     </div>
   );
