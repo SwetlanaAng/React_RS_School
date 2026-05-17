@@ -20,11 +20,22 @@ export default function Home() {
     setCurrentPaginationPage,
   } = useAppData();
   const [error, setError] = useState<boolean>(false);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page');
   useEffect(() => {
-    if (currentPage) setCurrentPaginationPage(Number(currentPage));
-  }, [currentPage, setCurrentPaginationPage]);
+    if (currentPage) {
+      setCurrentPaginationPage(Number(currentPage));
+      return;
+    }
+    const currentSearch = searchParams.get('name');
+    if (currentSearch) {
+      setSearchParams({ name: currentSearch, page: '1' }, { replace: true });
+    } else {
+      setSearchParams({ page: '1' }, { replace: true });
+    }
+
+    setCurrentPaginationPage(1);
+  }, [currentPage, searchParams, setSearchParams, setCurrentPaginationPage]);
   return (
     <>
       <ErrorBoundary errorSwitcher={setError}>

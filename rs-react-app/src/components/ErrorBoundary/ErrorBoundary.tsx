@@ -8,7 +8,7 @@ interface State {
 export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
   fallback?: React.ReactNode;
-  errorSwitcher: React.Dispatch<React.SetStateAction<boolean>>;
+  errorSwitcher: (error: boolean) => void;
 }> {
   state: State = { hasError: false };
 

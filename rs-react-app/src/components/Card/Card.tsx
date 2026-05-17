@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router';
 import InfoSpan from '../InfoSpan/InfoSpan';
 interface CardProps {
   name: string;
@@ -5,6 +6,7 @@ interface CardProps {
   species: string;
   status: string;
   image: string;
+  id: number;
 }
 export default function Card({
   name,
@@ -12,9 +14,29 @@ export default function Card({
   species,
   status,
   image,
+  id,
 }: CardProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
-    <div className="max-w-sm h-[500px] rounded overflow-hidden shadow-lg border-2 border-purple-200">
+    <div
+      onClick={() => {
+        const currentSearch = searchParams.get('name');
+        const currentPage = searchParams.get('page');
+        if (currentSearch && currentPage) {
+          setSearchParams({
+            name: currentSearch,
+            page: currentPage,
+            details: String(id),
+          });
+        } else if (currentPage) {
+          setSearchParams({
+            page: currentPage,
+            details: String(id),
+          });
+        }
+      }}
+      className="max-w-sm h-[500px] rounded overflow-hidden shadow-lg border-2 border-purple-200"
+    >
       <img className="w-full" src={image} alt={name} />
       <div className="px-6 py-4 text-center">
         <div className="font-bold w-[300px] text-xl mb-2">{name}</div>

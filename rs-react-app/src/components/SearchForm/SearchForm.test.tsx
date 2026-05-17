@@ -3,7 +3,7 @@ import SearchForm, { type SearchFormProps } from './SearchForm';
 import { expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { mockCharacters } from '../../test/mockCharacters';
-import { ApiService } from '../../services/apiService/apiService';
+import { getCharacters } from '../../services/apiService/apiService';
 describe('SearchForm', () => {
   function renderSearchForm(props: SearchFormProps) {
     return render(<SearchForm {...props} />);
@@ -45,7 +45,6 @@ describe('SearchForm', () => {
   });
   it('sends request to API when form is submitted', async () => {
     const user = userEvent.setup();
-    const service = new ApiService();
     renderSearchForm({ onSubmit: vi.fn(), error: false, search: 'Rick' });
 
     const button = screen.getByRole('button', { name: 'Search' });
@@ -61,7 +60,7 @@ describe('SearchForm', () => {
           results: filteredCharacters,
         }),
     } as Response);
-    const result = await service.getCharacters('Rick');
+    const result = await getCharacters('Rick');
     expect(mockFetch).toHaveBeenCalledWith(
       'https://rickandmortyapi.com/api/character/?name=Rick'
     );

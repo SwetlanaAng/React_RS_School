@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Component } from 'react';
 class TestWrapper extends Component<object, { error: boolean }> {
   state = { error: true };
-  setError = ({ error }: { error: boolean }) => {
+  setError = (error: boolean) => {
     this.setState({ error });
   };
   render() {
@@ -28,8 +28,11 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Something went wrong')).toBeVisible();
   });
   it('does not render ErrorBoundary when no error occurs', () => {
+    const setError = (error: boolean) => {
+      console.log(error);
+    };
     render(
-      <ErrorBoundary errorSwitcher={() => {}}>
+      <ErrorBoundary errorSwitcher={setError}>
         <h1>Nothing happens</h1>
       </ErrorBoundary>
     );
