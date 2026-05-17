@@ -1,21 +1,19 @@
-import { useState } from 'react';
 import type { Character } from '../../shared/types';
 import Card from '../Card/Card';
-import DetailedCard from '../DetailedCard/DetailedCard';
+import { useSearchParams } from 'react-router';
 interface CardsBoxProps {
   characters: Character[];
 }
 export default function CardsBox({ characters }: CardsBoxProps) {
-  const [chosenCharacter, setChosenCharacter] = useState<number | null>(null);
-  const selectedCharacter = characters.find(
-    (item) => item.id === chosenCharacter
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div className="flex   items-start">
       {' '}
       <div
         onClick={() => {
-          setChosenCharacter(null);
+          searchParams.delete('details');
+          setSearchParams(searchParams);
         }}
         className="mx-3 my-4   rounded-2xl border-2 border-teal-200 bg-white 
       p-6 shadow-lg shadow-teal-100"
@@ -23,24 +21,11 @@ export default function CardsBox({ characters }: CardsBoxProps) {
         <div className="flex flex-wrap gap-3 justify-center items-center">
           {characters.map((character) => (
             <div key={character.id}>
-              <Card {...character} setChosenCharacter={setChosenCharacter} />
+              <Card {...character} />
             </div>
           ))}
         </div>
       </div>
-      {selectedCharacter && (
-        <div
-          className="mx-3 my-4 rounded-2xl border-2 border-teal-200 bg-white 
-    p-6 shadow-lg shadow-teal-100"
-        >
-          <DetailedCard
-            {...selectedCharacter}
-            onClose={() => {
-              setChosenCharacter(null);
-            }}
-          />
-        </div>
-      )}
     </div>
   );
 }

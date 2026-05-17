@@ -3,14 +3,8 @@ interface CardProps {
   name: string;
   image: string;
   id: number;
-  setChosenCharacter: React.Dispatch<React.SetStateAction<number | null>>;
 }
-export default function Card({
-  name,
-  image,
-  id,
-  setChosenCharacter,
-}: CardProps) {
+export default function Card({ name, image, id }: CardProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div
@@ -24,13 +18,12 @@ export default function Card({
             page: currentPage,
             details: String(id),
           });
-        } else if (currentPage) {
+        } else {
           setSearchParams({
-            page: currentPage,
+            page: currentPage ?? '1',
             details: String(id),
           });
         }
-        setChosenCharacter(id);
       }}
       className="max-w-sm h-[450px] rounded overflow-hidden shadow-lg border-2 border-purple-200"
     >

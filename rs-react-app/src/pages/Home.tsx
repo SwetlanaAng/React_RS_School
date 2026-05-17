@@ -6,7 +6,7 @@ import { MainContent } from '../components/MainContent/MainContent';
 import ErrorUI from '../components/ErrorUI/ErrorUI';
 import { useAppData } from '../hooks/useAppData';
 import Pagination from '../components/Pagination/Pagination';
-import { useSearchParams } from 'react-router';
+import { Outlet, useSearchParams } from 'react-router';
 
 export default function Home() {
   const {
@@ -49,10 +49,10 @@ export default function Home() {
           {searchFailed ? (
             <ErrorUI errorMessage="There is no matching characters or an error has occurred(4xx or 5xx)"></ErrorUI>
           ) : (
-            <MainContent
-              loading={loading}
-              characters={characters}
-            ></MainContent>
+            <div className="flex items-start">
+              <MainContent loading={loading} characters={characters} />
+              <Outlet context={{ characters }} />
+            </div>
           )}
           {!loading && !searchFailed && (
             <Pagination
