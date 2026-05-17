@@ -14,6 +14,9 @@ export default function CardsBox({ characters }: CardsBoxProps) {
     <div className="flex   items-start">
       {' '}
       <div
+        onClick={() => {
+          setChosenCharacter(null);
+        }}
         className="mx-3 my-4   rounded-2xl border-2 border-teal-200 bg-white 
       p-6 shadow-lg shadow-teal-100"
       >
@@ -30,7 +33,12 @@ export default function CardsBox({ characters }: CardsBoxProps) {
           className="mx-3 my-4 rounded-2xl border-2 border-teal-200 bg-white 
     p-6 shadow-lg shadow-teal-100"
         >
-          <DetailedCard {...selectedCharacter} />
+          <DetailedCard
+            {...selectedCharacter}
+            onClose={() => {
+              setChosenCharacter(null);
+            }}
+          />
         </div>
       )}
     </div>

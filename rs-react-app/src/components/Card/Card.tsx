@@ -14,7 +14,8 @@ export default function Card({
   const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div
-      onClick={() => {
+      onClick={(event) => {
+        event.stopPropagation();
         const currentSearch = searchParams.get('name');
         const currentPage = searchParams.get('page');
         if (currentSearch && currentPage) {
