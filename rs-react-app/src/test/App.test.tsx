@@ -3,11 +3,11 @@ import { expect } from 'vitest';
 import App from '../App';
 import { mockCharacters } from './mockCharacters';
 import userEvent from '@testing-library/user-event';
-import { storageService } from '../services/storageService/storageService';
 
 describe('App', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    localStorage.clear();
   });
   it('renders App', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
@@ -62,9 +62,9 @@ describe('App', () => {
     await user.type(input, 'Rick');
     const button = screen.getByRole('button', { name: /search/i });
     await user.click(button);
-    expect(storageService.getSearch()).toBe('Rick');
+    expect(localStorage.getItem('search')).toBe('Rick');
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Rick'
+      'https://rickandmortyapi.com/api/character?name=Rick&page=1'
     );
   });
   it('shows error UI when error button clicked', async () => {
