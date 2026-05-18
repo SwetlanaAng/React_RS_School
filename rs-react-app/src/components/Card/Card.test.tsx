@@ -7,9 +7,7 @@ describe('Card', () => {
     render(
       <Card
         name="Rick Sanchez"
-        gender="Male"
-        species="Human"
-        status="Alive"
+        id={2}
         image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
       />
     );
