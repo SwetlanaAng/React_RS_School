@@ -46,14 +46,6 @@ export default function Home() {
           search={search}
         />
         <main>
-          {searchFailed ? (
-            <ErrorUI errorMessage="There is no matching characters or an error has occurred(4xx or 5xx)"></ErrorUI>
-          ) : (
-            <div className="flex items-start">
-              <MainContent loading={loading} characters={characters} />
-              <Outlet context={{ characters }} />
-            </div>
-          )}
           {!loading && !searchFailed && (
             <Pagination
               currentPage={currentPaginationPage}
@@ -63,6 +55,14 @@ export default function Home() {
               next={paginationData.next}
               prev={paginationData.prev}
             />
+          )}
+          {searchFailed ? (
+            <ErrorUI errorMessage="There is no matching characters or an error has occurred(4xx or 5xx)"></ErrorUI>
+          ) : (
+            <div className="flex items-start">
+              <MainContent loading={loading} characters={characters} />
+              <Outlet context={{ characters }} />
+            </div>
           )}
         </main>
 
