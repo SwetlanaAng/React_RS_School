@@ -3,18 +3,34 @@ import { expect } from 'vitest';
 import App from '../App';
 import { mockCharacters } from './mockCharacters';
 import userEvent from '@testing-library/user-event';
-import { storageService } from '../services/storageService/storageService';
+import { MemoryRouter } from 'react-router';
+
+const mockInfo = {
+  count: mockCharacters.length,
+  pages: 1,
+  next: null,
+  prev: null,
+};
 
 describe('App', () => {
+  function renderApp() {
+    return render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+  }
+
   afterEach(() => {
     vi.restoreAllMocks();
+    localStorage.clear();
   });
   it('renders App', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ results: mockCharacters }),
+      json: () => Promise.resolve({ info: mockInfo, results: mockCharacters }),
     } as Response);
-    render(<App />);
+    renderApp();
     const input = screen.getByPlaceholderText('Search...');
     expect(input).toBeInTheDocument();
     const button = screen.getByRole('button', { name: /search/i });
@@ -25,9 +41,9 @@ describe('App', () => {
   it('renders App with cards from API', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ results: mockCharacters }),
+      json: () => Promise.resolve({ info: mockInfo, results: mockCharacters }),
     } as Response);
-    render(<App />);
+    renderApp();
     const cardImg = await screen.findByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
     const cardTitle = screen.getByText('Rick Sanchez');
@@ -39,14 +55,14 @@ describe('App', () => {
   });
   it('shows spinner while characters are loading', () => {
     vi.spyOn(globalThis, 'fetch').mockReturnValue(new Promise(vi.fn()));
-    render(<App />);
+    renderApp();
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
   it('shows error UI when API request fails', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: false,
     } as Response);
-    render(<App />);
+    renderApp();
     expect(
       await screen.findByText(/there is no matching characters/i)
     ).toBeInTheDocument();
@@ -54,25 +70,30 @@ describe('App', () => {
   it('fetches characters by submitted search value', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ results: [] }),
+      json: () => Promise.resolve({ info: mockInfo, results: [] }),
     } as Response);
-    render(<App />);
+    renderApp();
     const user = userEvent.setup();
     const input = screen.getByPlaceholderText('Search...');
     await user.type(input, 'Rick');
     const button = screen.getByRole('button', { name: /search/i });
     await user.click(button);
-    expect(storageService.getSearch()).toBe('Rick');
-    expect(fetchMock).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Rick'
+    expect(localStorage.getItem('search')).toBe('Rick');
+    const requestUrl = fetchMock.mock.calls.at(-1)?.[0];
+    expect(requestUrl).toBeInstanceOf(URL);
+    if (!(requestUrl instanceof URL)) {
+      throw new Error('Expected fetch to be called with URL');
+    }
+    expect(requestUrl.toString()).toBe(
+      'https://rickandmortyapi.com/api/character?name=Rick&page=1'
     );
   });
   it('shows error UI when error button clicked', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve({ results: [] }),
+      json: () => Promise.resolve({ info: mockInfo, results: [] }),
     } as Response);
-    render(<App />);
+    renderApp();
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: /error button/i });
     await user.click(button);

@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import Input from './Input';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 
 describe('Input', () => {
   it('renders Input', () => {
     render(
       <Input
-        onChange={() => {}}
+        onChange={vi.fn()}
         type="text"
         placeholder="Search"
         name="search"

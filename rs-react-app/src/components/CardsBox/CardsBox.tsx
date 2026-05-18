@@ -1,19 +1,24 @@
-import { Component } from 'react';
 import type { Character } from '../../shared/types';
 import Card from '../Card/Card';
+import { useSearchParams } from 'react-router';
 interface CardsBoxProps {
   characters: Character[];
 }
-class CardsBox extends Component<CardsBoxProps> {
-  render() {
-    const { characters } = this.props;
+export default function CardsBox({ characters }: CardsBoxProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    return (
+  return (
+    <div className="flex   items-start">
+      {' '}
       <div
-        className="mx-3 my-4   rounded-2xl border-2 border-teal-200 bg-white 
-      p-6 shadow-lg shadow-teal-100"
+        onClick={() => {
+          searchParams.delete('details');
+          setSearchParams(searchParams);
+        }}
+        className="mx-1 my-4 rounded-2xl border-2 border-teal-200 bg-white 
+      p-2 shadow-lg shadow-teal-100 sm:mx-3 sm:p-6"
       >
-        <div className="flex flex-wrap gap-3 justify-center items-center">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {characters.map((character) => (
             <div key={character.id}>
               <Card {...character} />
@@ -21,8 +26,6 @@ class CardsBox extends Component<CardsBoxProps> {
           ))}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default CardsBox;

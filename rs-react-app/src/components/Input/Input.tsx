@@ -1,4 +1,3 @@
-import { Component } from 'react';
 interface InputProps {
   className?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,14 +7,10 @@ interface InputProps {
   name: string;
   id: string;
 }
-class Input extends Component<InputProps> {
-  render() {
-    return (
-      <>
-        <input {...this.props} />
-      </>
-    );
-  }
+export default function Input(props: InputProps) {
+  return (
+    <>
+      <input {...props} />
+    </>
+  );
 }
-
-export default Input;

@@ -1,29 +1,38 @@
-import { Component } from 'react';
-import InfoSpan from '../InfoSpan/InfoSpan';
+import { useSearchParams } from 'react-router';
 interface CardProps {
   name: string;
-  gender: string;
-  species: string;
-  status: string;
   image: string;
+  id: number;
 }
-class Card extends Component<CardProps> {
-  render() {
-    const { name, gender, species, status, image } = this.props;
-    return (
-      <div className="max-w-sm h-[500px] rounded overflow-hidden shadow-lg border-2 border-purple-200">
-        <img className="w-full" src={image} alt={name} />
-        <div className="px-6 py-4 text-center">
-          <div className="font-bold w-[300px] text-xl mb-2">{name}</div>
-        </div>
-        <div className="px-6 pt-4 pb-2 flex justify-center items-center">
-          <InfoSpan text={gender} />
-          <InfoSpan text={species} />
-          <InfoSpan text={status} />
+export default function Card({ name, image, id }: CardProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  return (
+    <div
+      onClick={(event) => {
+        event.stopPropagation();
+        const currentSearch = searchParams.get('name');
+        const currentPage = searchParams.get('page');
+        if (currentSearch && currentPage) {
+          setSearchParams({
+            name: currentSearch,
+            page: currentPage,
+            details: String(id),
+          });
+        } else {
+          setSearchParams({
+            page: currentPage ?? '1',
+            details: String(id),
+          });
+        }
+      }}
+      className="h-60 w-32 overflow-hidden rounded border-2 border-purple-200 shadow-lg sm:h-[450px] sm:w-auto sm:max-w-sm"
+    >
+      <img className="w-full" src={image} alt={name} />
+      <div className="px-6 py-4 text-center">
+        <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
+          {name}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default Card;

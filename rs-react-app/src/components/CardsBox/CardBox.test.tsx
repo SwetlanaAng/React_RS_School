@@ -2,10 +2,15 @@ import { render, screen } from '@testing-library/react';
 import CardsBox from './CardsBox';
 import { expect } from 'vitest';
 import { mockCharacters } from '../../test/mockCharacters';
+import { MemoryRouter } from 'react-router';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {
-    render(<CardsBox characters={mockCharacters} />);
+    render(
+      <MemoryRouter>
+        <CardsBox characters={mockCharacters} />
+      </MemoryRouter>
+    );
     const cardImg = screen.getByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
     const cardTitle = screen.getByText('Rick Sanchez');

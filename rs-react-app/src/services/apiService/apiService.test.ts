@@ -1,7 +1,6 @@
-import { ApiService } from './apiService';
+import { getCharacters, getOneCharacter } from './apiService';
 import { mockCharacters } from '../../test/mockCharacters';
 describe('apiService', () => {
-  const service = new ApiService();
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -14,11 +13,16 @@ describe('apiService', () => {
           results: mockCharacters,
         }),
     } as Response);
-    const result = await service.getCharacters('');
-    expect(mockFetch).toHaveBeenCalledWith(
+    const result = await getCharacters('');
+    const requestUrl = mockFetch.mock.calls[0]?.[0];
+    expect(requestUrl).toBeInstanceOf(URL);
+    if (!(requestUrl instanceof URL)) {
+      throw new Error('Expected fetch to be called with URL');
+    }
+    expect(requestUrl.toString()).toBe(
       'https://rickandmortyapi.com/api/character'
     );
-    expect(result).toEqual(mockCharacters);
+    expect(result.results).toEqual(mockCharacters);
   });
   it('gets characters from API with search', async () => {
     const filteredCharacters = mockCharacters.filter((character) =>
@@ -32,16 +36,21 @@ describe('apiService', () => {
           results: filteredCharacters,
         }),
     } as Response);
-    const result = await service.getCharacters('Rick');
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Rick'
+    const result = await getCharacters('Rick');
+    const requestUrl = mockFetch.mock.calls[0]?.[0];
+    expect(requestUrl).toBeInstanceOf(URL);
+    if (!(requestUrl instanceof URL)) {
+      throw new Error('Expected fetch to be called with URL');
+    }
+    expect(requestUrl.toString()).toBe(
+      'https://rickandmortyapi.com/api/character?name=Rick'
     );
-    expect(result).toEqual(filteredCharacters);
+    expect(result.results).toEqual(filteredCharacters);
   });
   it('throws error if API returns 404', async () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Network error'));
 
-    await expect(service.getCharacters('')).rejects.toThrow(
+    await expect(getCharacters('')).rejects.toThrow(
       'Failed to fetch characters'
     );
   });
@@ -49,8 +58,49 @@ describe('apiService', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: false,
     } as Response);
-    await expect(service.getCharacters('')).rejects.toThrow(
+    await expect(getCharacters('')).rejects.toThrow(
       'Failed to fetch characters'
+    );
+  });
+
+  it('gets one character from API by id', async () => {
+    const character = mockCharacters[0];
+    const mockFetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(character),
+    } as Response);
+
+    const result = await getOneCharacter(character.id);
+    const requestUrl = mockFetch.mock.calls[0]?.[0];
+
+    expect(requestUrl).toBeInstanceOf(URL);
+    if (!(requestUrl instanceof URL)) {
+      throw new Error('Expected fetch to be called with URL');
+    }
+    expect(requestUrl.toString()).toBe(
+      'https://rickandmortyapi.com/api/character/1'
+    );
+    expect(result).toEqual(character);
+  });
+
+  it('throws error if one character request fails', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: false,
+    } as Response);
+
+    await expect(getOneCharacter(1)).rejects.toThrow(
+      'Failed to fetch this character'
+    );
+  });
+
+  it('throws error if one character response is invalid', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ name: 'Invalid character' }),
+    } as Response);
+
+    await expect(getOneCharacter(1)).rejects.toThrow(
+      'Failed to fetch this character'
     );
   });
 });
