@@ -21,8 +21,13 @@ export function useAppData() {
 
   function onFormSubmit(string: string) {
     setSearch(string);
+    setCurrentPaginationPage(1);
     saveSearch(string);
-    if (string) setSearchParams({ name: string, page: '1' });
+    if (string) {
+      setSearchParams({ name: string, page: '1' });
+    } else {
+      setSearchParams({ page: '1' });
+    }
   }
 
   useEffect(() => {

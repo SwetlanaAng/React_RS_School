@@ -42,12 +42,19 @@ export default function Pagination({
   const defaultButtonClassName = 'bg-white text-teal-700';
 
   return (
-    <div className="my-8 flex items-center justify-center gap-2">
+    <div
+      onClick={() => {
+        searchParams.delete('details');
+        setSearchParams(searchParams);
+      }}
+      className="py-8 flex items-center justify-center gap-2"
+    >
       {prev && (
         <button
           type="button"
           className={paginationArrowClassName}
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             setPage(currentPage - 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
@@ -74,7 +81,8 @@ export default function Pagination({
                 : defaultButtonClassName
             }`}
             key={item}
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setPage(item);
               const currentSearch = searchParams.get('name');
               if (currentSearch) {
@@ -92,7 +100,8 @@ export default function Pagination({
         <button
           type="button"
           className={paginationArrowClassName}
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             setPage(currentPage + 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
