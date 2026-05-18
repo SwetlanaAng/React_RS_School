@@ -1,15 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
 import { expect } from 'vitest';
+import { MemoryRouter } from 'react-router';
 
 describe('Card', () => {
   it('renders Card', () => {
     render(
-      <Card
-        name="Rick Sanchez"
-        id={2}
-        image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-      />
+      <MemoryRouter>
+        <Card
+          name="Rick Sanchez"
+          id={2}
+          image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+        />
+      </MemoryRouter>
     );
     const cardImg = screen.getByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
