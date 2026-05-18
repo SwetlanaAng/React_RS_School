@@ -61,9 +61,14 @@ describe('SearchForm', () => {
         }),
     } as Response);
     const result = await getCharacters('Rick');
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Rick'
+    const requestUrl = mockFetch.mock.calls[0]?.[0];
+    expect(requestUrl).toBeInstanceOf(URL);
+    if (!(requestUrl instanceof URL)) {
+      throw new Error('Expected fetch to be called with URL');
+    }
+    expect(requestUrl.toString()).toBe(
+      'https://rickandmortyapi.com/api/character?name=Rick'
     );
-    expect(result).toEqual(filteredCharacters);
+    expect(result.results).toEqual(filteredCharacters);
   });
 });
