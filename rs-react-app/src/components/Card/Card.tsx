@@ -25,11 +25,13 @@ export default function Card({ name, image, id }: CardProps) {
           });
         }
       }}
-      className="max-w-sm h-[450px] rounded overflow-hidden shadow-lg border-2 border-purple-200"
+      className="h-60 w-32 overflow-hidden rounded border-2 border-purple-200 shadow-lg sm:h-[450px] sm:w-auto sm:max-w-sm"
     >
       <img className="w-full" src={image} alt={name} />
       <div className="px-6 py-4 text-center">
-        <div className="font-bold w-[300px] text-xl mb-2">{name}</div>
+        <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
+          {name}
+        </div>
       </div>
     </div>
   );

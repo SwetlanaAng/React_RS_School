@@ -21,7 +21,7 @@ export default function DetailedCard({
   location,
 }: DetailedCardProps) {
   return (
-    <div className="relative max-w-sm overflow-hidden rounded border-2 border-purple-200 shadow-lg">
+    <div className="relative w-full overflow-hidden rounded border-2 border-purple-200 shadow-lg sm:max-w-sm">
       <button
         type="button"
         aria-label="Close details"
@@ -31,13 +31,17 @@ export default function DetailedCard({
         ×
       </button>
       <img className="w-full" src={image} alt={name} />
-      <div className="px-6 py-4 text-center">
-        <div className="font-bold w-[300px] text-xl mb-2">{name}</div>
+      <div className="px-2 py-3 text-center sm:px-6 sm:py-4">
+        <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
+          {name}
+        </div>
       </div>
-      <div className="px-3 py-2 text-center">
-        <div className="w-[300px] text-m mb-2">{location.name}</div>
+      <div className="px-2 py-2 text-center sm:px-3">
+        <div className="mb-2 text-xs sm:w-[300px] sm:text-base">
+          {location.name}
+        </div>
       </div>
-      <div className="px-6 pt-4 pb-2 flex justify-center items-center">
+      <div className="flex flex-wrap items-center justify-center px-2 pt-3 pb-2 sm:px-6 sm:pt-4">
         <InfoSpan text={gender} />
         <InfoSpan text={species} />
         <InfoSpan text={status} />

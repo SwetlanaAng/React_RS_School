@@ -4,7 +4,7 @@ import CardsBox from '../CardsBox/CardsBox';
 type MainContentProps = Omit<AppState, 'searchFailed' | 'search' | 'error'>;
 export function MainContent({ loading, characters }: MainContentProps) {
   return (
-    <section className="flex-1">
+    <section className="min-w-0 flex-1">
       {loading ? (
         <div className="flex justify-center">
           <Spinner />
