@@ -4,12 +4,12 @@ import notFoundImage from '../assets/404.png';
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4">
+    <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4 transition-colors duration-300 dark:bg-slate-950">
       <section
         role="status"
-        className="flex w-full max-w-4xl flex-col items-center rounded-3xl border border-teal-100 bg-white px-8 py-12 text-center shadow-xl"
+        className="flex w-full max-w-4xl flex-col items-center rounded-3xl border border-teal-100 bg-white px-8 py-12 text-center shadow-xl transition-colors duration-300 dark:border-teal-800 dark:bg-slate-900 dark:shadow-teal-950"
       >
-        <h1 className="text-2xl font-bold text-teal-700">
+        <h1 className="text-2xl font-bold text-teal-700 dark:text-teal-100">
           Oops! The page was not found
         </h1>
         <img

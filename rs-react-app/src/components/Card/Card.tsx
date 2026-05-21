@@ -25,7 +25,7 @@ export default function Card({ name, image, id }: CardProps) {
           });
         }
       }}
-      className="h-60 w-32 overflow-hidden rounded border-2 border-purple-200 shadow-lg sm:h-[450px] sm:w-auto sm:max-w-sm"
+      className="h-60 w-32 overflow-hidden rounded border-2 border-purple-200 bg-white text-teal-900 shadow-lg transition-colors duration-300  dark:border-purple-800 dark:bg-slate-900 dark:text-teal-50 dark:shadow-purple-950 sm:h-[450px] sm:w-auto sm:max-w-sm"
     >
       <img className="w-full" src={image} alt={name} />
       <div className="px-6 py-4 text-center">

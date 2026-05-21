@@ -10,9 +10,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: oklch(97.7% 0.014 308.299);
+  transition:
+    background-color 300ms,
+    color 300ms;
 }
 .dark body {
-  background-color: #111827;
+  background-color: #020617;
 }
 #root {
   width: 100%;
