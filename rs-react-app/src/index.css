@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: 'Comic Sans MS', cursive, sans-serif;
 }
@@ -8,7 +11,9 @@ body {
   min-height: 100vh;
   background-color: oklch(97.7% 0.014 308.299);
 }
-
+.dark body {
+  background-color: #111827;
+}
 #root {
   width: 100%;
 }
