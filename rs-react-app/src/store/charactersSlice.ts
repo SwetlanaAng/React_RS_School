@@ -20,6 +20,7 @@ const charactersSlice = createSlice({
     },
     addCharacter: (state, action: PayloadAction<Character>) => {
       state.selected.push(action.payload);
+      console.log(state.selected);
     },
   },
 });

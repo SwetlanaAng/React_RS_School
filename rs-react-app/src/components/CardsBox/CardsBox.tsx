@@ -21,7 +21,7 @@ export default function CardsBox({ characters }: CardsBoxProps) {
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {characters.map((character) => (
             <div key={character.id}>
-              <Card {...character} />
+              <Card character={character} />
             </div>
           ))}
         </div>

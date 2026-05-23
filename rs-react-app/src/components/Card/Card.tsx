@@ -1,11 +1,18 @@
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router';
+import { addCharacter } from '../../store/charactersSlice';
+import type { Character } from '../../shared/types';
+import type { AppDispatch } from '../../store/store';
 interface CardProps {
-  name: string;
-  image: string;
-  id: number;
+  character: Character;
 }
-export default function Card({ name, image, id }: CardProps) {
+export default function Card({ character }: CardProps) {
+  const { id, image, name } = character;
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const handleSelect = () => {
+    dispatch(addCharacter(character));
+  };
   return (
     <div
       onClick={(event) => {
@@ -32,6 +39,15 @@ export default function Card({ name, image, id }: CardProps) {
         <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
           {name}
         </div>
+        <input
+          type="checkbox"
+          //checked={isSelected} add
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+          onChange={handleSelect}
+          aria-label={`Select ${name}`}
+        />
       </div>
     </div>
   );

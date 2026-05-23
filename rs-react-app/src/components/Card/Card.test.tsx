@@ -2,16 +2,13 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 import { expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { mockCharacters } from '../../test/mockCharacters';
 
 describe('Card', () => {
   it('renders Card', () => {
     render(
       <MemoryRouter>
-        <Card
-          name="Rick Sanchez"
-          id={2}
-          image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-        />
+        <Card character={mockCharacters[0]} />
       </MemoryRouter>
     );
     const cardImg = screen.getByAltText('Rick Sanchez');
