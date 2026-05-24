@@ -49,8 +49,8 @@ export default function Card({ character }: CardProps) {
           checked={isSelected}
           onClick={(event) => {
             event.stopPropagation();
-            handleSelect();
           }}
+          onChange={handleSelect}
           aria-label={`Select ${name}`}
         />
       </div>
