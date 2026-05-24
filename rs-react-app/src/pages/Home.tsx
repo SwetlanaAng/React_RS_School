@@ -66,9 +66,7 @@ export default function Home() {
             Error Button
           </Button>
         </div>
-        {charactersSelected > 0 && (
-          <Flyout charactersSelected={charactersSelected}></Flyout>
-        )}
+        {charactersSelected > 0 && <Flyout></Flyout>}
       </ErrorBoundary>
     </>
   );

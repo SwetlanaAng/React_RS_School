@@ -1,14 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "../../../../../react play"
-		},
-		{
-			"path": "../../../.."
-		},
-		{
-			"path": "../../../../../folder for cross-check"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../../../../../react play",
+    },
+    {
+      "path": "../../../..",
+    },
+    {
+      "path": "../../../../../folder for cross-check",
+    },
+  ],
+  "settings": {},
 }
