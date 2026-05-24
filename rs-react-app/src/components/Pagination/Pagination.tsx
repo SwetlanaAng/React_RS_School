@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router';
 import type { Info } from '../../shared/types';
 interface PaginationProps extends Info {
   currentPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Pagination({
@@ -10,7 +9,6 @@ export default function Pagination({
   next,
   pages,
   currentPage,
-  setPage,
 }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const buttons: number[] = [];
@@ -57,7 +55,6 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            setPage(currentPage - 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
               setSearchParams({
@@ -85,7 +82,6 @@ export default function Pagination({
             key={item}
             onClick={(event) => {
               event.stopPropagation();
-              setPage(item);
               const currentSearch = searchParams.get('name');
               if (currentSearch) {
                 setSearchParams({ name: currentSearch, page: String(item) });
@@ -104,7 +100,6 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            setPage(currentPage + 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
               setSearchParams({
