@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Character } from '../shared/types';
+import { current } from '@reduxjs/toolkit';
 
 interface CharactersState {
   selected: Character[];
@@ -18,11 +19,18 @@ const charactersSlice = createSlice({
     clearAllSelected: (state) => {
       state.selected = [];
     },
-    addCharacter: (state, action: PayloadAction<Character>) => {
-      state.selected.push(action.payload);
-      console.log(state.selected);
+    toggleCharacter: (state, action: PayloadAction<Character>) => {
+      const selectedIndex = state.selected.findIndex((item) => {
+        return item.id === action.payload.id;
+      });
+      if (selectedIndex === -1) {
+        state.selected.push(action.payload);
+      } else {
+        state.selected.splice(selectedIndex, 1);
+      }
+      console.log(current(state.selected));
     },
   },
 });
-export const { addCharacter, clearAllSelected } = charactersSlice.actions;
+export const { toggleCharacter, clearAllSelected } = charactersSlice.actions;
 export default charactersSlice.reducer;
