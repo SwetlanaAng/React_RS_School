@@ -18,7 +18,7 @@ export default function Header() {
         >
           About
         </Link>
-        <button type="button" onClick={toggleTheme}>
+        <button type="button" onClick={toggleTheme} aria-label="Toggle theme">
           <img
             src={theme === 'light' ? dark : light}
             alt="Sun"
