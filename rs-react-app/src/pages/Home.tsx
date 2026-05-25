@@ -8,13 +8,8 @@ import { useAppData } from '../hooks/useAppData';
 import Pagination from '../components/Pagination/Pagination';
 import { Outlet } from 'react-router';
 import { Flyout } from '../components/Flyout/Flyout';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
 
 export default function Home() {
-  const charactersSelected = useSelector(
-    (state: RootState) => state.characters.selected.length
-  );
   const {
     search,
     characters,
@@ -66,7 +61,7 @@ export default function Home() {
             Error Button
           </Button>
         </div>
-        {charactersSelected > 0 && <Flyout></Flyout>}
+        <Flyout></Flyout>
       </ErrorBoundary>
     </>
   );
