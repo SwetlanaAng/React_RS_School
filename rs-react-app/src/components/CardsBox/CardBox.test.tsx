@@ -3,12 +3,16 @@ import CardsBox from './CardsBox';
 import { expect } from 'vitest';
 import { mockCharacters } from '../../test/mockCharacters';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {
     render(
       <MemoryRouter>
-        <CardsBox characters={mockCharacters} />
+        <Provider store={store}>
+          <CardsBox characters={mockCharacters} />
+        </Provider>
       </MemoryRouter>
     );
     const cardImg = screen.getByAltText('Rick Sanchez');

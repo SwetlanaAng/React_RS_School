@@ -15,14 +15,12 @@ function renderPagination({
   pages = 5,
   prev = null,
   next = 'https://rickandmortyapi.com/api/character?page=2',
-  setPage = vi.fn(),
 }: {
   currentPage?: number;
   initialEntry?: string;
   pages?: number;
   prev?: string | null;
   next?: string | null;
-  setPage?: React.Dispatch<React.SetStateAction<number>>;
 } = {}) {
   const view = render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -32,13 +30,12 @@ function renderPagination({
         next={next}
         prev={prev}
         currentPage={currentPage}
-        setPage={setPage}
       />
       <LocationDisplay />
     </MemoryRouter>
   );
 
-  return { ...view, setPage };
+  return { ...view };
 }
 
 describe('Pagination', () => {
@@ -61,18 +58,15 @@ describe('Pagination', () => {
 
   it('changes page and removes details from URL when page button is clicked', async () => {
     const user = userEvent.setup();
-    const setPage = vi.fn();
 
     renderPagination({
       currentPage: 1,
       initialEntry: '/?name=Rick&page=1&details=1',
       pages: 5,
-      setPage,
     });
 
     await user.click(screen.getByRole('button', { name: '3' }));
 
-    expect(setPage).toHaveBeenCalledWith(3);
     expect(screen.getByTestId('location')).toHaveTextContent(
       '?name=Rick&page=3'
     );
@@ -80,7 +74,6 @@ describe('Pagination', () => {
 
   it('changes page when prev and next buttons are clicked', async () => {
     const user = userEvent.setup();
-    const setPage = vi.fn();
 
     renderPagination({
       currentPage: 2,
@@ -88,15 +81,12 @@ describe('Pagination', () => {
       pages: 5,
       prev: 'https://rickandmortyapi.com/api/character?page=1',
       next: 'https://rickandmortyapi.com/api/character?page=3',
-      setPage,
     });
 
     await user.click(screen.getByRole('button', { name: /prev/i }));
-    expect(setPage).toHaveBeenCalledWith(1);
     expect(screen.getByTestId('location')).toHaveTextContent('?page=1');
 
     await user.click(screen.getByRole('button', { name: /next/i }));
-    expect(setPage).toHaveBeenCalledWith(3);
     expect(screen.getByTestId('location')).toHaveTextContent('?page=3');
   });
 

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Character } from '../shared/types';
-import { current } from '@reduxjs/toolkit';
 
 interface CharactersState {
   selected: Character[];
@@ -28,7 +27,6 @@ const charactersSlice = createSlice({
       } else {
         state.selected.splice(selectedIndex, 1);
       }
-      console.log(current(state.selected));
     },
   },
 });

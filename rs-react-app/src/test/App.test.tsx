@@ -4,6 +4,9 @@ import App from '../App';
 import { mockCharacters } from './mockCharacters';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
+import { ThemeProvider } from '../contexts/ThemeContext/ThemeContextProvider';
 
 const mockInfo = {
   count: mockCharacters.length,
@@ -16,7 +19,11 @@ describe('App', () => {
   function renderApp() {
     return render(
       <MemoryRouter>
-        <App />
+        <ThemeProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ThemeProvider>
       </MemoryRouter>
     );
   }
