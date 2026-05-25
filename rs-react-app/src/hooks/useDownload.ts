@@ -18,8 +18,6 @@ export function useDownload() {
     const headers = Object.keys(characters[0]);
 
     const csvRows = [
-      headers.join(','),
-
       ...characters.map((character) =>
         headers
           .map((header) => {
