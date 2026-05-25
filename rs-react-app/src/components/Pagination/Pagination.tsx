@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router';
 import type { Info } from '../../shared/types';
 interface PaginationProps extends Info {
   currentPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Pagination({
@@ -10,7 +9,6 @@ export default function Pagination({
   next,
   pages,
   currentPage,
-  setPage,
 }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const buttons: number[] = [];
@@ -35,11 +33,13 @@ export default function Pagination({
     buttons.push(pages);
   }
   const paginationButtonClassName =
-    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
+    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:hover:bg-purple-900 dark:hover:text-teal-100';
   const paginationArrowClassName =
-    'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800';
-  const activeButtonClassName = 'bg-fuchsia-200 text-fuchsia-700';
-  const defaultButtonClassName = 'bg-white text-teal-700';
+    'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:bg-slate-900 dark:text-teal-100 dark:hover:bg-purple-900 dark:hover:text-teal-100';
+  const activeButtonClassName =
+    'bg-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-800 dark:text-fuchsia-100';
+  const defaultButtonClassName =
+    'bg-white text-teal-700 dark:bg-slate-900 dark:text-teal-100';
 
   return (
     <div
@@ -47,7 +47,7 @@ export default function Pagination({
         searchParams.delete('details');
         setSearchParams(searchParams);
       }}
-      className="py-8 flex items-center justify-center gap-2"
+      className="py-8 flex items-center justify-center gap-2 text-teal-700 dark:text-teal-200"
     >
       {prev && (
         <button
@@ -55,7 +55,6 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            setPage(currentPage - 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
               setSearchParams({
@@ -83,7 +82,6 @@ export default function Pagination({
             key={item}
             onClick={(event) => {
               event.stopPropagation();
-              setPage(item);
               const currentSearch = searchParams.get('name');
               if (currentSearch) {
                 setSearchParams({ name: currentSearch, page: String(item) });
@@ -102,7 +100,6 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            setPage(currentPage + 1);
             const currentSearch = searchParams.get('name');
             if (currentSearch) {
               setSearchParams({

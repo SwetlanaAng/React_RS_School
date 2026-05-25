@@ -28,9 +28,7 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Something went wrong')).toBeVisible();
   });
   it('does not render ErrorBoundary when no error occurs', () => {
-    const setError = (error: boolean) => {
-      console.log(error);
-    };
+    const setError = vi.fn();
     render(
       <ErrorBoundary errorSwitcher={setError}>
         <h1>Nothing happens</h1>

@@ -46,8 +46,7 @@ export async function getOneCharacter(id: number): Promise<Character> {
       throw new Error('Invalid API response');
     }
     return character;
-  } catch (error) {
-    console.error(error);
+  } catch {
     throw new Error('Failed to fetch this character');
   }
 }

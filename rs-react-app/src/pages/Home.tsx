@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Button from '../components/Button/Button';
 import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
@@ -6,7 +6,8 @@ import { MainContent } from '../components/MainContent/MainContent';
 import ErrorUI from '../components/ErrorUI/ErrorUI';
 import { useAppData } from '../hooks/useAppData';
 import Pagination from '../components/Pagination/Pagination';
-import { Outlet, useSearchParams } from 'react-router';
+import { Outlet } from 'react-router';
+import { Flyout } from '../components/Flyout/Flyout';
 
 export default function Home() {
   const {
@@ -17,25 +18,9 @@ export default function Home() {
     onFormSubmit,
     paginationData,
     currentPaginationPage,
-    setCurrentPaginationPage,
   } = useAppData();
   const [error, setError] = useState<boolean>(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = searchParams.get('page');
-  useEffect(() => {
-    if (currentPage) {
-      setCurrentPaginationPage(Number(currentPage));
-      return;
-    }
-    const currentSearch = searchParams.get('name');
-    if (currentSearch) {
-      setSearchParams({ name: currentSearch, page: '1' }, { replace: true });
-    } else {
-      setSearchParams({ page: '1' }, { replace: true });
-    }
 
-    setCurrentPaginationPage(1);
-  }, [currentPage, searchParams, setSearchParams, setCurrentPaginationPage]);
   return (
     <>
       <ErrorBoundary errorSwitcher={setError}>
@@ -49,7 +34,6 @@ export default function Home() {
           {!loading && !searchFailed && (
             <Pagination
               currentPage={currentPaginationPage}
-              setPage={setCurrentPaginationPage}
               count={paginationData.count}
               pages={paginationData.pages}
               next={paginationData.next}
@@ -77,6 +61,7 @@ export default function Home() {
             Error Button
           </Button>
         </div>
+        <Flyout></Flyout>
       </ErrorBoundary>
     </>
   );

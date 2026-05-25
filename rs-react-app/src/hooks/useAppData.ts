@@ -5,9 +5,7 @@ import { getCharacters } from '../services/apiService/apiService';
 import { useSearchParams } from 'react-router';
 
 export function useAppData() {
-  const [, setSearchParams] = useSearchParams();
-  const { saveSearch, getSearch } = useStorage();
-  const [search, setSearch] = useState(getSearch() ?? '');
+  const { saveSearch } = useStorage();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchFailed, setSearchFailed] = useState<boolean>(false);
@@ -17,11 +15,12 @@ export function useAppData() {
     next: '',
     prev: '',
   });
-  const [currentPaginationPage, setCurrentPaginationPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const search = searchParams.get('name') ?? '';
+  const currentPaginationPage = Number(searchParams.get('page') ?? 1);
 
   function onFormSubmit(string: string) {
-    setSearch(string);
-    setCurrentPaginationPage(1);
     saveSearch(string);
     if (string) {
       setSearchParams({ name: string, page: '1' });
@@ -57,6 +56,5 @@ export function useAppData() {
     onFormSubmit,
     paginationData,
     currentPaginationPage,
-    setCurrentPaginationPage,
   };
 }
