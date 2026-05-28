@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useStorage } from './useStorage';
-import type { Character, Info, ResponseCharacter } from '../shared/types';
-import { getCharacters } from '../services/apiService/apiService';
 import { useSearchParams } from 'react-router';
+import { useGetCharactersQuery } from '../store/apiSlice';
 
 export function useAppData() {
   const { saveSearch } = useStorage();
-  const [characters, setCharacters] = useState<Character[]>([]);
+  /*  const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchFailed, setSearchFailed] = useState<boolean>(false);
   const [paginationData, setPaginationData] = useState<Info>({
@@ -14,10 +12,10 @@ export function useAppData() {
     pages: 0,
     next: '',
     prev: '',
-  });
+  }); */
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const search = searchParams.get('name') ?? '';
+  const search = searchParams.get('name') ?? ''; // тут добавить получение из локал ст
   const currentPaginationPage = Number(searchParams.get('page') ?? 1);
 
   function onFormSubmit(string: string) {
@@ -28,8 +26,12 @@ export function useAppData() {
       setSearchParams({ page: '1' });
     }
   }
+  const { data, isError, isLoading } = useGetCharactersQuery({
+    search,
+    page: currentPaginationPage,
+  });
 
-  useEffect(() => {
+  /* useEffect(() => {
     async function updateData() {
       setLoading(true);
       try {
@@ -47,14 +49,19 @@ export function useAppData() {
       }
     }
     void updateData();
-  }, [search, currentPaginationPage]);
+  }, [search, currentPaginationPage]); */
   return {
     search,
-    characters,
-    loading,
-    searchFailed,
+    characters: data?.results ?? [],
+    loading: isLoading,
+    searchFailed: isError,
     onFormSubmit,
-    paginationData,
+    paginationData: data?.info ?? {
+      count: 0,
+      pages: 0,
+      next: '',
+      prev: '',
+    },
     currentPaginationPage,
   };
 }
