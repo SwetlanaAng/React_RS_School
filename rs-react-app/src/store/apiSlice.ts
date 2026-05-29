@@ -11,6 +11,7 @@ export const BASE_URL = 'https://rickandmortyapi.com/api';
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  keepUnusedDataFor: 60,
   endpoints: (builder) => ({
     getCharacters: builder.query<ResponseCharacter, GetCharactersArgs>({
       query: ({ search, page }) => {
