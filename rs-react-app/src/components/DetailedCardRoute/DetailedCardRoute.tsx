@@ -1,14 +1,11 @@
 import { useSearchParams } from 'react-router';
 import type { Character } from '../../shared/types';
 import DetailedCard from '../DetailedCard/DetailedCard';
-//import { getOneCharacter } from '../../services/apiService/apiService';
 import Spinner from '../Spinner/Spinner';
-//import { useEffect, useState } from 'react';
 import { useGetOneCharacterQuery } from '../../store/apiSlice';
 import ErrorUI from '../ErrorUI/ErrorUI';
 
 export default function DetailedCardRoute() {
-  //const [character, setCharacter] = useState<Character | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const detailsParam = searchParams.get('details');
@@ -19,21 +16,6 @@ export default function DetailedCardRoute() {
     { skip: !detailsParam || !detailsId }
   );
   const character: Character = data;
-  /* useEffect(() => {
-    if (!detailsId) {
-      return;
-    }
-    async function loadCharacter() {
-      try {
-        const character = await getOneCharacter(detailsId);
-
-        setCharacter(character);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    void loadCharacter();
-  }, [detailsId]); */
   if (!detailsId) {
     return null;
   }
