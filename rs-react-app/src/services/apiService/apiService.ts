@@ -1,9 +1,9 @@
-import type { Character, ResponseCharacter } from '../../shared/types';
-import { isCharacter, isResponseCharacter } from '../../utils/typeGuards';
-
+/* import type { Character } from '../../shared/types';
+import { isCharacter } from '../../utils/typeGuards';
+ */
 export const BASE_URL = 'https://rickandmortyapi.com/api';
 
-export async function getCharacters(
+/* export async function getCharacters(
   search?: string,
   page?: number,
   id?: number
@@ -31,9 +31,9 @@ export async function getCharacters(
     console.error(error);
     throw new Error('Failed to fetch characters');
   }
-}
+} */
 
-export async function getOneCharacter(id: number): Promise<Character> {
+/* export async function getOneCharacter(id: number): Promise<Character> {
   try {
     const url = new URL(`${BASE_URL}/character/${String(id)}`);
 
@@ -49,4 +49,4 @@ export async function getOneCharacter(id: number): Promise<Character> {
   } catch {
     throw new Error('Failed to fetch this character');
   }
-}
+} */

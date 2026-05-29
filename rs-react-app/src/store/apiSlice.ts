@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { ResponseCharacter } from '../shared/types';
+import type { Character, ResponseCharacter } from '../shared/types';
 interface GetCharactersArgs {
   search?: string;
   page?: number;
+}
+interface GetOneCharacterArgs {
+  id: number;
 }
 export const BASE_URL = 'https://rickandmortyapi.com/api';
 export const charactersApi = createApi({
@@ -22,8 +25,8 @@ export const charactersApi = createApi({
         return url;
       },
     }),
-    getOneCharacter: builder.query({
-      query: (id: number) => `/character/${String(id)}`,
+    getOneCharacter: builder.query<Character, GetOneCharacterArgs>({
+      query: ({ id }) => `/character/${String(id)}`,
     }),
   }),
 });
