@@ -4,11 +4,13 @@ import light from '../assets/light.png';
 import dark from '../assets/dark.png';
 import reload from '../assets/reload.png';
 import { useTheme } from '../hooks/useTheme';
+import { useRefetchCharactersMutation } from '../store/apiSlice';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const [refetchCharacters] = useRefetchCharactersMutation();
   const handleReload = () => {
-    console.log('works');
+    void refetchCharacters(undefined);
   };
 
   return (

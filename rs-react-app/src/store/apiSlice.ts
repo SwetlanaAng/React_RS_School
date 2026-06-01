@@ -10,6 +10,7 @@ interface GetOneCharacterArgs {
 export const BASE_URL = 'https://rickandmortyapi.com/api';
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
+  tagTypes: ['Characters', 'DetailedCharacter'],
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   keepUnusedDataFor: 60,
   endpoints: (builder) => ({
@@ -25,11 +26,21 @@ export const charactersApi = createApi({
         }
         return url;
       },
+      providesTags: ['Characters'],
     }),
     getOneCharacter: builder.query<Character, GetOneCharacterArgs>({
       query: ({ id }) => `/character/${String(id)}`,
+      providesTags: ['DetailedCharacter'],
+    }),
+    refetchCharacters: builder.mutation({
+      queryFn: () => ({ data: undefined }),
+      invalidatesTags: ['Characters', 'DetailedCharacter'],
     }),
   }),
 });
 
-export const { useGetCharactersQuery, useGetOneCharacterQuery } = charactersApi;
+export const {
+  useGetCharactersQuery,
+  useGetOneCharacterQuery,
+  useRefetchCharactersMutation,
+} = charactersApi;
