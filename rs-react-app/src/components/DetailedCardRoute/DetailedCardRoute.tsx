@@ -1,5 +1,4 @@
 import { useSearchParams } from 'react-router';
-import type { Character } from '../../shared/types';
 import DetailedCard from '../DetailedCard/DetailedCard';
 import Spinner from '../Spinner/Spinner';
 import { useGetOneCharacterQuery } from '../../store/apiSlice';
@@ -15,7 +14,7 @@ export default function DetailedCardRoute() {
     { id: detailsId },
     { skip: !detailsParam || !detailsId }
   );
-  const character: Character = data;
+
   if (!detailsId) {
     return null;
   }
@@ -36,7 +35,7 @@ export default function DetailedCardRoute() {
   return (
     <div className="mx-1 my-4 w-40 shrink-0 self-start rounded-2xl border-2 border-teal-200 bg-white p-2 shadow-lg shadow-teal-100 transition-colors duration-300 dark:border-teal-800 dark:bg-slate-800 dark:shadow-teal-950 sm:mx-3 sm:w-auto sm:p-6">
       <DetailedCard
-        {...character}
+        {...data}
         onClose={() => {
           searchParams.delete('details');
           setSearchParams(searchParams);

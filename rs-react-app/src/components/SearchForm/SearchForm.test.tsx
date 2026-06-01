@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { render, renderHook, screen } from '@testing-library/react';
 import SearchForm, { type SearchFormProps } from './SearchForm';
 import { expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { mockCharacters } from '../../test/mockCharacters';
-import { getCharacters } from '../../services/apiService/apiService';
+import { charactersApi } from '../../store/apiSlice';
 describe('SearchForm', () => {
   function renderSearchForm(props: SearchFormProps) {
     return render(<SearchForm {...props} />);
@@ -60,7 +60,9 @@ describe('SearchForm', () => {
           results: filteredCharacters,
         }),
     } as Response);
-    const result = await getCharacters('Rick');
+    const { result } = renderHook(() =>
+      charactersApi.useGetCharactersQuery({ search: 'Rick', page: 1 })
+    );
     const requestUrl = mockFetch.mock.calls[0]?.[0];
     expect(requestUrl).toBeInstanceOf(URL);
     if (!(requestUrl instanceof URL)) {
@@ -69,6 +71,6 @@ describe('SearchForm', () => {
     expect(requestUrl.toString()).toBe(
       'https://rickandmortyapi.com/api/character?name=Rick'
     );
-    expect(result.results).toEqual(filteredCharacters);
+    expect(result).toEqual(filteredCharacters);
   });
 });
