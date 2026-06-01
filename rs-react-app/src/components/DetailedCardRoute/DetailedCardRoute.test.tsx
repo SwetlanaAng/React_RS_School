@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { MemoryRouter, useLocation } from 'react-router';
+import { MemoryRouter } from 'react-router';
 import type { Character } from '../../shared/types';
 import DetailedCardRoute from './DetailedCardRoute';
 import { charactersApi } from '../../store/apiSlice';
@@ -11,13 +11,9 @@ import {
   getFetchUrl,
   createMockJsonResponse,
   type TestStore,
+  mockFetchError,
 } from '../../test/utils/testUtils';
-
-function LocationDisplay() {
-  const location = useLocation();
-
-  return <span data-testid="location">{location.search}</span>;
-}
+import { LocationDisplay } from '../../test/utils/LocationDisplay';
 
 function renderDetailedCardRoute(
   initialEntry: string,
@@ -137,5 +133,14 @@ describe('DetailedCardRoute', () => {
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
     expect(screen.getByTestId('location')).toHaveTextContent('?page=1');
+  });
+  it('shows error UI when character request fails', async () => {
+    mockFetchError();
+
+    renderDetailedCardRoute('/?page=1&details=1');
+
+    expect(
+      await screen.findByText(/there is no character or an error has occurred/i)
+    ).toBeInTheDocument();
   });
 });
