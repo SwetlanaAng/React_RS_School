@@ -17,7 +17,7 @@ export function useAppData() {
       setSearchParams({ page: '1' });
     }
   }
-  const { data, isError, isLoading } = useGetCharactersQuery({
+  const { data, isError, isLoading, isFetching } = useGetCharactersQuery({
     search,
     page: currentPaginationPage,
   });
@@ -25,7 +25,7 @@ export function useAppData() {
   return {
     search,
     characters: data?.results ?? [],
-    loading: isLoading,
+    loading: isLoading || isFetching,
     searchFailed: isError,
     onFormSubmit,
     paginationData: data?.info ?? {
