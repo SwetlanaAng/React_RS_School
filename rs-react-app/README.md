@@ -12,7 +12,11 @@ React SPA created as part of the RS School React course.
 
 ## Tech Stack
 
-React, TypeScript, Vite, React Router, Tailwind CSS, Vitest.
+React, TypeScript, Vite, React Router, Tailwind CSS, Vitest, Redux Toolkit (RTK Query).
+
+## Environment
+
+Copy `.env.example` to `.env` and set `VITE_CACHE_TTL` — RTK Query cache TTL in seconds (`keepUnusedDataFor`).
 
 ## Scripts
 

@@ -7,12 +7,12 @@ interface GetCharactersArgs {
 interface GetOneCharacterArgs {
   id: number;
 }
-export const BASE_URL = 'https://rickandmortyapi.com/api';
+const BASE_URL = 'https://rickandmortyapi.com/api';
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
   tagTypes: ['Characters', 'DetailedCharacter'],
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  keepUnusedDataFor: 60,
+  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
   endpoints: (builder) => ({
     getCharacters: builder.query<ResponseCharacter, GetCharactersArgs>({
       query: ({ search, page }) => {

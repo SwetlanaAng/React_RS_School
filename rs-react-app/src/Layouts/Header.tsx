@@ -36,7 +36,7 @@ export default function Header() {
       <button
         type="button"
         onClick={handleReload}
-        aria-label="Reload page"
+        aria-label="Cache invalidation and refetch characters"
         className="absolute top-full right-4 z-30 mt-6 flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-2 border-teal-300 bg-white p-1.5 shadow-md transition-all duration-200 hover:scale-105 hover:border-purple-300 hover:bg-teal-50 hover:shadow-lg active:scale-95 dark:border-teal-400 dark:bg-slate-900 dark:hover:border-fuchsia-400 dark:hover:bg-slate-800"
       >
         <img
