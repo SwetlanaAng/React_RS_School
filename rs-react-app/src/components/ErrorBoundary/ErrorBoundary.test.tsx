@@ -7,6 +7,7 @@ class TestWrapper extends Component<object, { error: boolean }> {
   setError = (error: boolean) => {
     this.setState({ error });
   };
+
   render() {
     const ThrowError = () => {
       if (this.state.error) {
@@ -14,6 +15,7 @@ class TestWrapper extends Component<object, { error: boolean }> {
       }
       return <h1>Normal content</h1>;
     };
+
     return (
       <ErrorBoundary errorSwitcher={this.setError}>
         <ThrowError />
@@ -27,6 +29,7 @@ describe('ErrorBoundary', () => {
     render(<TestWrapper />);
     expect(screen.getByText('Something went wrong')).toBeVisible();
   });
+
   it('does not render ErrorBoundary when no error occurs', () => {
     const setError = vi.fn();
     render(
@@ -37,6 +40,7 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Nothing happens')).toBeVisible();
     expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
   });
+
   it('return button works', async () => {
     const user = userEvent.setup();
     render(<TestWrapper />);

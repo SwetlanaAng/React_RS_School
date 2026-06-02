@@ -15,6 +15,7 @@ export class ErrorBoundary extends Component<{
   static getDerivedStateFromError() {
     return { hasError: true };
   }
+
   onButtonClick() {
     this.setState({ hasError: false });
     this.props.errorSwitcher(false);

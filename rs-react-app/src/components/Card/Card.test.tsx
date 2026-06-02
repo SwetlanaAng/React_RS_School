@@ -15,6 +15,7 @@ describe('Card', () => {
         </Provider>
       </MemoryRouter>
     );
+
     const cardImg = screen.getByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
     const cardTitle = screen.getByText('Rick Sanchez');

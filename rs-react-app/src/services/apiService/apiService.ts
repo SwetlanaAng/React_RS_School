@@ -26,6 +26,7 @@ export async function getCharacters(
     if (!isResponseCharacter(characters)) {
       throw new Error('Invalid API response');
     }
+
     return characters;
   } catch (error) {
     console.error(error);
@@ -33,11 +34,14 @@ export async function getCharacters(
   }
 }
 
-export async function getOneCharacter(id: number): Promise<Character> {
+export async function getOneCharacter(
+  id: number,
+  signal?: AbortSignal
+): Promise<Character> {
   try {
     const url = new URL(`${BASE_URL}/character/${String(id)}`);
 
-    const res = await fetch(url);
+    const res = await fetch(url, { signal });
     if (!res.ok) {
       throw new Error('Search failed');
     }
@@ -46,7 +50,10 @@ export async function getOneCharacter(id: number): Promise<Character> {
       throw new Error('Invalid API response');
     }
     return character;
-  } catch {
+  } catch (error) {
+    if (signal?.aborted) {
+      throw error;
+    }
     throw new Error('Failed to fetch this character');
   }
 }

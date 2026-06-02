@@ -32,12 +32,14 @@ describe('App', () => {
     vi.restoreAllMocks();
     localStorage.clear();
   });
+
   it('renders App', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ info: mockInfo, results: mockCharacters }),
     } as Response);
     renderApp();
+
     const input = screen.getByPlaceholderText('Search...');
     expect(input).toBeInTheDocument();
     const button = screen.getByRole('button', { name: /search/i });
@@ -45,12 +47,14 @@ describe('App', () => {
     const errorButton = screen.getByRole('button', { name: 'Error Button' });
     expect(errorButton).toBeInTheDocument();
   });
+
   it('renders App with cards from API', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ info: mockInfo, results: mockCharacters }),
     } as Response);
     renderApp();
+
     const cardImg = await screen.findByAltText('Rick Sanchez');
     expect(cardImg).toBeInTheDocument();
     const cardTitle = screen.getByText('Rick Sanchez');
@@ -60,9 +64,11 @@ describe('App', () => {
     const cardTitle2 = screen.getByText('Morty Smith');
     expect(cardTitle2).toBeInTheDocument();
   });
+
   it('shows spinner while characters are loading', () => {
     vi.spyOn(globalThis, 'fetch').mockReturnValue(new Promise(vi.fn()));
     renderApp();
+
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
   it('shows error UI when API request fails', async () => {
@@ -70,6 +76,7 @@ describe('App', () => {
       ok: false,
     } as Response);
     renderApp();
+
     expect(
       await screen.findByText(/there is no matching characters/i)
     ).toBeInTheDocument();
@@ -80,6 +87,7 @@ describe('App', () => {
       json: () => Promise.resolve({ info: mockInfo, results: [] }),
     } as Response);
     renderApp();
+
     const user = userEvent.setup();
     const input = screen.getByPlaceholderText('Search...');
     await user.type(input, 'Rick');
@@ -101,6 +109,7 @@ describe('App', () => {
       json: () => Promise.resolve({ info: mockInfo, results: [] }),
     } as Response);
     renderApp();
+
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: /error button/i });
     await user.click(button);

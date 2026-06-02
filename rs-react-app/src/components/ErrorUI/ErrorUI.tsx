@@ -1,4 +1,5 @@
 import gif from './brokenRobot.gif';
+
 interface ErrorUIProps {
   errorMessage: string;
   children?: React.ReactNode;

@@ -9,31 +9,36 @@ export function useDownload() {
     return String(value);
   };
 
-  const isCharacterKey = (
-    character: Character,
-    header: string
-  ): header is keyof Character => header in character;
+  const escapeCsvValue = (value: string): string => {
+    if (/[",\n\r]/.test(value)) {
+      return `"${value.replaceAll('"', '""')}"`;
+    }
+
+    return value;
+  };
 
   const makeString = (characters: Character[]): string => {
-    const headers = Object.keys(characters[0]);
+    if (characters.length === 0) {
+      return '';
+    }
+    const headers = Object.keys(characters[0]) as (keyof Character)[];
 
     const csvRows = [
+      headers.join(','),
       ...characters.map((character) =>
         headers
-          .map((header) => {
-            if (isCharacterKey(character, header)) {
-              return stringifyCsvValue(character[header]);
-            }
-
-            return '';
-          })
+          .map((header) => escapeCsvValue(stringifyCsvValue(character[header])))
           .join(',')
       ),
     ];
 
     return csvRows.join('\n');
   };
+
   const download = (characters: Character[], selectedAmount: number) => {
+    if (selectedAmount === 0 || characters.length === 0) {
+      return;
+    }
     const blob = new Blob([makeString(characters)], {
       type: 'text/csv;charset=utf-8;',
     });
@@ -48,5 +53,6 @@ export function useDownload() {
 
     URL.revokeObjectURL(url);
   };
+
   return { download };
 }

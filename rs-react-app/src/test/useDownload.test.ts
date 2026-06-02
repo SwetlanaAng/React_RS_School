@@ -64,6 +64,8 @@ describe('useDownload', () => {
     expect(csv).toContain('Rick Sanchez');
     expect(csv).toContain('Morty Smith');
     expect(csv).toContain('https://rickandmortyapi.com/api/character/1');
-    expect(csv).toContain(JSON.stringify(mockCharacters[0].origin));
+    const originJson = JSON.stringify(mockCharacters[0].origin);
+    const escapedOrigin = `"${originJson.replaceAll('"', '""')}"`;
+    expect(csv).toContain(escapedOrigin);
   });
 });
