@@ -21,6 +21,17 @@ export default function Pagination({
 
   const [searchParams, setSearchParams] = useSearchParams();
   const buttons: number[] = [];
+  const setParams = (page: number) => {
+    const currentSearch = searchParams.get('name');
+    if (currentSearch) {
+      setSearchParams({
+        name: currentSearch,
+        page: String(page),
+      });
+    } else {
+      setSearchParams({ page: String(page) });
+    }
+  };
 
   if (pages <= 5) {
     for (let i = 1; i <= pages; i++) {
@@ -57,15 +68,7 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            const currentSearch = searchParams.get('name');
-            if (currentSearch) {
-              setSearchParams({
-                name: currentSearch,
-                page: String(currentPage - 1),
-              });
-            } else {
-              setSearchParams({ page: String(currentPage - 1) });
-            }
+            setParams(currentPage - 1);
           }}
         >
           prev
@@ -84,12 +87,7 @@ export default function Pagination({
             key={item}
             onClick={(event) => {
               event.stopPropagation();
-              const currentSearch = searchParams.get('name');
-              if (currentSearch) {
-                setSearchParams({ name: currentSearch, page: String(item) });
-              } else {
-                setSearchParams({ page: String(item) });
-              }
+              setParams(item);
             }}
           >
             {item}
@@ -102,15 +100,7 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            const currentSearch = searchParams.get('name');
-            if (currentSearch) {
-              setSearchParams({
-                name: currentSearch,
-                page: String(currentPage + 1),
-              });
-            } else {
-              setSearchParams({ page: String(currentPage + 1) });
-            }
+            setParams(currentPage + 1);
           }}
         >
           next
