@@ -19,15 +19,14 @@ export default function DetailedCardRoute() {
       return;
     }
 
-    setTimeout(() => {
+    void Promise.resolve().then(() => {
       setErrorMessage('');
       setCharacter(null);
-    }, 0);
+    });
 
     async function loadCharacter() {
       try {
         const character = await getOneCharacter(detailsId);
-
         setCharacter(character);
       } catch (error) {
         console.error(error);
