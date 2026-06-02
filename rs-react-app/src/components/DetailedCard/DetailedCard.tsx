@@ -1,4 +1,5 @@
 import InfoSpan from '../InfoSpan/InfoSpan';
+
 interface DetailedCardProps {
   name: string;
   gender: string;
@@ -11,6 +12,7 @@ interface DetailedCardProps {
     url: string;
   };
 }
+
 export default function DetailedCard({
   name,
   gender,

@@ -48,6 +48,7 @@ export function useAppData() {
     }
     void updateData();
   }, [search, currentPaginationPage]);
+
   return {
     search,
     characters,

@@ -10,8 +10,18 @@ export default function Pagination({
   pages,
   currentPage,
 }: PaginationProps) {
+  const paginationButtonClassName =
+    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:hover:bg-purple-900 dark:hover:text-teal-100';
+  const paginationArrowClassName =
+    'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:bg-slate-900 dark:text-teal-100 dark:hover:bg-purple-900 dark:hover:text-teal-100';
+  const activeButtonClassName =
+    'bg-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-800 dark:text-fuchsia-100';
+  const defaultButtonClassName =
+    'bg-white text-teal-700 dark:bg-slate-900 dark:text-teal-100';
+
   const [searchParams, setSearchParams] = useSearchParams();
   const buttons: number[] = [];
+
   if (pages <= 5) {
     for (let i = 1; i <= pages; i++) {
       buttons.push(i);
@@ -32,14 +42,6 @@ export default function Pagination({
     }
     buttons.push(pages);
   }
-  const paginationButtonClassName =
-    'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:hover:bg-purple-900 dark:hover:text-teal-100';
-  const paginationArrowClassName =
-    'flex h-10 min-w-16 items-center justify-center rounded-lg border-2 border-teal-300 bg-white px-3 font-bold text-teal-700 shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:bg-slate-900 dark:text-teal-100 dark:hover:bg-purple-900 dark:hover:text-teal-100';
-  const activeButtonClassName =
-    'bg-fuchsia-200 text-fuchsia-700 dark:bg-fuchsia-800 dark:text-fuchsia-100';
-  const defaultButtonClassName =
-    'bg-white text-teal-700 dark:bg-slate-900 dark:text-teal-100';
 
   return (
     <div

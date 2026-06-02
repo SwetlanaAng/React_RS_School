@@ -6,6 +6,7 @@ import { useTheme } from '../hooks/useTheme';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="flex items-center justify-between bg-teal-100 px-5 py-3 text-teal-800 shadow-sm transition-colors duration-300 dark:bg-slate-950 dark:text-teal-100 dark:shadow-teal-950">
       <Link to="/" className="">

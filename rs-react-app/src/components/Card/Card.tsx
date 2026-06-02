@@ -3,21 +3,27 @@ import { useSearchParams } from 'react-router';
 import { toggleCharacter } from '../../store/charactersSlice';
 import type { Character } from '../../shared/types';
 import type { AppDispatch, RootState } from '../../store/store';
+
 interface CardProps {
   character: Character;
 }
+
 export default function Card({ character }: CardProps) {
   const { id, image, name } = character;
+
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+
   const isSelected = useSelector((state: RootState) =>
     state.characters.selected.some((item) => {
       return item.id === id;
     })
   );
+
   const handleSelect = () => {
     dispatch(toggleCharacter(character));
   };
+
   return (
     <div
       onClick={(event) => {

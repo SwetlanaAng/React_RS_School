@@ -75,6 +75,7 @@ describe('Flyout', () => {
 
   it('downloads selected characters with selected amount', async () => {
     const user = userEvent.setup();
+
     renderFlyout(mockCharacters);
 
     await user.click(screen.getByRole('button', { name: /download/i }));

@@ -26,6 +26,7 @@ export async function getCharacters(
     if (!isResponseCharacter(characters)) {
       throw new Error('Invalid API response');
     }
+
     return characters;
   } catch (error) {
     console.error(error);
