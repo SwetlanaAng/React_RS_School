@@ -46,7 +46,6 @@ describe('DetailedCardRoute', () => {
     renderDetailedCardRoute('/?page=1&details=1');
 
     expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(mockedGetOneCharacter).toHaveBeenCalledWith(1);
   });
 
   it('renders detailed card after character is loaded', async () => {

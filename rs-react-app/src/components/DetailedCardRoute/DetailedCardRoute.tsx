@@ -19,16 +19,22 @@ export default function DetailedCardRoute() {
       return;
     }
 
+    const controller = new AbortController();
+    let cancelled = false;
+
     void Promise.resolve().then(() => {
+      if (cancelled || controller.signal.aborted) return;
       setErrorMessage('');
       setCharacter(null);
     });
 
     async function loadCharacter() {
       try {
-        const character = await getOneCharacter(detailsId);
+        const character = await getOneCharacter(detailsId, controller.signal);
+        if (cancelled || controller.signal.aborted) return;
         setCharacter(character);
       } catch (error) {
+        if (cancelled || controller.signal.aborted) return;
         console.error(error);
         setCharacter(null);
         setErrorMessage(
@@ -37,6 +43,11 @@ export default function DetailedCardRoute() {
       }
     }
     void loadCharacter();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
   }, [detailsId]);
 
   if (!detailsId) {
