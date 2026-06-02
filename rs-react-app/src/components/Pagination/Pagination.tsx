@@ -4,6 +4,8 @@ interface PaginationProps extends Info {
   currentPage: number;
 }
 
+type PaginationItem = number | 'ellipsis-start' | 'ellipsis-end';
+
 export default function Pagination({
   prev,
   next,
@@ -20,9 +22,10 @@ export default function Pagination({
     'bg-white text-teal-700 dark:bg-slate-900 dark:text-teal-100';
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const buttons: number[] = [];
+
   const setParams = (page: number) => {
     const currentSearch = searchParams.get('name');
+
     if (currentSearch) {
       setSearchParams({
         name: currentSearch,
@@ -33,6 +36,7 @@ export default function Pagination({
     }
   };
 
+  const buttons: PaginationItem[] = [];
   if (pages <= 5) {
     for (let i = 1; i <= pages; i++) {
       buttons.push(i);
@@ -41,16 +45,19 @@ export default function Pagination({
     buttons.push(1);
     buttons.push(2);
     if (currentPage > 3) {
-      buttons.push(0);
+      buttons.push('ellipsis-start');
     }
     const start = Math.max(3, currentPage - 1);
     const end = Math.min(pages - 1, currentPage + 1);
+
     for (let i = start; i <= end; i++) {
       buttons.push(i);
     }
+
     if (currentPage < pages - 2) {
-      buttons.push(0);
+      buttons.push('ellipsis-end');
     }
+
     buttons.push(pages);
   }
 
@@ -75,7 +82,10 @@ export default function Pagination({
         </button>
       )}
       {buttons.map((item) => {
-        if (item === 0) return <span key={item}>...</span>;
+        if (item === 'ellipsis-start' || item === 'ellipsis-end') {
+          return <span key={item}>...</span>;
+        }
+
         return (
           <button
             type="button"
