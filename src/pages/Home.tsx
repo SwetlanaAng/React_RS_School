@@ -68,8 +68,13 @@ export default function Home() {
           }}
           isOpen={isModalOpen}
         >
-          <h2>Важное уведомление</h2>
-          <p>Этот текст отображается внутри портала!</p>
+          <h2 id="modal-title">
+            {currentForm.selectedForm &&
+            currentForm.selectedForm === 'uncontrolled'
+              ? 'Uncontrolled form'
+              : 'React Hook Form'}
+          </h2>
+          <p>Please, fill out and submit the form </p>
         </Modal>
       )}
     </>

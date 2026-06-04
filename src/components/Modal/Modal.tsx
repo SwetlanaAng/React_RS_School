@@ -35,9 +35,16 @@ export default function Modal({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-teal-950/30 p-4 backdrop-blur-[2px]"
       role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
       onClick={onClose}
     >
-      <div className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border-2 border-teal-200 bg-white p-6 shadow-xl shadow-teal-200/70">
+      <div
+        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+          event.stopPropagation();
+        }}
+        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border-2 border-teal-200 bg-white p-6 shadow-xl shadow-teal-200/70"
+      >
         <button
           type="button"
           onClick={onClose}
@@ -51,7 +58,7 @@ export default function Modal({
           {children}
         </div>
 
-        <div className="rounded-xl border border-teal-100 bg-teal-50/50 p-4">
+        <div className="rounded-xl border border-teal-100 bg-teal-100 p-4">
           {form.selectedForm && form.selectedForm === 'uncontrolled' ? (
             <UncontrolledForm />
           ) : (
