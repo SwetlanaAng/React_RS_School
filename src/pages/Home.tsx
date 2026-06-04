@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../components/Button/Button';
 import Modal from '../components/Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../store/store';
+import {
+  clearSelectedForm,
+  selectRHF,
+  selectUncontrolled,
+} from '../store/currentFormSlice';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,6 +15,8 @@ export default function Home() {
   const [modalContainer, setModalContainer] = useState<HTMLDivElement | null>(
     null
   );
+  const currentForm = useSelector((state: RootState) => state.currentForm);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setModalContainer(modalRef.current);
@@ -29,6 +38,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               onClick={() => {
+                dispatch(selectUncontrolled()); // вынести
                 setIsModalOpen(true);
               }}
               type="button"
@@ -37,6 +47,7 @@ export default function Home() {
             </Button>
             <Button
               onClick={() => {
+                dispatch(selectRHF());
                 setIsModalOpen(true);
               }}
               type="button"
@@ -49,8 +60,10 @@ export default function Home() {
       <div ref={modalRef}></div>
       {modalContainer && (
         <Modal
+          form={currentForm}
           container={modalContainer}
           onClose={() => {
+            dispatch(clearSelectedForm());
             setIsModalOpen(false);
           }}
           isOpen={isModalOpen}

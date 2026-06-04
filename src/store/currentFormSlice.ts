@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface currentFormState {
+export interface currentFormState {
   selectedForm: 'uncontrolled' | 'RHF' | null;
 }
 
@@ -9,7 +9,7 @@ const initialState: currentFormState = {
 };
 
 const currentFormSlice = createSlice({
-  name: 'currentForm',
+  name: 'form',
   initialState,
 
   reducers: {
