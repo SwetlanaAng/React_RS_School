@@ -1,5 +1,6 @@
 import { Form, useForm } from 'react-hook-form';
 import Button from '../Button/Button';
+import Input from '../Input/Input';
 import {
   checkboxLabelClassName,
   fieldsetClassName,
@@ -18,7 +19,7 @@ export default function ReactHookForm() {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -30,7 +31,7 @@ export default function ReactHookForm() {
       agreement: false,
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormFields) => {
     console.log(data);
   };
 
@@ -42,46 +43,39 @@ export default function ReactHookForm() {
       }}
       className={formClassName}
     >
-      <label htmlFor="name" className={labelClassName}>
-        Name
-        <input
-          {...register('name')}
-          id="name"
-          type="text"
-          name="name"
-          placeholder="Your name"
-          className={inputClassName}
-        />
-      </label>
-      {errors.name && (
-        <div className="text-rose-600">{errors.name.message}</div>
-      )}
-      <label htmlFor="age" className={labelClassName}>
-        Age
-        <input
-          {...register('age')}
-          id="age"
-          type="number"
-          name="age"
-          placeholder="18"
-          className={inputClassName}
-        />
-      </label>
-      {errors.age && <div className="text-rose-600">{errors.age.message}</div>}
-      <label htmlFor="email" className={labelClassName}>
-        Email
-        <input
-          {...register('email')}
-          id="email"
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          className={inputClassName}
-        />
-      </label>
-      {errors.email && (
-        <div className="text-rose-600">{errors.email.message}</div>
-      )}
+      <Input
+        name="name"
+        label="Name"
+        id="name"
+        type="text"
+        placeholder="Your name"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        error={errors.name}
+      />
+      <Input
+        name="age"
+        label="Age"
+        id="age"
+        type="number"
+        placeholder="18"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        error={errors.age}
+      />
+      <Input
+        name="email"
+        label="Email"
+        id="email"
+        type="email"
+        placeholder="you@example.com"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        error={errors.email}
+      />
       <fieldset className={fieldsetClassName}>
         <legend className={legendClassName}>Gender</legend>
         <div className={radioGroupClassName}>
@@ -125,7 +119,17 @@ export default function ReactHookForm() {
         <div className="text-rose-600">{errors.agreement.message}</div>
       )}
       <div className="flex justify-center pt-1">
-        <Button type="submit">Submit</Button>
+        <Button
+          disabled={!isValid}
+          className={
+            !isValid
+              ? 'cursor-not-allowed bg-red-100 hover:bg-red-100 hover:text-teal-700'
+              : ''
+          }
+          type="submit"
+        >
+          Submit
+        </Button>
       </div>
     </Form>
   );

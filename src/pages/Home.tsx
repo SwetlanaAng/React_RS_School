@@ -37,6 +37,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button
+              disabled={false}
               onClick={() => {
                 dispatch(selectUncontrolled()); // вынести
                 setIsModalOpen(true);
@@ -46,6 +47,7 @@ export default function Home() {
               Uncontrolled Form
             </Button>
             <Button
+              disabled={false}
               onClick={() => {
                 dispatch(selectRHF());
                 setIsModalOpen(true);

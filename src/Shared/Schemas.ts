@@ -4,12 +4,11 @@ const nameSchema = z.string().regex(/^[A-Z][a-z]{0,50}$/, {
   message:
     'The first letter must be capitalized, and the remaining letters must be lowercase',
 });
-const ageSchema = z.refine(
-  (str: string) => /^-?\d+(\.\d+)?$/.test(str) && Number(str) >= 0,
-  {
+const ageSchema = z
+  .string()
+  .refine((str) => /^-?\d+(\.\d+)?$/.test(str) && Number(str) >= 0, {
     message: 'Must be a positive number',
-  }
-);
+  });
 const genderSchema = z.string().min(1, 'Choose your gender');
 const agreementSchema = z.boolean().refine(Boolean, {
   message: 'Please accept the Terms & Conditions',

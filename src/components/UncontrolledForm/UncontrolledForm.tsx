@@ -142,7 +142,9 @@ export default function UncontrolledForm() {
         </div>
       )}
       <div className="flex justify-center pt-1">
-        <Button type="submit">Submit</Button>
+        <Button disabled={false} type="submit">
+          Submit
+        </Button>
       </div>
     </form>
   );
