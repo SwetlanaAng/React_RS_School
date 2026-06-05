@@ -52,7 +52,7 @@ export default function ReactHookForm() {
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
         register={register}
-        error={errors.name}
+        errorMessage={errors.name?.message}
       />
       <Input
         name="age"
@@ -63,7 +63,7 @@ export default function ReactHookForm() {
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
         register={register}
-        error={errors.age}
+        errorMessage={errors.age?.message}
       />
       <Input
         name="email"
@@ -74,7 +74,7 @@ export default function ReactHookForm() {
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
         register={register}
-        error={errors.email}
+        errorMessage={errors.email?.message}
       />
       <fieldset className={fieldsetClassName}>
         <legend className={legendClassName}>Gender</legend>

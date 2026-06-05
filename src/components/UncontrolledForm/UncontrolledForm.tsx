@@ -1,5 +1,6 @@
 import { useState, type SubmitEvent } from 'react';
 import Button from '../Button/Button';
+import Input from '../Input/Input';
 import {
   checkboxLabelClassName,
   fieldsetClassName,
@@ -60,45 +61,36 @@ export default function UncontrolledForm() {
 
   return (
     <form onSubmit={handleSubmit} className={formClassName}>
-      <label htmlFor="uc-name" className={labelClassName}>
-        Name
-        <input
-          id="uc-name"
-          type="text"
-          name="name"
-          placeholder="Your name"
-          className={inputClassName}
-        />
-      </label>
-      {getMessage(fieldErrors, 'name') && (
-        <div className="text-rose-600">{getMessage(fieldErrors, 'name')}</div>
-      )}
-      <label htmlFor="uc-age" className={labelClassName}>
-        Age
-        <input
-          id="uc-age"
-          type="number"
-          name="age"
-          placeholder="18"
-          className={inputClassName}
-        />
-      </label>
-      {getMessage(fieldErrors, 'age') && (
-        <div className="text-rose-600">{getMessage(fieldErrors, 'age')}</div>
-      )}
-      <label htmlFor="uc-email" className={labelClassName}>
-        Email
-        <input
-          id="uc-email"
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          className={inputClassName}
-        />
-      </label>
-      {getMessage(fieldErrors, 'email') && (
-        <div className="text-rose-600">{getMessage(fieldErrors, 'email')}</div>
-      )}
+      <Input
+        name="name"
+        label="Name"
+        id="uc-name"
+        type="text"
+        placeholder="Your name"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        errorMessage={getMessage(fieldErrors, 'name')}
+      />
+      <Input
+        name="age"
+        label="Age"
+        id="uc-age"
+        type="number"
+        placeholder="18"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        errorMessage={getMessage(fieldErrors, 'age')}
+      />
+      <Input
+        name="email"
+        label="Email"
+        id="uc-email"
+        type="email"
+        placeholder="you@example.com"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        errorMessage={getMessage(fieldErrors, 'email')}
+      />
       <fieldset className={fieldsetClassName}>
         <legend className={legendClassName}>Gender</legend>
         <div className={radioGroupClassName}>
