@@ -1,17 +1,11 @@
 import { useState, type SubmitEvent } from 'react';
 import Button from '../Button/Button';
+import CheckboxField from '../CheckboxField/CheckboxField';
 import Input from '../Input/Input';
-import {
-  checkboxLabelClassName,
-  fieldsetClassName,
-  formClassName,
-  inputClassName,
-  labelClassName,
-  legendClassName,
-  radioGroupClassName,
-  radioLabelClassName,
-} from '../formStyles';
-import { formSchema } from '../../Shared/Schemas';
+import RadioGroup from '../RadioGroup/RadioGroup';
+import { formClassName, inputClassName, labelClassName } from '../formStyles';
+import { genderOptions } from '../../Shared/formOptions';
+import { formSchema, type FormFields } from '../../Shared/Schemas';
 
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -26,10 +20,41 @@ function getMessage(
 }
 
 export default function UncontrolledForm() {
+  const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const validateForm = (data: FormFields): boolean => {
+    const result = formSchema.safeParse(data);
+    if (!result.success) {
+      const nextErrors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const field = String(issue.path[0]);
+        if (!nextErrors[field]) {
+          nextErrors[field] = issue.message;
+        }
+      }
+      setFieldErrors(nextErrors);
+      return false;
+    }
+
+    setFieldErrors({});
+    return true;
+  };
+
+  const clearFieldError = (field: keyof FormFields) => {
+    if (!wasSubmitted) return;
+
+    setFieldErrors((prev) => {
+      if (!(field in prev)) return prev;
+      return Object.fromEntries(
+        Object.entries(prev).filter(([key]) => key !== field)
+      );
+    });
+  };
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
+    setWasSubmitted(true);
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
 
@@ -41,22 +66,11 @@ export default function UncontrolledForm() {
       agreement: formData.has('agreement'),
     };
 
-    const result = formSchema.safeParse(data);
-    if (!result.success) {
-      const nextErrors: Record<string, string> = {};
-      for (const issue of result.error.issues) {
-        const field = String(issue.path[0]);
-        if (!nextErrors[field]) {
-          nextErrors[field] = issue.message;
-        }
-      }
-      setFieldErrors(nextErrors);
-      return;
-    }
+    const isValid = validateForm(data);
+    if (!isValid) return;
 
-    setFieldErrors({});
     form.reset();
-    console.log(result.data);
+    console.log(data);
   };
 
   return (
@@ -69,6 +83,9 @@ export default function UncontrolledForm() {
         placeholder="Your name"
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('name');
+        }}
         errorMessage={getMessage(fieldErrors, 'name')}
       />
       <Input
@@ -91,48 +108,19 @@ export default function UncontrolledForm() {
         classNameInput={inputClassName}
         errorMessage={getMessage(fieldErrors, 'email')}
       />
-      <fieldset className={fieldsetClassName}>
-        <legend className={legendClassName}>Gender</legend>
-        <div className={radioGroupClassName}>
-          <label htmlFor="uc-male" className={radioLabelClassName}>
-            <input
-              type="radio"
-              id="uc-male"
-              name="gender"
-              value="male"
-              className="accent-teal-600"
-            />
-            Male
-          </label>
-          <label htmlFor="uc-female" className={radioLabelClassName}>
-            <input
-              type="radio"
-              id="uc-female"
-              name="gender"
-              value="female"
-              className="accent-teal-600"
-            />
-            Female
-          </label>
-        </div>
-      </fieldset>
-      {getMessage(fieldErrors, 'gender') && (
-        <div className="text-rose-600">{getMessage(fieldErrors, 'gender')}</div>
-      )}
-      <label htmlFor="uc-agree" className={checkboxLabelClassName}>
-        <input
-          type="checkbox"
-          id="uc-agree"
-          name="agreement"
-          className="h-4 w-4 accent-teal-600"
-        />
-        Terms & Conditions
-      </label>
-      {getMessage(fieldErrors, 'agreement') && (
-        <div className="text-rose-600">
-          {getMessage(fieldErrors, 'agreement')}
-        </div>
-      )}
+      <RadioGroup
+        name="gender"
+        legend="Gender"
+        options={genderOptions}
+        idPrefix="uc"
+        errorMessage={getMessage(fieldErrors, 'gender')}
+      />
+      <CheckboxField
+        name="agreement"
+        id="uc-agree"
+        label="Terms & Conditions"
+        errorMessage={getMessage(fieldErrors, 'agreement')}
+      />
       <div className="flex justify-center pt-1">
         <Button disabled={false} type="submit">
           Submit

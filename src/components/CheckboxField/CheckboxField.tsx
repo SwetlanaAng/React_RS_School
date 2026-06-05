@@ -1,43 +1,32 @@
 import type { Path, UseFormRegister } from 'react-hook-form';
+import { checkboxLabelClassName } from '../formStyles';
 import type { FormFields } from '../../Shared/Schemas';
 
-interface InputProps {
+interface CheckboxFieldProps {
   name: Path<FormFields>;
-  label: string;
-  type: string;
-  placeholder: string;
-  classNameLabel: string;
-  classNameInput: string;
   id: string;
+  label: string;
   errorMessage?: string | null;
   register?: UseFormRegister<FormFields>;
-  onChange?: () => void;
 }
 
-export default function Input({
+export default function CheckboxField({
   name,
-  label,
-  type,
-  placeholder,
-  classNameLabel,
-  classNameInput,
   id,
+  label,
   errorMessage,
   register,
-  onChange,
-}: InputProps) {
+}: CheckboxFieldProps) {
   return (
     <>
-      <label htmlFor={id} className={classNameLabel}>
-        {label}
+      <label htmlFor={id} className={checkboxLabelClassName}>
         <input
           {...(register ? register(name) : { name })}
+          type="checkbox"
           id={id}
-          type={type}
-          placeholder={placeholder}
-          className={classNameInput}
-          onChange={onChange}
+          className="h-4 w-4 accent-teal-600"
         />
+        {label}
       </label>
       {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
     </>

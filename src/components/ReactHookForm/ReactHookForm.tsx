@@ -1,16 +1,10 @@
 import { Form, useForm } from 'react-hook-form';
 import Button from '../Button/Button';
+import CheckboxField from '../CheckboxField/CheckboxField';
 import Input from '../Input/Input';
-import {
-  checkboxLabelClassName,
-  fieldsetClassName,
-  formClassName,
-  inputClassName,
-  labelClassName,
-  legendClassName,
-  radioGroupClassName,
-  radioLabelClassName,
-} from '../formStyles';
+import RadioGroup from '../RadioGroup/RadioGroup';
+import { formClassName, inputClassName, labelClassName } from '../formStyles';
+import { genderOptions } from '../../Shared/formOptions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
 
@@ -76,48 +70,20 @@ export default function ReactHookForm() {
         register={register}
         errorMessage={errors.email?.message}
       />
-      <fieldset className={fieldsetClassName}>
-        <legend className={legendClassName}>Gender</legend>
-        <div className={radioGroupClassName}>
-          <label htmlFor="male" className={radioLabelClassName}>
-            <input
-              {...register('gender')}
-              type="radio"
-              id="male"
-              name="gender"
-              value="male"
-              className="accent-teal-600"
-            />
-            Male
-          </label>
-          <label htmlFor="female" className={radioLabelClassName}>
-            <input
-              {...register('gender')}
-              type="radio"
-              id="female"
-              name="gender"
-              value="female"
-              className="accent-teal-600"
-            />
-            Female
-          </label>
-        </div>
-      </fieldset>
-      {errors.gender && (
-        <div className="text-rose-600">{errors.gender.message}</div>
-      )}
-      <label htmlFor="agree" className={checkboxLabelClassName}>
-        <input
-          {...register('agreement')}
-          type="checkbox"
-          id="agree"
-          className="h-4 w-4 accent-teal-600"
-        />
-        Terms & Conditions
-      </label>
-      {errors.agreement && (
-        <div className="text-rose-600">{errors.agreement.message}</div>
-      )}
+      <RadioGroup
+        name="gender"
+        legend="Gender"
+        options={genderOptions}
+        register={register}
+        errorMessage={errors.gender?.message}
+      />
+      <CheckboxField
+        name="agreement"
+        id="agree"
+        label="Terms & Conditions"
+        register={register}
+        errorMessage={errors.agreement?.message}
+      />
       <div className="flex justify-center pt-1">
         <Button
           disabled={!isValid}
