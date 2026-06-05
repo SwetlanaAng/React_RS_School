@@ -26,7 +26,7 @@ export default function ReactHookForm() {
       name: '',
       age: '',
       email: '',
-      gender: 'male',
+      gender: '',
       agreement: false,
     },
   });

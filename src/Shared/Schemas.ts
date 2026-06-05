@@ -10,8 +10,8 @@ const ageSchema = z.refine(
     message: 'Must be a positive number',
   }
 );
-const genderSchema = z.string('Choose your gender');
-const agreementSchema = z.refine((val) => val === true, {
+const genderSchema = z.string().min(1, 'Choose your gender');
+const agreementSchema = z.boolean().refine(Boolean, {
   message: 'Please accept the Terms & Conditions',
 });
 export const formSchema = z.object({
