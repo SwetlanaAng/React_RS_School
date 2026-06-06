@@ -1,7 +1,8 @@
-import { Form, useForm } from 'react-hook-form';
+import { Form, useForm, useWatch } from 'react-hook-form';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import Input from '../Input/Input';
+import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
@@ -21,10 +22,15 @@ export default function ReactHookForm() {
       name: '',
       age: '',
       email: '',
+      password: '',
+      confirmPassword: '',
       gender: '',
       agreement: false,
     },
   });
+
+  const password = useWatch({ control, name: 'password', defaultValue: '' });
+
   const onSubmit = (data: FormFields) => {
     console.log(data);
   };
@@ -69,6 +75,29 @@ export default function ReactHookForm() {
         classNameInput={inputClassName}
         register={register}
         errorMessage={errors.email?.message}
+      />
+      <Input
+        name="password"
+        label="Password"
+        id="password"
+        type="password"
+        placeholder="Enter password"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        errorMessage={errors.password?.message}
+      />
+      <PasswordStrengthIndicator password={password} />
+      <Input
+        name="confirmPassword"
+        label="Confirm password"
+        id="confirm-password"
+        type="password"
+        placeholder="Repeat password"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        errorMessage={errors.confirmPassword?.message}
       />
       <RadioGroup
         name="gender"

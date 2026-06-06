@@ -1,3 +1,4 @@
+import type { ChangeEventHandler } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import { checkboxLabelClassName } from '../formStyles';
 import type { FormFields } from '../../Shared/Schemas';
@@ -8,6 +9,7 @@ interface CheckboxFieldProps {
   label: string;
   errorMessage?: string | null;
   register?: UseFormRegister<FormFields>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function CheckboxField({
@@ -16,15 +18,24 @@ export default function CheckboxField({
   label,
   errorMessage,
   register,
+  onChange,
 }: CheckboxFieldProps) {
+  const registration = register ? register(name) : null;
+
   return (
     <>
       <label htmlFor={id} className={checkboxLabelClassName}>
         <input
-          {...(register ? register(name) : { name })}
+          {...(registration ?? { name })}
           type="checkbox"
           id={id}
           className="h-4 w-4 accent-teal-600"
+          onChange={(event) => {
+            if (registration) {
+              void registration.onChange(event);
+            }
+            onChange?.(event);
+          }}
         />
         {label}
       </label>

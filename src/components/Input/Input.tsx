@@ -1,3 +1,4 @@
+import type { ChangeEventHandler } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import type { FormFields } from '../../Shared/Schemas';
 
@@ -11,7 +12,7 @@ interface InputProps {
   id: string;
   errorMessage?: string | null;
   register?: UseFormRegister<FormFields>;
-  onChange?: () => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function Input({
@@ -26,17 +27,24 @@ export default function Input({
   register,
   onChange,
 }: InputProps) {
+  const registration = register ? register(name) : null;
+
   return (
     <>
       <label htmlFor={id} className={classNameLabel}>
         {label}
         <input
-          {...(register ? register(name) : { name })}
+          {...(registration ?? { name })}
           id={id}
           type={type}
           placeholder={placeholder}
           className={classNameInput}
-          onChange={onChange}
+          onChange={(event) => {
+            if (registration) {
+              void registration.onChange(event);
+            }
+            onChange?.(event);
+          }}
         />
       </label>
       {errorMessage && <div className="text-rose-600">{errorMessage}</div>}

@@ -1,3 +1,4 @@
+import type { ChangeEventHandler } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import {
   fieldsetClassName,
@@ -19,6 +20,7 @@ interface RadioGroupProps {
   errorMessage?: string | null;
   register?: UseFormRegister<FormFields>;
   idPrefix?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function RadioGroup({
@@ -28,7 +30,10 @@ export default function RadioGroup({
   errorMessage,
   register,
   idPrefix = '',
+  onChange,
 }: RadioGroupProps) {
+  const registration = register ? register(name) : null;
+
   return (
     <>
       <fieldset className={fieldsetClassName}>
@@ -46,11 +51,17 @@ export default function RadioGroup({
                 className={radioLabelClassName}
               >
                 <input
-                  {...(register ? register(name) : { name })}
+                  {...(registration ?? { name })}
                   type="radio"
                   id={inputId}
                   value={option.value}
                   className="accent-teal-600"
+                  onChange={(event) => {
+                    if (registration) {
+                      void registration.onChange(event);
+                    }
+                    onChange?.(event);
+                  }}
                 />
                 {option.label}
               </label>

@@ -2,6 +2,7 @@ import { useState, type SubmitEvent } from 'react';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import Input from '../Input/Input';
+import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
@@ -20,8 +21,9 @@ function getMessage(
 }
 
 export default function UncontrolledForm() {
-  const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
+  const [wasSubmitted, setWasSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [password, setPassword] = useState('');
 
   const validateForm = (data: FormFields): boolean => {
     const result = formSchema.safeParse(data);
@@ -62,6 +64,8 @@ export default function UncontrolledForm() {
       name: getFormString(formData, 'name'),
       age: getFormString(formData, 'age'),
       email: getFormString(formData, 'email'),
+      password: getFormString(formData, 'password'),
+      confirmPassword: getFormString(formData, 'confirmPassword'),
       gender: getFormString(formData, 'gender'),
       agreement: formData.has('agreement'),
     };
@@ -70,6 +74,7 @@ export default function UncontrolledForm() {
     if (!isValid) return;
 
     form.reset();
+    setPassword('');
     console.log(data);
   };
 
@@ -96,6 +101,9 @@ export default function UncontrolledForm() {
         placeholder="18"
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('age');
+        }}
         errorMessage={getMessage(fieldErrors, 'age')}
       />
       <Input
@@ -106,19 +114,56 @@ export default function UncontrolledForm() {
         placeholder="you@example.com"
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('email');
+        }}
         errorMessage={getMessage(fieldErrors, 'email')}
+      />
+      <Input
+        name="password"
+        label="Password"
+        id="uc-password"
+        type="password"
+        placeholder="Enter password"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        onChange={(event) => {
+          setPassword(event.target.value);
+          clearFieldError('password');
+        }}
+        errorMessage={getMessage(fieldErrors, 'password')}
+      />
+      <PasswordStrengthIndicator password={password} />
+      <Input
+        name="confirmPassword"
+        label="Confirm password"
+        id="uc-confirm-password"
+        type="password"
+        placeholder="Repeat password"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('confirmPassword');
+        }}
+        errorMessage={getMessage(fieldErrors, 'confirmPassword')}
       />
       <RadioGroup
         name="gender"
         legend="Gender"
         options={genderOptions}
         idPrefix="uc"
+        onChange={() => {
+          clearFieldError('gender');
+        }}
         errorMessage={getMessage(fieldErrors, 'gender')}
       />
       <CheckboxField
         name="agreement"
         id="uc-agree"
         label="Terms & Conditions"
+        onChange={() => {
+          clearFieldError('agreement');
+        }}
         errorMessage={getMessage(fieldErrors, 'agreement')}
       />
       <div className="flex justify-center pt-1">
