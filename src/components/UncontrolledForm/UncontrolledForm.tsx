@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent } from 'react';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
+import ImageField from '../ImageField/ImageField';
 import Input from '../Input/Input';
 import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
 import RadioGroup from '../RadioGroup/RadioGroup';
@@ -11,6 +12,11 @@ import { formSchema, type FormFields } from '../../Shared/Schemas';
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
   return typeof value === 'string' ? value : '';
+}
+
+function getFormFile(formData: FormData, key: string): File {
+  const value = formData.get(key);
+  return value instanceof File ? value : new File([], '');
 }
 
 function getMessage(
@@ -68,6 +74,7 @@ export default function UncontrolledForm() {
       confirmPassword: getFormString(formData, 'confirmPassword'),
       gender: getFormString(formData, 'gender'),
       agreement: formData.has('agreement'),
+      image: getFormFile(formData, 'image'),
     };
 
     const isValid = validateForm(data);
@@ -146,6 +153,17 @@ export default function UncontrolledForm() {
           clearFieldError('confirmPassword');
         }}
         errorMessage={getMessage(fieldErrors, 'confirmPassword')}
+      />
+      <ImageField
+        name="image"
+        label="Image"
+        id="uc-image"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('image');
+        }}
+        errorMessage={getMessage(fieldErrors, 'image')}
       />
       <RadioGroup
         name="gender"

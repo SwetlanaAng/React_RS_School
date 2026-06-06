@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ALLOWED_IMAGE_TYPES, MAX_IMAGE_SIZE } from './ValidateImageFile';
 
 const emailSchema = z.email('Must be a valid email address');
 const nameSchema = z.string().regex(/^[A-Z][a-z]{0,50}$/, {
@@ -16,6 +17,17 @@ const genderSchema = z.string().min(1, 'Choose your gender');
 const agreementSchema = z.boolean().refine(Boolean, {
   message: 'Please accept the Terms & Conditions',
 });
+const imageSchema = z
+  .instanceof(File, { message: 'Image is required' })
+  .refine((file) => file.size > 0, {
+    message: 'Image is required',
+  })
+  .refine((file) => ALLOWED_IMAGE_TYPES.includes(file.type), {
+    message: 'Only PNG and JPEG images are allowed',
+  })
+  .refine((file) => file.size <= MAX_IMAGE_SIZE, {
+    message: 'Image must be smaller than 5 MB',
+  });
 
 export const formSchema = z
   .object({
@@ -26,6 +38,7 @@ export const formSchema = z
     confirmPassword: confirmPasswordSchema,
     gender: genderSchema,
     agreement: agreementSchema,
+    image: imageSchema,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match',

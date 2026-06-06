@@ -1,6 +1,7 @@
 import { Form, useForm, useWatch } from 'react-hook-form';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
+import ImageField from '../ImageField/ImageField';
 import Input from '../Input/Input';
 import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
 import RadioGroup from '../RadioGroup/RadioGroup';
@@ -26,6 +27,7 @@ export default function ReactHookForm() {
       confirmPassword: '',
       gender: '',
       agreement: false,
+      image: new File([], ''),
     },
   });
 
@@ -98,6 +100,15 @@ export default function ReactHookForm() {
         classNameInput={inputClassName}
         register={register}
         errorMessage={errors.confirmPassword?.message}
+      />
+      <ImageField
+        name="image"
+        label="Image"
+        id="image"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        errorMessage={errors.image?.message}
       />
       <RadioGroup
         name="gender"
