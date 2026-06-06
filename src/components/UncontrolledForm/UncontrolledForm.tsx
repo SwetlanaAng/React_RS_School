@@ -1,6 +1,8 @@
 import { useState, type SubmitEvent } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
+import CountryField from '../CountryField/CountryField';
 import ImageField from '../ImageField/ImageField';
 import Input from '../Input/Input';
 import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
@@ -8,6 +10,7 @@ import RadioGroup from '../RadioGroup/RadioGroup';
 import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
+import { selectCountries } from '../../store/countriesSlice';
 
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -27,6 +30,7 @@ function getMessage(
 }
 
 export default function UncontrolledForm() {
+  const countries = useSelector(selectCountries);
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [password, setPassword] = useState('');
@@ -75,6 +79,7 @@ export default function UncontrolledForm() {
       gender: getFormString(formData, 'gender'),
       agreement: formData.has('agreement'),
       image: getFormFile(formData, 'image'),
+      country: getFormString(formData, 'country'),
     };
 
     const isValid = validateForm(data);
@@ -164,6 +169,20 @@ export default function UncontrolledForm() {
           clearFieldError('image');
         }}
         errorMessage={getMessage(fieldErrors, 'image')}
+      />
+      <CountryField
+        name="country"
+        label="Country"
+        id="uc-country"
+        listId="uc-country-list"
+        countries={countries}
+        placeholder="Start typing a country"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        onChange={() => {
+          clearFieldError('country');
+        }}
+        errorMessage={getMessage(fieldErrors, 'country')}
       />
       <RadioGroup
         name="gender"

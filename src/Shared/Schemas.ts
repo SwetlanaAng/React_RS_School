@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { COUNTRIES } from './countries';
 import { ALLOWED_IMAGE_TYPES, MAX_IMAGE_SIZE } from './ValidateImageFile';
 
 const emailSchema = z.email('Must be a valid email address');
@@ -28,6 +29,12 @@ const imageSchema = z
   .refine((file) => file.size <= MAX_IMAGE_SIZE, {
     message: 'Image must be smaller than 5 MB',
   });
+const countrySchema = z
+  .string()
+  .min(1, 'Country is required')
+  .refine((value) => (COUNTRIES as readonly string[]).includes(value), {
+    message: 'Select a country from the list',
+  });
 
 export const formSchema = z
   .object({
@@ -39,6 +46,7 @@ export const formSchema = z
     gender: genderSchema,
     agreement: agreementSchema,
     image: imageSchema,
+    country: countrySchema,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match',

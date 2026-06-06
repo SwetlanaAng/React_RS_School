@@ -1,6 +1,8 @@
 import { Form, useForm, useWatch } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
+import CountryField from '../CountryField/CountryField';
 import ImageField from '../ImageField/ImageField';
 import Input from '../Input/Input';
 import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStrengthIndicator';
@@ -9,8 +11,10 @@ import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
+import { selectCountries } from '../../store/countriesSlice';
 
 export default function ReactHookForm() {
+  const countries = useSelector(selectCountries);
   const {
     control,
     register,
@@ -28,6 +32,7 @@ export default function ReactHookForm() {
       gender: '',
       agreement: false,
       image: new File([], ''),
+      country: '',
     },
   });
 
@@ -109,6 +114,18 @@ export default function ReactHookForm() {
         classNameInput={inputClassName}
         register={register}
         errorMessage={errors.image?.message}
+      />
+      <CountryField
+        name="country"
+        label="Country"
+        id="country"
+        listId="rhf-country-list"
+        countries={countries}
+        placeholder="Start typing a country"
+        classNameLabel={labelClassName}
+        classNameInput={inputClassName}
+        register={register}
+        errorMessage={errors.country?.message}
       />
       <RadioGroup
         name="gender"
