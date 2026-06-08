@@ -14,12 +14,14 @@ function renderModal(
   document.body.appendChild(container);
 
   const onClose = props.onClose ?? vi.fn();
+  const onSubmitSuccess = vi.fn();
 
   const view = renderWithProviders(
     <Modal
       container={container}
       isOpen={props.isOpen ?? true}
       onClose={onClose}
+      onSubmitSuccess={onSubmitSuccess}
       form={props.form ?? { selectedForm: 'uncontrolled' }}
     >
       <h2 id="modal-title">Test modal</h2>

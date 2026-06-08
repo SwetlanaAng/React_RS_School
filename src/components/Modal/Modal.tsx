@@ -8,6 +8,7 @@ export default function Modal({
   children,
   container,
   onClose,
+  onSubmitSuccess,
   isOpen,
   form,
 }: {
@@ -15,6 +16,7 @@ export default function Modal({
   container: HTMLDivElement;
   isOpen: boolean;
   onClose: () => void;
+  onSubmitSuccess: (submissionId: string) => void;
   form: currentFormState;
 }) {
   useEffect(() => {
@@ -60,9 +62,9 @@ export default function Modal({
 
         <div className="rounded-xl border border-teal-100 bg-teal-100 p-4">
           {form.selectedForm && form.selectedForm === 'uncontrolled' ? (
-            <UncontrolledForm onSubmitSuccess={onClose} />
+            <UncontrolledForm onSubmitSuccess={onSubmitSuccess} />
           ) : (
-            <ReactHookForm onSubmitSuccess={onClose} />
+            <ReactHookForm onSubmitSuccess={onSubmitSuccess} />
           )}
         </div>
       </div>

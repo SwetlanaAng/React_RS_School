@@ -1,50 +1,27 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type {
-  FormSubmission,
-  SubmissionPayload,
-} from '../Shared/buildSubmission';
+import type { FormSubmission } from '../Shared/buildSubmission';
+import type { RootState } from './rootState';
 
 export interface SubmissionsState {
-  uncontrolled: FormSubmission[];
-  rhf: FormSubmission[];
+  items: FormSubmission[];
 }
 
 const initialState: SubmissionsState = {
-  uncontrolled: [],
-  rhf: [],
+  items: [],
 };
 
 const submissionsSlice = createSlice({
   name: 'submissions',
   initialState,
   reducers: {
-    addUncontrolledSubmission: (
-      state,
-      action: PayloadAction<SubmissionPayload>
-    ) => {
-      state.uncontrolled.push({
-        id: crypto.randomUUID(),
-        ...action.payload,
-      });
-    },
-    addRhfSubmission: (state, action: PayloadAction<SubmissionPayload>) => {
-      state.rhf.push({
-        id: crypto.randomUUID(),
-        ...action.payload,
-      });
+    addSubmission: (state, action: PayloadAction<FormSubmission>) => {
+      state.items.push(action.payload);
     },
   },
 });
 
-export const { addUncontrolledSubmission, addRhfSubmission } =
-  submissionsSlice.actions;
+export const { addSubmission } = submissionsSlice.actions;
 
-export const selectUncontrolledSubmissions = (state: {
-  submissions: SubmissionsState;
-}) => state.submissions.uncontrolled;
-
-export const selectRhfSubmissions = (state: {
-  submissions: SubmissionsState;
-}) => state.submissions.rhf;
+export const selectSubmissions = (state: RootState) => state.submissions.items;
 
 export default submissionsSlice.reducer;

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { COUNTRIES } from '../Shared/countries';
+import type { RootState } from './rootState';
 
 export interface CountriesState {
   countries: readonly string[];
@@ -15,7 +16,6 @@ const countriesSlice = createSlice({
   reducers: {},
 });
 
-export const selectCountries = (state: { countries: CountriesState }) =>
-  state.countries.countries;
+export const selectCountries = (state: RootState) => state.countries.countries;
 
 export default countriesSlice.reducer;

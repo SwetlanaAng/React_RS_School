@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import CountryField from '../CountryField/CountryField';
@@ -12,8 +12,7 @@ import { genderOptions } from '../../Shared/formOptions';
 import { buildSubmission } from '../../Shared/buildSubmission';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
 import { selectCountries } from '../../store/countriesSlice';
-import { addUncontrolledSubmission } from '../../store/submissionsSlice';
-import type { AppDispatch } from '../../store/store';
+import { addSubmission } from '../../store/submissionsSlice';
 
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -33,14 +32,14 @@ function getMessage(
 }
 
 interface UncontrolledFormProps {
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess?: (submissionId: string) => void;
 }
 
 export default function UncontrolledForm({
   onSubmitSuccess,
 }: UncontrolledFormProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const countries = useSelector(selectCountries);
+  const dispatch = useAppDispatch();
+  const countries = useAppSelector(selectCountries);
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [password, setPassword] = useState('');
@@ -74,10 +73,10 @@ export default function UncontrolledForm({
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    const form = e.currentTarget as HTMLFormElement;
+    const form = e.currentTarget;
     const formData = new FormData(form);
 
     const data = {
@@ -95,14 +94,14 @@ export default function UncontrolledForm({
     const isValid = validateForm(data);
     if (!isValid) return;
 
-    const submission = await buildSubmission(data);
-    dispatch(addUncontrolledSubmission(submission));
+    const submission = await buildSubmission(data, 'uncontrolled');
+    dispatch(addSubmission(submission));
 
     form.reset();
     setPassword('');
     setWasSubmitted(false);
     setFieldErrors({});
-    onSubmitSuccess?.();
+    onSubmitSuccess?.(submission.id);
   };
 
   return (

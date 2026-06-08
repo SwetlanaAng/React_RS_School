@@ -1,5 +1,5 @@
 import { Form, useForm, useWatch } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import CountryField from '../CountryField/CountryField';
@@ -13,16 +13,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { buildSubmission } from '../../Shared/buildSubmission';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
 import { selectCountries } from '../../store/countriesSlice';
-import { addRhfSubmission } from '../../store/submissionsSlice';
-import type { AppDispatch } from '../../store/store';
+import { addSubmission } from '../../store/submissionsSlice';
 
 interface ReactHookFormProps {
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess?: (submissionId: string) => void;
 }
 
 export default function ReactHookForm({ onSubmitSuccess }: ReactHookFormProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const countries = useSelector(selectCountries);
+  const dispatch = useAppDispatch();
+  const countries = useAppSelector(selectCountries);
   const {
     control,
     register,
@@ -50,10 +49,10 @@ export default function ReactHookForm({ onSubmitSuccess }: ReactHookFormProps) {
     <Form
       control={control}
       onSubmit={async ({ data }) => {
-        const submission = await buildSubmission(data);
-        dispatch(addRhfSubmission(submission));
+        const submission = await buildSubmission(data, 'rhf');
+        dispatch(addSubmission(submission));
         reset();
-        onSubmitSuccess?.();
+        onSubmitSuccess?.(submission.id);
       }}
       className={formClassName}
     >
@@ -119,7 +118,7 @@ export default function ReactHookForm({ onSubmitSuccess }: ReactHookFormProps) {
         id="image"
         classNameLabel={labelClassName}
         classNameInput={inputClassName}
-        register={register}
+        control={control}
         errorMessage={errors.image?.message}
       />
       <CountryField

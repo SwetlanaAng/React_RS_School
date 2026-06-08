@@ -1,5 +1,5 @@
-import type { ChangeEventHandler } from 'react';
-import type { Path, UseFormRegister } from 'react-hook-form';
+import type { ChangeEvent, ChangeEventHandler, Ref } from 'react';
+import { Controller, type Control, type Path } from 'react-hook-form';
 import type { FormFields } from '../../Shared/Schemas';
 
 interface ImageFieldProps {
@@ -9,7 +9,7 @@ interface ImageFieldProps {
   classNameLabel: string;
   classNameInput: string;
   errorMessage?: string | null;
-  register?: UseFormRegister<FormFields>;
+  control?: Control<FormFields>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -20,33 +20,53 @@ export default function ImageField({
   classNameLabel,
   classNameInput,
   errorMessage,
-  register,
+  control,
   onChange,
 }: ImageFieldProps) {
-  const registration = register
-    ? register(name, {
-        setValueAs: (fileList: FileList) =>
-          fileList.length > 0 ? fileList[0] : new File([], ''),
-      })
-    : null;
+  const fileInput = (
+    inputName: string,
+    onFileChange: (event: ChangeEvent<HTMLInputElement>) => void,
+    onBlur?: () => void,
+    ref?: Ref<HTMLInputElement>
+  ) => (
+    <input
+      name={inputName}
+      ref={ref}
+      id={id}
+      type="file"
+      accept="image/png,image/jpeg,.png,.jpg,.jpeg"
+      className={classNameInput}
+      onBlur={onBlur}
+      onChange={(event) => {
+        onFileChange(event);
+        onChange?.(event);
+      }}
+    />
+  );
 
   return (
     <>
       <label htmlFor={id} className={classNameLabel}>
         {label}
-        <input
-          {...(registration ?? { name })}
-          id={id}
-          type="file"
-          accept="image/png,image/jpeg,.png,.jpg,.jpeg"
-          className={classNameInput}
-          onChange={(event) => {
-            if (registration) {
-              void registration.onChange(event);
+        {control ? (
+          <Controller
+            name={name}
+            control={control}
+            render={({ field: { onChange: setFile, onBlur, name, ref } }) =>
+              fileInput(
+                name,
+                (event) => {
+                  const file = event.target.files?.[0];
+                  setFile(file ?? new File([], ''));
+                },
+                onBlur,
+                ref
+              )
             }
-            onChange?.(event);
-          }}
-        />
+          />
+        ) : (
+          fileInput(name, () => undefined)
+        )}
       </label>
       {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
     </>
