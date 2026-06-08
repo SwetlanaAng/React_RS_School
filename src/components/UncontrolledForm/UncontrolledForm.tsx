@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import CountryField from '../CountryField/CountryField';
@@ -9,8 +9,11 @@ import PasswordStrengthIndicator from '../PasswordStrengthIndicator/PasswordStre
 import RadioGroup from '../RadioGroup/RadioGroup';
 import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
+import { buildSubmission } from '../../Shared/buildSubmission';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
 import { selectCountries } from '../../store/countriesSlice';
+import { addUncontrolledSubmission } from '../../store/submissionsSlice';
+import type { AppDispatch } from '../../store/store';
 
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -29,7 +32,14 @@ function getMessage(
   return fieldErrors[field] ?? null;
 }
 
-export default function UncontrolledForm() {
+interface UncontrolledFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+export default function UncontrolledForm({
+  onSubmitSuccess,
+}: UncontrolledFormProps) {
+  const dispatch = useDispatch<AppDispatch>();
   const countries = useSelector(selectCountries);
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -64,7 +74,7 @@ export default function UncontrolledForm() {
     });
   };
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setWasSubmitted(true);
     const form = e.currentTarget as HTMLFormElement;
@@ -85,13 +95,23 @@ export default function UncontrolledForm() {
     const isValid = validateForm(data);
     if (!isValid) return;
 
+    const submission = await buildSubmission(data);
+    dispatch(addUncontrolledSubmission(submission));
+
     form.reset();
     setPassword('');
-    console.log(data);
+    setWasSubmitted(false);
+    setFieldErrors({});
+    onSubmitSuccess?.();
   };
 
   return (
-    <form onSubmit={handleSubmit} className={formClassName}>
+    <form
+      onSubmit={(event) => {
+        void handleSubmit(event);
+      }}
+      className={formClassName}
+    >
       <Input
         name="name"
         label="Name"

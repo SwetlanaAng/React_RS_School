@@ -60,9 +60,9 @@ export default function Modal({
 
         <div className="rounded-xl border border-teal-100 bg-teal-100 p-4">
           {form.selectedForm && form.selectedForm === 'uncontrolled' ? (
-            <UncontrolledForm />
+            <UncontrolledForm onSubmitSuccess={onClose} />
           ) : (
-            <ReactHookForm />
+            <ReactHookForm onSubmitSuccess={onClose} />
           )}
         </div>
       </div>

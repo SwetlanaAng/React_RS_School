@@ -1,5 +1,5 @@
 import { Form, useForm, useWatch } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import CheckboxField from '../CheckboxField/CheckboxField';
 import CountryField from '../CountryField/CountryField';
@@ -10,15 +10,23 @@ import RadioGroup from '../RadioGroup/RadioGroup';
 import { formClassName, inputClassName, labelClassName } from '../formStyles';
 import { genderOptions } from '../../Shared/formOptions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { buildSubmission } from '../../Shared/buildSubmission';
 import { formSchema, type FormFields } from '../../Shared/Schemas';
 import { selectCountries } from '../../store/countriesSlice';
+import { addRhfSubmission } from '../../store/submissionsSlice';
+import type { AppDispatch } from '../../store/store';
 
-export default function ReactHookForm() {
+interface ReactHookFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+export default function ReactHookForm({ onSubmitSuccess }: ReactHookFormProps) {
+  const dispatch = useDispatch<AppDispatch>();
   const countries = useSelector(selectCountries);
   const {
     control,
     register,
-    handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<FormFields>({
     resolver: zodResolver(formSchema),
@@ -38,15 +46,14 @@ export default function ReactHookForm() {
 
   const password = useWatch({ control, name: 'password', defaultValue: '' });
 
-  const onSubmit = (data: FormFields) => {
-    console.log(data);
-  };
-
   return (
     <Form
       control={control}
-      onSubmit={() => {
-        handleSubmit(onSubmit);
+      onSubmit={async ({ data }) => {
+        const submission = await buildSubmission(data);
+        dispatch(addRhfSubmission(submission));
+        reset();
+        onSubmitSuccess?.();
       }}
       className={formClassName}
     >
