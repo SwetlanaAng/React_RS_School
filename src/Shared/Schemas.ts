@@ -1,8 +1,12 @@
 import { z } from 'zod';
 import { COUNTRIES } from './countries';
 import { ALLOWED_IMAGE_TYPES, MAX_IMAGE_SIZE } from './ValidateImageFile';
+import { isValidEmail } from './validateEmail';
 
-const emailSchema = z.email('Must be a valid email address');
+const emailSchema = z
+  .string()
+  .min(1, 'Email is required')
+  .refine(isValidEmail, { message: 'Must be a valid email address' });
 const nameSchema = z.string().regex(/^[A-Z][a-z]{0,50}$/, {
   message:
     'The first letter must be capitalized, and the remaining letters must be lowercase',

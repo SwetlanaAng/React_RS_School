@@ -1,6 +1,7 @@
 import type { ChangeEventHandler } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import type { FormFields } from '../../Shared/Schemas';
+import FieldError from '../FieldError/FieldError';
 
 interface InputProps {
   name: Path<FormFields>;
@@ -47,7 +48,7 @@ export default function Input({
           }}
         />
       </label>
-      {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
+      <FieldError message={errorMessage} />
     </>
   );
 }

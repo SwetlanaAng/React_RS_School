@@ -7,6 +7,7 @@ import {
   radioLabelClassName,
 } from '../formStyles';
 import type { FormFields } from '../../Shared/Schemas';
+import FieldError from '../FieldError/FieldError';
 
 interface RadioOption {
   value: string;
@@ -69,7 +70,7 @@ export default function RadioGroup({
           })}
         </div>
       </fieldset>
-      {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
+      <FieldError message={errorMessage} />
     </>
   );
 }

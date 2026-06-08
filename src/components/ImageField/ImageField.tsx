@@ -1,6 +1,7 @@
 import type { ChangeEvent, ChangeEventHandler, Ref } from 'react';
 import { Controller, type Control, type Path } from 'react-hook-form';
 import type { FormFields } from '../../Shared/Schemas';
+import FieldError from '../FieldError/FieldError';
 
 interface ImageFieldProps {
   name: Path<FormFields>;
@@ -68,7 +69,7 @@ export default function ImageField({
           fileInput(name, () => undefined)
         )}
       </label>
-      {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
+      <FieldError message={errorMessage} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import type { ChangeEventHandler } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import type { FormFields } from '../../Shared/Schemas';
+import FieldError from '../FieldError/FieldError';
 
 interface CountryFieldProps {
   name: Path<FormFields>;
@@ -55,7 +56,7 @@ export default function CountryField({
           <option key={country} value={country} />
         ))}
       </datalist>
-      {errorMessage && <div className="text-rose-600">{errorMessage}</div>}
+      <FieldError message={errorMessage} />
     </>
   );
 }
