@@ -4,6 +4,7 @@ import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Layout from './Layouts/Layuot';
 import DetailedCardRoute from './components/DetailedCardRoute/DetailedCardRoute';
+
 export function App() {
   return (
     <>

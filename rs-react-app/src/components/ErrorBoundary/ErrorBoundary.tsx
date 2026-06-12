@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 interface State {
   hasError: boolean;
 }
+
 export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
   fallback?: React.ReactNode;
@@ -15,6 +16,7 @@ export class ErrorBoundary extends Component<{
   static getDerivedStateFromError() {
     return { hasError: true };
   }
+
   onButtonClick() {
     this.setState({ hasError: false });
     this.props.errorSwitcher(false);

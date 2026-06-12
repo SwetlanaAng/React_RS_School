@@ -46,7 +46,9 @@ describe('App', () => {
 
   it('renders App', () => {
     mockFetchSuccess({ info: mockInfo, results: mockCharacters });
+
     renderApp();
+
     expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
     expect(
@@ -72,13 +74,17 @@ describe('App', () => {
 
   it('shows spinner while characters are loading', () => {
     mockPendingFetch();
+
     renderApp();
+
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
   it('shows error UI when API request fails', async () => {
     mockFetchError();
+
     renderApp();
+
     expect(
       await screen.findByText(/there is no matching characters/i)
     ).toBeInTheDocument();
@@ -92,12 +98,16 @@ describe('App', () => {
     const testStore = createTestStore();
 
     const { unmount } = renderApp(testStore);
+
     await screen.findByAltText('Rick Sanchez');
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
     unmount();
 
     renderApp(testStore);
+
     await screen.findByAltText('Rick Sanchez');
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -109,7 +119,9 @@ describe('App', () => {
     const user = userEvent.setup();
 
     renderApp();
+
     await screen.findByAltText('Rick Sanchez');
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     await user.click(
@@ -150,16 +162,23 @@ describe('App', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const user = userEvent.setup();
+
     renderApp();
+
     await screen.findByAltText('Rick Sanchez');
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     await user.click(screen.getByRole('button', { name: '2' }));
+
     await screen.findByAltText('Morty Smith');
+
     expect(fetchMock).toHaveBeenCalledTimes(2);
 
     await user.click(screen.getByRole('button', { name: '1' }));
+
     await screen.findByAltText('Rick Sanchez');
+
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
@@ -167,7 +186,9 @@ describe('App', () => {
     const fetchMock = mockFetchSuccess({ info: mockInfo, results: [] });
 
     renderApp();
+
     const user = userEvent.setup();
+
     await user.type(screen.getByPlaceholderText('Search...'), 'Rick');
     await user.click(screen.getByRole('button', { name: /search/i }));
 
@@ -179,6 +200,7 @@ describe('App', () => {
       throw new Error('Expected fetch to have been called with a URL');
     }
     const requestUrl = getFetchUrl(lastFetchInput);
+
     expect(requestUrl).toBe(
       'https://rickandmortyapi.com/api/character?name=Rick&page=1'
     );
@@ -191,11 +213,15 @@ describe('App', () => {
     mockFetchSuccess({ info: mockInfo, results: [] });
 
     renderApp();
+
     const user = userEvent.setup();
+
     await user.click(screen.getByRole('button', { name: /error button/i }));
+
     expect(
       await screen.findByText(/Something went wrong/i)
     ).toBeInTheDocument();
+
     consoleError.mockRestore();
   });
 });

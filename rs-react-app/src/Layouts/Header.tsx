@@ -9,6 +9,7 @@ import { useRefetchCharactersMutation } from '../store/apiSlice';
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const [refetchCharacters] = useRefetchCharactersMutation();
+
   const handleReload = () => {
     void refetchCharacters(undefined);
   };

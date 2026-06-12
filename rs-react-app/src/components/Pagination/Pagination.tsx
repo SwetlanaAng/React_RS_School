@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router';
 import type { Info } from '../../shared/types';
+
 interface PaginationProps extends Info {
   currentPage: number;
 }
@@ -11,7 +12,9 @@ export default function Pagination({
   currentPage,
 }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const buttons: number[] = [];
+
   if (pages <= 5) {
     for (let i = 1; i <= pages; i++) {
       buttons.push(i);
@@ -19,19 +22,25 @@ export default function Pagination({
   } else {
     buttons.push(1);
     buttons.push(2);
+
     if (currentPage > 3) {
       buttons.push(0);
     }
+
     const start = Math.max(3, currentPage - 1);
     const end = Math.min(pages - 1, currentPage + 1);
+
     for (let i = start; i <= end; i++) {
       buttons.push(i);
     }
+
     if (currentPage < pages - 2) {
       buttons.push(0);
     }
+
     buttons.push(pages);
   }
+
   const paginationButtonClassName =
     'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:hover:bg-purple-900 dark:hover:text-teal-100';
   const paginationArrowClassName =
@@ -56,6 +65,7 @@ export default function Pagination({
           onClick={(event) => {
             event.stopPropagation();
             const currentSearch = searchParams.get('name');
+
             if (currentSearch) {
               setSearchParams({
                 name: currentSearch,
@@ -71,6 +81,7 @@ export default function Pagination({
       )}
       {buttons.map((item) => {
         if (item === 0) return <span key={item}>...</span>;
+
         return (
           <button
             type="button"
@@ -83,6 +94,7 @@ export default function Pagination({
             onClick={(event) => {
               event.stopPropagation();
               const currentSearch = searchParams.get('name');
+
               if (currentSearch) {
                 setSearchParams({ name: currentSearch, page: String(item) });
               } else {
@@ -101,6 +113,7 @@ export default function Pagination({
           onClick={(event) => {
             event.stopPropagation();
             const currentSearch = searchParams.get('name');
+
             if (currentSearch) {
               setSearchParams({
                 name: currentSearch,

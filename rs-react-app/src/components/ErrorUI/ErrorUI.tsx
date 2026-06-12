@@ -1,8 +1,10 @@
 import gif from './brokenRobot.gif';
+
 interface ErrorUIProps {
   errorMessage: string;
   children?: React.ReactNode;
 }
+
 export default function ErrorUI({ errorMessage, children }: ErrorUIProps) {
   return (
     <div className="flex flex-col items-center justify-center">

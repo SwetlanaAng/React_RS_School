@@ -112,12 +112,16 @@ describe('DetailedCardRoute', () => {
     const { unmount } = renderDetailedCardRoute('/?page=1&details=1', {
       store: testStore,
     });
+
     await screen.findByText(character.name);
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
     unmount();
 
     renderDetailedCardRoute('/?page=1&details=1', { store: testStore });
+
     await screen.findByText(character.name);
+
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -134,6 +138,7 @@ describe('DetailedCardRoute', () => {
 
     expect(screen.getByTestId('location')).toHaveTextContent('?page=1');
   });
+
   it('shows error UI when character request fails', async () => {
     mockFetchError();
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import searchSVG from '../../assets/search.svg';
+
 export interface SearchFormProps {
   className?: string;
   onSubmit: (string: string) => void;
@@ -9,6 +10,7 @@ export interface SearchFormProps {
   error: boolean;
   search: string;
 }
+
 export default function SearchForm({
   error,
   search,
@@ -21,6 +23,7 @@ export default function SearchForm({
   if (error) {
     throw new Error('ErrorBoundary test error');
   }
+
   return (
     <div className="flex items-center justify-center px-4 my-4">
       <form

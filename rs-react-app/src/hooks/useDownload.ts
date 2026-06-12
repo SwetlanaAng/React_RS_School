@@ -33,6 +33,7 @@ export function useDownload() {
 
     return csvRows.join('\n');
   };
+
   const download = (characters: Character[], selectedAmount: number) => {
     const blob = new Blob([makeString(characters)], {
       type: 'text/csv;charset=utf-8;',
@@ -48,5 +49,6 @@ export function useDownload() {
 
     URL.revokeObjectURL(url);
   };
+
   return { download };
 }

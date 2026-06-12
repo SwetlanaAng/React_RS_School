@@ -18,6 +18,7 @@ export default function DetailedCardRoute() {
   if (!detailsId) {
     return null;
   }
+
   if (isError) {
     return (
       <div className="mx-1 my-4 flex min-h-60 w-40 shrink-0 items-center justify-center self-start rounded-2xl border-2 border-teal-200 bg-white p-2 shadow-lg shadow-teal-100 transition-colors duration-300 dark:border-teal-800 dark:bg-slate-800 dark:shadow-teal-950 sm:mx-3 sm:min-h-[450px] sm:w-96 sm:p-6">
@@ -25,6 +26,7 @@ export default function DetailedCardRoute() {
       </div>
     );
   }
+
   if (isLoading || isFetching || data?.id !== detailsId) {
     return (
       <div className="mx-1 my-4 flex min-h-60 w-40 shrink-0 items-center justify-center self-start rounded-2xl border-2 border-teal-200 bg-white p-2 shadow-lg shadow-teal-100 transition-colors duration-300 dark:border-teal-800 dark:bg-slate-800 dark:shadow-teal-950 sm:mx-3 sm:min-h-[450px] sm:w-96 sm:p-6">
@@ -32,6 +34,7 @@ export default function DetailedCardRoute() {
       </div>
     );
   }
+
   return (
     <div className="mx-1 my-4 w-40 shrink-0 self-start rounded-2xl border-2 border-teal-200 bg-white p-2 shadow-lg shadow-teal-100 transition-colors duration-300 dark:border-teal-800 dark:bg-slate-800 dark:shadow-teal-950 sm:mx-3 sm:w-auto sm:p-6">
       <DetailedCard

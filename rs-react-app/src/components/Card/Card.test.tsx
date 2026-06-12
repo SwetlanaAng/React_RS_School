@@ -37,6 +37,7 @@ describe('Card', () => {
 
   it('renders Card', () => {
     const { character } = renderCard('/?page=1');
+
     expect(screen.getByAltText(character.name)).toBeInTheDocument();
     expect(screen.getByText(character.name)).toBeInTheDocument();
   });
@@ -63,15 +64,18 @@ describe('Card', () => {
     const checkbox = screen.getByRole('checkbox', {
       name: `Select ${character.name}`,
     });
+
     expect(checkbox).not.toBeChecked();
 
     await user.click(checkbox);
+
     expect(checkbox).toBeChecked();
     expect(screen.getByAltText(character.name).parentElement).toHaveClass(
       'ring-fuchsia-400'
     );
 
     await user.click(checkbox);
+
     expect(checkbox).not.toBeChecked();
   });
 

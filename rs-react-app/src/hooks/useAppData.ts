@@ -11,12 +11,14 @@ export function useAppData() {
 
   function onFormSubmit(string: string) {
     saveSearch(string);
+
     if (string) {
       setSearchParams({ name: string, page: '1' });
     } else {
       setSearchParams({ page: '1' });
     }
   }
+
   const { data, isError, isLoading, isFetching } = useGetCharactersQuery({
     search,
     page: currentPaginationPage,

@@ -13,7 +13,9 @@ describe('Input', () => {
         id="search"
       />
     );
+
     const input = screen.getByPlaceholderText('Search');
+
     expect(input).toBeInTheDocument();
   });
 });

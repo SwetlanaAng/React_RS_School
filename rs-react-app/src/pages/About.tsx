@@ -1,4 +1,5 @@
 import authorImage from '../assets/author.png';
+
 export default function About() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 p-4 transition-colors duration-300 dark:bg-slate-950">

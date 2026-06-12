@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '../contexts/ThemeContext/ThemeContextProvider';
 import { store } from '../store/store';
 import Header from './Header';
+
 describe('Header theme toggle', () => {
   afterEach(() => {
     document.documentElement.classList.remove('dark');
@@ -12,6 +13,7 @@ describe('Header theme toggle', () => {
 
   it('toggles dark theme when theme button is clicked', async () => {
     const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <ThemeProvider>
@@ -21,10 +23,15 @@ describe('Header theme toggle', () => {
         </ThemeProvider>
       </MemoryRouter>
     );
+
     expect(document.documentElement).not.toHaveClass('dark');
+
     await user.click(screen.getByRole('button', { name: /toggle theme/i }));
+
     expect(document.documentElement).toHaveClass('dark');
+
     await user.click(screen.getByRole('button', { name: /toggle theme/i }));
+
     expect(document.documentElement).not.toHaveClass('dark');
   });
 });

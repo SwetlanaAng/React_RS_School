@@ -19,6 +19,7 @@ export default function Home() {
     paginationData,
     currentPaginationPage,
   } = useAppData();
+
   const [error, setError] = useState<boolean>(false);
 
   return (

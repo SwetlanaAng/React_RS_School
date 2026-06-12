@@ -7,12 +7,15 @@ export function getFetchUrl(input: RequestInfo | URL): string {
   if (typeof input === 'string') {
     return input;
   }
+
   if (input instanceof URL) {
     return input.href;
   }
+
   if (input instanceof Request) {
     return input.url;
   }
+
   return String(input);
 }
 

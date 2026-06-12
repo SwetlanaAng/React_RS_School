@@ -22,6 +22,7 @@ const charactersSlice = createSlice({
       const selectedIndex = state.selected.findIndex((item) => {
         return item.id === action.payload.id;
       });
+
       if (selectedIndex === -1) {
         state.selected.push(action.payload);
       } else {
@@ -30,5 +31,6 @@ const charactersSlice = createSlice({
     },
   },
 });
+
 export const { toggleCharacter, clearAllSelected } = charactersSlice.actions;
 export default charactersSlice.reducer;

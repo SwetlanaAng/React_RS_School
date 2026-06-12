@@ -84,9 +84,11 @@ describe('Pagination', () => {
     });
 
     await user.click(screen.getByRole('button', { name: /prev/i }));
+
     expect(screen.getByTestId('location')).toHaveTextContent('?page=1');
 
     await user.click(screen.getByRole('button', { name: /next/i }));
+
     expect(screen.getByTestId('location')).toHaveTextContent('?page=3');
   });
 
