@@ -1,9 +1,11 @@
 import type { Character } from '../../shared/types';
 import Card from '../Card/Card';
 import { useSearchParams } from 'react-router';
+
 interface CardsBoxProps {
   characters: Character[];
 }
+
 export default function CardsBox({ characters }: CardsBoxProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 

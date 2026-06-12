@@ -2,12 +2,14 @@ export interface ResponseCharacter {
   info: Info;
   results: Character[];
 }
+
 export interface Info {
   count: number;
   pages: number;
   next: string | null;
   prev: string | null;
 }
+
 export interface Character {
   id: number;
   name: string;
@@ -28,6 +30,7 @@ export interface Character {
   url: string;
   created: string;
 }
+
 export interface AppState {
   search: string;
   characters: Character[];

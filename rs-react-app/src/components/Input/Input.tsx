@@ -7,6 +7,7 @@ interface InputProps {
   name: string;
   id: string;
 }
+
 export default function Input(props: InputProps) {
   return (
     <>

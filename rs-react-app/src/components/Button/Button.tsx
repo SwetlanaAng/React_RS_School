@@ -1,5 +1,6 @@
 import buttonSpinner from '../../assets/buttonSpinner.svg';
 import { buttonClassName } from '../../shared/classes';
+
 interface ButtonProps {
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -7,6 +8,7 @@ interface ButtonProps {
   type: 'submit' | 'button';
   loading?: boolean;
 }
+
 export default function Button({
   loading,
   children,
