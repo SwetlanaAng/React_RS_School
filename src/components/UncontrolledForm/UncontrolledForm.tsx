@@ -16,11 +16,13 @@ import { addSubmission } from '../../store/submissionsSlice';
 
 function getFormString(formData: FormData, key: string): string {
   const value = formData.get(key);
+
   return typeof value === 'string' ? value : '';
 }
 
 function getFormFile(formData: FormData, key: string): File {
   const value = formData.get(key);
+
   return value instanceof File ? value : new File([], '');
 }
 
@@ -40,25 +42,32 @@ export default function UncontrolledForm({
 }: UncontrolledFormProps) {
   const dispatch = useAppDispatch();
   const countries = useAppSelector(selectCountries);
+
   const [wasSubmitted, setWasSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [password, setPassword] = useState('');
 
   const validateForm = (data: FormFields): boolean => {
     const result = formSchema.safeParse(data);
+
     if (!result.success) {
       const nextErrors: Record<string, string> = {};
+
       for (const issue of result.error.issues) {
         const field = String(issue.path[0]);
+
         if (!nextErrors[field]) {
           nextErrors[field] = issue.message;
         }
       }
+
       setFieldErrors(nextErrors);
+
       return false;
     }
 
     setFieldErrors({});
+
     return true;
   };
 
@@ -67,6 +76,7 @@ export default function UncontrolledForm({
 
     setFieldErrors((prev) => {
       if (!(field in prev)) return prev;
+
       return Object.fromEntries(
         Object.entries(prev).filter(([key]) => key !== field)
       );
@@ -76,6 +86,7 @@ export default function UncontrolledForm({
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
+
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -92,6 +103,7 @@ export default function UncontrolledForm({
     };
 
     const isValid = validateForm(data);
+
     if (!isValid) return;
 
     const submission = await buildSubmission(data, 'uncontrolled');

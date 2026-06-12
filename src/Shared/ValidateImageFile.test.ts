@@ -11,7 +11,9 @@ function createFile(
   content = 'image-data'
 ): File {
   const file = new File([content], name, { type });
+
   Object.defineProperty(file, 'size', { value: size });
+
   return file;
 }
 
@@ -45,6 +47,7 @@ describe('ValidateImageFile', () => {
 
   it('returns null for valid png and jpeg files', () => {
     const png = createFile('photo.png', 'image/png', 1024);
+
     const jpeg = createFile('photo.jpg', 'image/jpeg', 2048);
 
     expect(validateImageFile(png)).toBeNull();

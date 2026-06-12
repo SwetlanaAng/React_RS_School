@@ -23,6 +23,7 @@ describe('CountryField', () => {
     expect(input).toHaveAttribute('placeholder', 'Start typing a country');
 
     const datalist = document.getElementById('test-country-list');
+
     expect(datalist?.tagName).toBe('DATALIST');
     expect(datalist).toContainHTML('<option value="Poland"></option>');
     expect(datalist).toContainHTML('<option value="Germany"></option>');

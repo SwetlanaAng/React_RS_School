@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 
 const root = document.getElementById('root');
+
 if (root) {
   createRoot(root).render(
     <StrictMode>

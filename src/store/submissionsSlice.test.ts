@@ -24,6 +24,7 @@ describe('submissionsSlice', () => {
 
   it('keeps all submissions in one list', () => {
     const first = submissionsReducer(undefined, addSubmission(submission));
+
     const state = submissionsReducer(
       first,
       addSubmission({ ...submission, id: '2', source: 'rhf', name: 'Bob' })

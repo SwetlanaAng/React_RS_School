@@ -161,6 +161,7 @@ describe('Home', () => {
     expect(store.getState().currentForm.selectedForm).toBeNull();
 
     const card = screen.getByRole('article');
+
     expect(card).toHaveClass('border-purple-400');
 
     act(() => {

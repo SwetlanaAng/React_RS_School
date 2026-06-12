@@ -42,6 +42,7 @@ describe('UncontrolledForm', () => {
     renderWithProviders(<UncontrolledForm />);
 
     await user.click(screen.getByRole('button', { name: 'Submit' }));
+
     expect(screen.getByText('Country is required')).toBeInTheDocument();
 
     await user.type(screen.getByLabelText('Country'), 'Poland');

@@ -24,6 +24,8 @@ const currentFormSlice = createSlice({
     },
   },
 });
+
 export const { clearSelectedForm, selectUncontrolled, selectRHF } =
   currentFormSlice.actions;
+
 export default currentFormSlice.reducer;

@@ -36,6 +36,7 @@ describe('ReactHookForm', () => {
         'The first letter must be capitalized, and the remaining letters must be lowercase'
       )
     ).toBeInTheDocument();
+
     expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
   });
 
@@ -69,6 +70,7 @@ describe('ReactHookForm', () => {
     await waitFor(() => {
       expect(screen.getByText('Passwords must match')).toBeInTheDocument();
     });
+
     expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
   });
 });

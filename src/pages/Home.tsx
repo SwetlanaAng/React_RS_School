@@ -19,6 +19,7 @@ export default function Home() {
   const [modalContainer, setModalContainer] = useState<HTMLDivElement | null>(
     null
   );
+
   const currentForm = useAppSelector((state) => state.currentForm);
   const submissions = useAppSelector(selectSubmissions);
   const dispatch = useAppDispatch();
