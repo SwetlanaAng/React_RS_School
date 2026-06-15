@@ -74,9 +74,9 @@ export const CountryList = ({
   return (
     <List
       className={styles.countryList}
-      style={{ height: 750 }}
+      style={{ height: 1050 }}
       rowCount={filteredCountries.length}
-      rowHeight={300}
+      rowHeight={350}
       rowComponent={CountryRow}
       rowProps={{
         countries: filteredCountries,
