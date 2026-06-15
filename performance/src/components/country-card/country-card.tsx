@@ -1,5 +1,5 @@
 import type { Country } from '../../types';
-import { DataTable } from '../data-table/data-table';
+import  DataTable  from '../data-table/data-table';
 import {
   getPopulationForYear,
   getCo2ForYear,

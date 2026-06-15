@@ -92,16 +92,21 @@ export const App = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>CO₂ Emissions Data Explorer</h1>
 
-      {/* Controls */}
       <div className={styles.controls}>
         <SearchBar value={state.searchQuery} onChange={handleSearch} />
-        <YearSelector year={state.selectedYear} years={years} onChange={handleYearChange} />
+        <YearSelector
+          year={state.selectedYear}
+          years={years}
+          onChange={handleYearChange}
+        />
 
         <div className={styles.sortContainer}>
           <label className={styles.sortLabel}>Sort by:</label>
           <select
             value={state.sortField}
-            onChange={(e) => handleSortFieldChange(e.target.value as 'name' | 'population')}
+            onChange={(e) =>
+              handleSortFieldChange(e.target.value as 'name' | 'population')
+            }
             className={styles.sortSelect}
           >
             <option value="population">Population</option>
@@ -120,7 +125,6 @@ export const App = () => {
         </div>
       </div>
 
-      {/* Country List */}
       <CountryList
         countries={data}
         searchQuery={state.searchQuery}
@@ -132,7 +136,6 @@ export const App = () => {
         onYearChange={handleYearChange}
       />
 
-      {/* Column Modal */}
       <ColumnModal
         isOpen={state.isColumnModalOpen}
         availableColumns={availableColumns}
