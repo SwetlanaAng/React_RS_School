@@ -6,7 +6,7 @@ type SearchBarProps = {
   onChange: (value: string) => void;
 };
 
-export default memo( function SearchBar ({ value, onChange }: SearchBarProps) {
+export default memo(function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <div className={styles.container}>
       <label htmlFor="search" className={styles.label}>
@@ -22,4 +22,4 @@ export default memo( function SearchBar ({ value, onChange }: SearchBarProps) {
       />
     </div>
   );
-}) 
+});

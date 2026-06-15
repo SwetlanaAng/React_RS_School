@@ -7,7 +7,7 @@ type YearSelectorProps = {
   onChange: (year: number) => void;
 };
 
-export default memo( function YearSelector ({ year, years, onChange }: YearSelectorProps) {
+export default memo(function YearSelector({ year, years, onChange }: YearSelectorProps) {
   return (
     <div className={styles.container}>
       <label htmlFor="year" className={styles.label}>

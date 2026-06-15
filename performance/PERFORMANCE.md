@@ -10,7 +10,7 @@
 
 ### Interaction B: Search countries
 
-- **Commit duration**:  0.0002 s
+- **Commit duration**: 0.0002 s
 - **Render duration**: 247.3 ms
 - **Screenshot**: ![Search countries baseline](performance-starter/screenshots/baseline/SearchCountriesBefore.png)
 

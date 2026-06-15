@@ -9,7 +9,7 @@ type ColumnModalProps = {
   onClose: () => void;
 };
 
-export default memo( function ColumnModal ({
+export default memo(function ColumnModal({
   isOpen,
   availableColumns,
   selectedColumns,
@@ -47,5 +47,4 @@ export default memo( function ColumnModal ({
       </div>
     </div>
   );
-}
-);
+});

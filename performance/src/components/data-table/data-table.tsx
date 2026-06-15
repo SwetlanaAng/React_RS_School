@@ -10,8 +10,8 @@ type DataTableProps = {
   columns: string[];
 };
 
-export default memo(function DataTable ({ data, year, columns }: DataTableProps) {
-  const yearData = useMemo(()=>data.filter((d) => d.year === year), [year, data]) ;
+export default memo(function DataTable({ data, year, columns }: DataTableProps) {
+  const yearData = useMemo(() => data.filter((d) => d.year === year), [year, data]);
 
   if (yearData.length === 0) {
     return <div className={styles.noData}>No data available for year {year}</div>;
@@ -35,4 +35,4 @@ export default memo(function DataTable ({ data, year, columns }: DataTableProps)
       </tbody>
     </table>
   );
-}) ;
+});
