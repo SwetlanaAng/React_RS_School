@@ -35,6 +35,7 @@ export const App = () => {
   const years = useMemo(() => {
     return data ? getAvailableYears(data) : [];
   }, [data]);
+  
   const availableColumns = useMemo(() => {
     return getAvailableColumns();
   }, []);

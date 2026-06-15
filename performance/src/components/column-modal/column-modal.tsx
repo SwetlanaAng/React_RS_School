@@ -16,6 +16,7 @@ export default memo(function ColumnModal({
   onToggle,
   onClose,
 }: ColumnModalProps) {
+  
   if (!isOpen) {
     return null;
   }

@@ -30,7 +30,9 @@ function CountryRow({
   index,
   style,
 }: RowComponentProps<RowProps>) {
+
   const country = countries[index];
+
   return (
     <div style={style}>
       <CountryCard
@@ -51,6 +53,7 @@ export const CountryList = ({
   sortField,
   sortOrder,
 }: CountryListProps) => {
+  
   const filteredCountries = useMemo(() => {
     return countries
       .filter((c) => {

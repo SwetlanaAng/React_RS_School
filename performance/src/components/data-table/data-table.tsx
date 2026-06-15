@@ -11,6 +11,7 @@ type DataTableProps = {
 };
 
 export default memo(function DataTable({ data, year, columns }: DataTableProps) {
+  
   const yearData = useMemo(() => data.filter((d) => d.year === year), [year, data]);
 
   if (yearData.length === 0) {
