@@ -16,7 +16,7 @@ export const charactersApi = createApi({
   reducerPath: 'charactersApi',
   tagTypes: ['Characters', 'DetailedCharacter'],
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
+  keepUnusedDataFor: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 60,
   endpoints: (builder) => ({
     getCharacters: builder.query<ResponseCharacter, GetCharactersArgs>({
       query: ({ search, page }) => {
