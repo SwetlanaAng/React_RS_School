@@ -3,7 +3,6 @@ import '../index.css';
 
 export const metadata: Metadata = {
   title: 'Rick and Morty',
-  description: 'Rick and Morty characters search',
 };
 
 export default function RootLayout({

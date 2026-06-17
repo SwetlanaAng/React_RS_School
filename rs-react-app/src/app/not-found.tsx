@@ -1,7 +1,6 @@
-/* import { Link } from 'react-router';
-import { buttonClassName } from '../shared/classes';
-import notFoundImage from '../assets/404.png';
-
+//import { Link } from 'react-router';
+//import { buttonClassName } from '../shared/classes';
+//import notFoundImage from '../assets/404.png';
 export default function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4 transition-colors duration-300 dark:bg-slate-950">
@@ -12,16 +11,15 @@ export default function NotFound() {
         <h1 className="text-2xl font-bold text-teal-700 dark:text-teal-100">
           Oops! The page was not found
         </h1>
-        <img
+        {/* <img
           src={notFoundImage}
           alt="404"
           className="my-8 w-full max-w-2xl object-contain
           "
-        />
-        <Link to="/" className={buttonClassName}>
+        />  <Link to="/" className={buttonClassName}>
           Return to home page
-        </Link>
+        </Link> */}
       </section>
     </main>
   );
-} */
+}

@@ -1,4 +1,4 @@
-/* import authorImage from '../assets/author.png';
+//import authorImage from '../assets/author.png';
 
 export default function About() {
   return (
@@ -30,13 +30,12 @@ export default function About() {
             . It allows users to search for Rick and Morty characters
           </span>
         </div>
-        <img
+        {/* <img
           src={authorImage}
           alt="author"
           className="my-8 w-full max-w-md object-contain"
-        />
+        /> */}
       </section>
     </main>
   );
 }
-*/
