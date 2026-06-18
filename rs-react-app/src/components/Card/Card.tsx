@@ -4,6 +4,7 @@ import { toggleCharacter } from '../../store/charactersSlice';
 import type { Character } from '../../shared/types';
 import type { AppDispatch, RootState } from '../../store/store';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 interface CardProps {
   character: Character;
@@ -42,7 +43,13 @@ export default function Card({ character }: CardProps) {
         isSelected ? 'ring-4 ring-fuchsia-400' : ''
       }`}
     >
-      <img className="w-full" src={image} alt={name} />
+      <Image
+        src={image}
+        alt={name}
+        width={300}
+        height={300}
+        className="w-full"
+      />
       <div className="px-6 py-4 text-center">
         <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
           {name}

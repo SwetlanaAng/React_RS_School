@@ -2,6 +2,8 @@ import DetailedCardServer from '@/components/DetailedCardServer/DetailedCardServ
 import { MainContent } from '../components/MainContent/MainContent';
 import Pagination from '../components/Pagination/Pagination';
 import { isResponseCharacter } from '@/utils/typeGuards';
+import { Suspense } from 'react';
+import Spinner from '@/components/Spinner/Spinner';
 
 export default async function Home({
   searchParams,
@@ -26,7 +28,7 @@ export default async function Home({
   const params = await searchParams;
 
   const page = Number(params.page ?? 1);
-  const id = Number(params.details);
+  const id = params.details ? Number(params.details) : null;
 
   const response = await fetch(
     `https://rickandmortyapi.com/api/character?page=${String(page)}`,
@@ -50,7 +52,9 @@ export default async function Home({
       />
       <div className="flex items-start">
         <MainContent loading={false} characters={data.results} />
-        <DetailedCardServer detailsId={id}></DetailedCardServer>
+        <Suspense fallback={<Spinner />}>
+          <DetailedCardServer detailsId={id}></DetailedCardServer>
+        </Suspense>
       </div>
       {/* <ErrorBoundary errorSwitcher={setError}> */}
       {/*  <SearchForm
