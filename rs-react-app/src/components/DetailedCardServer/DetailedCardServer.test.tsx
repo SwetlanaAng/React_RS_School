@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import type { Character } from '../../shared/types';
-import DetailedCardRoute from './DetailedCardRoute';
+import DetailedCardRoute from './DetailedCardServer';
 import { charactersApi } from '../../store/apiSlice';
 import { mockCharacters } from '../../test/mockCharacters';
 import {

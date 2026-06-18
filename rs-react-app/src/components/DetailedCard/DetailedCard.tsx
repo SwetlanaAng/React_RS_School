@@ -1,3 +1,5 @@
+'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import InfoSpan from '../InfoSpan/InfoSpan';
 
 interface DetailedCardProps {
@@ -6,7 +8,6 @@ interface DetailedCardProps {
   species: string;
   status: string;
   image: string;
-  onClose: () => void;
   location: {
     name: string;
     url: string;
@@ -19,15 +20,22 @@ export default function DetailedCard({
   species,
   status,
   image,
-  onClose,
   location,
 }: DetailedCardProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   return (
     <div className="relative w-full overflow-hidden rounded border-2 border-purple-200 bg-white dark:border-teal-800  text-teal-900 shadow-lg transition-colors duration-300 dark:border-purple-800 dark:bg-slate-900 dark:text-teal-50 dark:shadow-purple-950 sm:max-w-sm">
       <button
         type="button"
         aria-label="Close details"
-        onClick={onClose}
+        onClick={() => {
+          if (!searchParams || !pathname) return;
+          const params = new URLSearchParams(searchParams.toString());
+          params.delete('details');
+          router.push(`${pathname}?${params.toString()}`);
+        }}
         className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-xl font-bold text-purple-700 shadow-md transition-colors hover:bg-purple-200 dark:bg-slate-950/90 dark:text-fuchsia-200 dark:hover:bg-purple-900"
       >
         ×

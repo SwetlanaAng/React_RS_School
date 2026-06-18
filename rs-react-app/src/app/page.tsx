@@ -1,13 +1,6 @@
-//import { useState } from 'react';
-import SearchForm from '../components/SearchForm/SearchForm';
-import Button from '../components/Button/Button';
-import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary';
+import DetailedCardServer from '@/components/DetailedCardServer/DetailedCardServer';
 import { MainContent } from '../components/MainContent/MainContent';
-import ErrorUI from '../components/ErrorUI/ErrorUI';
-//import { useAppData } from '../hooks/useAppData';
 import Pagination from '../components/Pagination/Pagination';
-import { Outlet } from 'react-router';
-import { Flyout } from '../components/Flyout/Flyout';
 import { isResponseCharacter } from '@/utils/typeGuards';
 
 export default async function Home({
@@ -33,6 +26,7 @@ export default async function Home({
   const params = await searchParams;
 
   const page = Number(params.page ?? 1);
+  const id = Number(params.details);
 
   const response = await fetch(
     `https://rickandmortyapi.com/api/character?page=${String(page)}`,
@@ -56,6 +50,7 @@ export default async function Home({
       />
       <div className="flex items-start">
         <MainContent loading={false} characters={data.results} />
+        <DetailedCardServer detailsId={id}></DetailedCardServer>
       </div>
       {/* <ErrorBoundary errorSwitcher={setError}> */}
       {/*  <SearchForm

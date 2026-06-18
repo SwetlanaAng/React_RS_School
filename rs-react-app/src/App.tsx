@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Layout from './Layouts/Layuot';
-import DetailedCardRoute from './components/DetailedCardRoute/DetailedCardRoute';
+import DetailedCardRoute from './components/DetailedCardServer/DetailedCardServer';
 
 export function App() {
   return (
