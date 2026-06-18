@@ -1,3 +1,4 @@
+'use client';
 import type { AppState } from '../../shared/types';
 import Spinner from '../Spinner/Spinner';
 import CardsBox from '../CardsBox/CardsBox';

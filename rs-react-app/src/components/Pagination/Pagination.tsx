@@ -1,4 +1,5 @@
-import { useSearchParams } from 'react-router';
+'use client';
+//import { useSearchParams } from 'react-router';
 import type { Info } from '../../shared/types';
 
 interface PaginationProps extends Info {
@@ -11,7 +12,7 @@ export default function Pagination({
   pages,
   currentPage,
 }: PaginationProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  //const [searchParams, setSearchParams] = useSearchParams();
 
   const buttons: number[] = [];
 
@@ -53,8 +54,8 @@ export default function Pagination({
   return (
     <div
       onClick={() => {
-        searchParams.delete('details');
-        setSearchParams(searchParams);
+        //searchParams.delete('details');
+        //setSearchParams(searchParams);
       }}
       className="py-8 flex items-center justify-center gap-2 text-teal-700 dark:text-teal-200"
     >
@@ -64,16 +65,16 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            const currentSearch = searchParams.get('name');
+            //const currentSearch = searchParams.get('name');
 
-            if (currentSearch) {
+            /* if (currentSearch) {
               setSearchParams({
                 name: currentSearch,
                 page: String(currentPage - 1),
               });
             } else {
               setSearchParams({ page: String(currentPage - 1) });
-            }
+            } */
           }}
         >
           prev
@@ -93,13 +94,13 @@ export default function Pagination({
             key={item}
             onClick={(event) => {
               event.stopPropagation();
-              const currentSearch = searchParams.get('name');
+              /* const currentSearch = searchParams.get('name');
 
               if (currentSearch) {
                 setSearchParams({ name: currentSearch, page: String(item) });
               } else {
                 setSearchParams({ page: String(item) });
-              }
+              } */
             }}
           >
             {item}
@@ -112,7 +113,7 @@ export default function Pagination({
           className={paginationArrowClassName}
           onClick={(event) => {
             event.stopPropagation();
-            const currentSearch = searchParams.get('name');
+            /* const currentSearch = searchParams.get('name');
 
             if (currentSearch) {
               setSearchParams({
@@ -121,7 +122,7 @@ export default function Pagination({
               });
             } else {
               setSearchParams({ page: String(currentPage + 1) });
-            }
+            } */
           }}
         >
           next
