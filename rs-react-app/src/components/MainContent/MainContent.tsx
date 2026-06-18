@@ -1,20 +1,11 @@
-'use client';
-import type { AppState } from '../../shared/types';
-import Spinner from '../Spinner/Spinner';
 import CardsBox from '../CardsBox/CardsBox';
+import { getCharacters } from '@/shared/getCharacters';
 
-type MainContentProps = Omit<AppState, 'searchFailed' | 'search' | 'error'>;
-
-export function MainContent({ loading, characters }: MainContentProps) {
+export async function MainContent({ page }: { page: number }) {
+  const data = await getCharacters(page);
   return (
     <section className="min-w-0 flex-1">
-      {loading ? (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      ) : (
-        <CardsBox characters={characters} />
-      )}
+      <CardsBox characters={data.results} />
     </section>
   );
 }

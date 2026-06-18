@@ -1,9 +1,9 @@
 import DetailedCardServer from '@/components/DetailedCardServer/DetailedCardServer';
 import { MainContent } from '../components/MainContent/MainContent';
-import Pagination from '../components/Pagination/Pagination';
-import { isResponseCharacter } from '@/utils/typeGuards';
 import { Suspense } from 'react';
 import Spinner from '@/components/Spinner/Spinner';
+import { PaginationServer } from '@/components/Pagination/PaginationServer';
+import PaginationSkeleton from '@/components/Pagination/PaginationSkeleton';
 
 export default async function Home({
   searchParams,
@@ -13,49 +13,28 @@ export default async function Home({
     details?: string;
   }>;
 }) {
-  /*   const {
-    search,
-    characters,
-    loading,
-    searchFailed,
-    onFormSubmit,
-    paginationData,
-    currentPaginationPage,
-  } = useAppData();
-
-  const [error, setError] = useState<boolean>(false); */
-
   const params = await searchParams;
 
   const page = Number(params.page ?? 1);
   const id = params.details ? Number(params.details) : null;
 
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${String(page)}`,
-    {
-      cache: 'no-store',
-    }
-  );
-
-  const data: unknown = await response.json();
-  if (!isResponseCharacter(data)) {
-    throw new Error('Invalid API response');
-  }
   return (
     <>
-      <Pagination
-        currentPage={page}
-        count={data.info.count}
-        pages={data.info.pages}
-        next={data.info.next}
-        prev={data.info.prev}
-      />
-      <div className="flex items-start">
-        <MainContent loading={false} characters={data.results} />
-        <Suspense fallback={<Spinner />}>
-          <DetailedCardServer detailsId={id}></DetailedCardServer>
+      <main>
+        <Suspense fallback={<PaginationSkeleton />}>
+          <PaginationServer page={page} />
         </Suspense>
-      </div>
+        <div className="flex items-start">
+          <Suspense fallback={<Spinner />}>
+            <MainContent page={page} />
+          </Suspense>
+
+          <Suspense fallback={<Spinner />}>
+            <DetailedCardServer detailsId={id}></DetailedCardServer>
+          </Suspense>
+        </div>
+      </main>
+
       {/* <ErrorBoundary errorSwitcher={setError}> */}
       {/*  <SearchForm
           error={error}
