@@ -1,19 +1,29 @@
+'use client';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import type { AppDispatch, RootState } from '../../store/store';
 import { clearAllSelected } from '../../store/charactersSlice';
-import { useDownload } from '../../hooks/useDownload';
+import { downloadCsvAction } from '@/app/actions/downloadCsvAction';
+import { triggerCsvDownload } from '@/shared/triggerCsvDownload';
 
 export const Flyout = () => {
   const charactersSelected = useSelector(
     (state: RootState) => state.characters.selected
   );
 
-  const { download } = useDownload();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleUnselectClick = () => {
     dispatch(clearAllSelected());
+  };
+
+  const handleDownloadClick = async () => {
+    const result = await downloadCsvAction(charactersSelected);
+
+    if (result.ok) {
+      triggerCsvDownload(result.csv, result.filename);
+    }
   };
 
   if (charactersSelected.length === 0) return null;
@@ -30,7 +40,7 @@ export const Flyout = () => {
         <Button
           type="button"
           onClick={() => {
-            download(charactersSelected, charactersSelected.length);
+            void handleDownloadClick();
           }}
         >
           Download

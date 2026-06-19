@@ -8,6 +8,7 @@ import SearchForm from '@/components/SearchForm/SearchForm';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SEARCH_STORAGE_KEY } from '@/shared/searchStorage';
+import { Flyout } from '@/components/Flyout/Flyout';
 
 export default async function Home({
   searchParams,
@@ -51,7 +52,7 @@ export default async function Home({
           </Suspense>
         </div>
       </main>
-
+      <Flyout></Flyout>
       {/* <ErrorBoundary errorSwitcher={setError}> */}
       {/*  <SearchForm
           error={error}
