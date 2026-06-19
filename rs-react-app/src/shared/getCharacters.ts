@@ -1,14 +1,26 @@
 import { isResponseCharacter } from '@/utils/typeGuards';
 import { ResponseCharacter } from './types';
 
+export const BASE_URL = 'https://rickandmortyapi.com/api';
+
 type CharactersResult =
   | { ok: true; data: ResponseCharacter }
   | { ok: false; error: string };
-export async function getCharacters(page: number): Promise<CharactersResult> {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${String(page)}`,
-    { cache: 'no-store' }
-  );
+export async function getCharacters(
+  search?: string,
+  page?: number
+): Promise<CharactersResult> {
+  const url = new URL(`${BASE_URL}/character/`);
+
+  if (search) {
+    url.searchParams.set('name', search);
+  }
+  if (page) {
+    url.searchParams.set('page', String(page));
+  }
+
+  const response = await fetch(url, { cache: 'no-store' });
+
   if (!response.ok) {
     return {
       ok: false,

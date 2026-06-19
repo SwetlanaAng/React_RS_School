@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import logo from '../assets/morty-smith.png';
 import light from '../assets/light.png';

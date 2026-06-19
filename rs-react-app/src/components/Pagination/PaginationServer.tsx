@@ -2,8 +2,14 @@ import { getCharacters } from '@/shared/getCharacters';
 import Pagination from './Pagination';
 import ErrorUI from '../ErrorUI/ErrorUI';
 
-export async function PaginationServer({ page }: { page: number }) {
-  const data = await getCharacters(page);
+export async function PaginationServer({
+  page,
+  search,
+}: {
+  page: number;
+  search: string;
+}) {
+  const data = await getCharacters(search, page);
 
   if (!data.ok) {
     return (

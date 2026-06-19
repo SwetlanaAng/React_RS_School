@@ -2,8 +2,14 @@ import CardsBox from '../CardsBox/CardsBox';
 import { getCharacters } from '@/shared/getCharacters';
 import ErrorUI from '../ErrorUI/ErrorUI';
 
-export async function MainContent({ page }: { page: number }) {
-  const data = await getCharacters(page);
+export async function MainContent({
+  page,
+  search,
+}: {
+  page: number;
+  search: string;
+}) {
+  const data = await getCharacters(search, page);
 
   if (!data.ok) {
     return (
