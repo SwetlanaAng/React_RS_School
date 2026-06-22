@@ -6,6 +6,19 @@ interface State {
   hasError: boolean;
 }
 
+function isNavigationError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const digest = (error as Error & { digest?: string }).digest;
+
+  return (
+    typeof digest === 'string' &&
+    (digest.startsWith('NEXT_REDIRECT') || digest.startsWith('NEXT_NOT_FOUND'))
+  );
+}
+
 export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
   fallback?: React.ReactNode;
@@ -15,8 +28,18 @@ export class ErrorBoundary extends Component<{
 }> {
   state: State = { hasError: false };
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(error: unknown) {
+    if (isNavigationError(error)) {
+      return null;
+    }
+
     return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    if (isNavigationError(error)) {
+      throw error;
+    }
   }
 
   onButtonClick() {
