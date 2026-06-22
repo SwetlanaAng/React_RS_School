@@ -6,15 +6,15 @@ import light from '../assets/light.png';
 import dark from '../assets/dark.png';
 import reload from '../assets/reload.png';
 import { useTheme } from '../hooks/useTheme';
-import { useRefetchCharactersMutation } from '../store/apiSlice';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
-  const [refetchCharacters] = useRefetchCharactersMutation();
+  const router = useRouter();
 
   const handleReload = () => {
-    void refetchCharacters(undefined);
+    router.refresh();
   };
 
   return (

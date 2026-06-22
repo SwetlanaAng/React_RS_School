@@ -10,9 +10,13 @@ export default async function DetailedCardServer({
   if (!detailsId) {
     return null;
   }
+
   const res = await fetch(
     `https://rickandmortyapi.com/api/character/${String(detailsId)}`,
-    { cache: 'no-store' }
+    {
+      cache: 'force-cache',
+      next: { revalidate: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 60 },
+    }
   );
 
   if (!res.ok) {

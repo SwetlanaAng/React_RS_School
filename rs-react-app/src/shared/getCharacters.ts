@@ -19,7 +19,10 @@ export async function getCharacters(
     url.searchParams.set('page', String(page));
   }
 
-  const response = await fetch(url, { cache: 'no-store' });
+  const response = await fetch(url.toString(), {
+    cache: 'force-cache',
+    next: { revalidate: Number(process.env.NEXT_PUBLIC_CACHE_TTL) || 60 },
+  });
 
   if (!response.ok) {
     return {
