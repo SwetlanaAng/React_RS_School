@@ -1,10 +1,10 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { usePathname, useRouter } from '@/i18n/routing';
 import InfoSpan from '@/components/InfoSpan/InfoSpan';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { clearDetailsAction } from '@/app/actions/searchActions';
 
 interface DetailedCardProps {
   name: string;
@@ -26,26 +26,32 @@ export default function DetailedCard({
   image,
   location,
 }: DetailedCardProps) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const t = useTranslations('details');
+  const nameFromUrl = searchParams.get('name') ?? '';
+  const pageFromUrl = searchParams.get('page') ?? '1';
 
   return (
-    <div className="relative w-full overflow-hidden rounded border-2 border-purple-200 bg-white dark:border-teal-800  text-teal-900 shadow-lg transition-colors duration-300 dark:border-purple-800 dark:bg-slate-900 dark:text-teal-50 dark:shadow-purple-950 sm:max-w-sm">
+    <form
+      action={clearDetailsAction}
+      className="relative w-full overflow-hidden rounded border-2 border-purple-200 bg-white text-teal-900 shadow-lg transition-colors duration-300 dark:border-purple-800 dark:bg-slate-900 dark:text-teal-50 dark:shadow-purple-950 sm:max-w-sm"
+    >
+      <input type="hidden" name="name" value={nameFromUrl} />
+      <input type="hidden" name="page" value={pageFromUrl} />
       <button
-        type="button"
+        type="submit"
         aria-label={t('close')}
-        onClick={() => {
-          const params = new URLSearchParams(searchParams.toString());
-          params.delete('details');
-          router.push(`${pathname}?${params.toString()}`);
-        }}
-        className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-xl font-bold text-purple-700 shadow-md transition-colors hover:bg-purple-200 dark:bg-slate-950/90 dark:text-fuchsia-200 dark:hover:bg-purple-900"
+        className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-xl font-bold text-purple-700 shadow-md transition-colors hover:bg-purple-200 dark:bg-slate-950/90 dark:text-fuchsia-200 dark:hover:bg-purple-900"
       >
         ×
       </button>
-      <Image className="w-full" src={image} alt={name} />
+      <Image
+        className="w-full"
+        src={image}
+        alt={name}
+        width={300}
+        height={300}
+      />
       <div className="px-2 py-3 text-center sm:px-6 sm:py-4">
         <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
           {name}
@@ -61,6 +67,6 @@ export default function DetailedCard({
         <InfoSpan text={species} />
         <InfoSpan text={status} />
       </div>
-    </div>
+    </form>
   );
 }

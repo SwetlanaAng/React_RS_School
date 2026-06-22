@@ -3,25 +3,33 @@
 import type { Character } from '@/shared/types';
 import Card from '@/components/Card/Card';
 import { useSearchParams } from 'next/navigation';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { clearDetailsAction } from '@/app/actions/searchActions';
 
 interface CardsBoxProps {
   characters: Character[];
 }
 
 export default function CardsBox({ characters }: CardsBoxProps) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const nameFromUrl = searchParams.get('name') ?? '';
+  const pageFromUrl = searchParams.get('page') ?? '1';
+
+  const handleBackgroundClick = () => {
+    const formData = new FormData();
+    formData.set('name', nameFromUrl);
+    formData.set('page', pageFromUrl);
+    void clearDetailsAction(formData);
+  };
 
   return (
-    <div className="flex   items-start">
-      {' '}
+    <div className="flex items-start">
       <div
-        onClick={() => {
-          const params = new URLSearchParams(searchParams.toString());
-          params.delete('details');
-          router.push(`${pathname}?${params.toString()}`);
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest('[data-character-card]')) {
+            return;
+          }
+
+          handleBackgroundClick();
         }}
         className="mx-1 my-4 rounded-2xl border-2 border-teal-200 bg-white 
       p-2 shadow-lg shadow-teal-100 transition-colors duration-300 dark:border-teal-800 dark:bg-slate-800 dark:shadow-teal-950 sm:mx-3 sm:p-6"
