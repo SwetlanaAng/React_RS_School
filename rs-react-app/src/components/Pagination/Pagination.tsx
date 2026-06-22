@@ -1,6 +1,9 @@
 'use client';
 import type { Info } from '@/shared/types';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
+
 interface PaginationProps extends Info {
   currentPage: number;
 }
@@ -13,6 +16,7 @@ export default function Pagination({
   pages,
   currentPage,
 }: PaginationProps) {
+  const t = useTranslations('pagination');
   const paginationButtonClassName =
     'flex h-10 w-10 items-center justify-center rounded-lg border-2 border-teal-300 font-bold shadow-sm transition-colors hover:bg-purple-300 hover:text-teal-800 dark:border-teal-700 dark:hover:bg-purple-900 dark:hover:text-teal-100';
   const paginationArrowClassName =
@@ -30,7 +34,7 @@ export default function Pagination({
     const params = new URLSearchParams(searchParams.toString());
 
     params.set('page', String(page));
-    if (pathname) router.push(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const buttons: PaginationItem[] = [];
@@ -76,7 +80,7 @@ export default function Pagination({
             setParams(currentPage - 1);
           }}
         >
-          prev
+          {t('prev')}
         </button>
       )}
       {buttons.map((item) => {
@@ -111,7 +115,7 @@ export default function Pagination({
             setParams(currentPage + 1);
           }}
         >
-          next
+          {t('next')}
         </button>
       )}
     </div>

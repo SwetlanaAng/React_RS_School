@@ -3,8 +3,10 @@
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import Image from 'next/image';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
 import { useStorage } from '@/hooks/useStorage';
+import { useTranslations } from 'next-intl';
 
 export interface SearchFormProps {
   className?: string;
@@ -15,6 +17,7 @@ export default function SearchForm({ className }: SearchFormProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { saveSearch } = useStorage();
+  const t = useTranslations('search');
   const nameFromUrl = searchParams.get('name') ?? '';
 
   const setParams = (name: string) => {
@@ -53,7 +56,7 @@ export default function SearchForm({ className }: SearchFormProps) {
                dark:text-teal-100 dark:placeholder:text-teal-600 dark:focus:border-fuchsia-500 dark:focus:ring-purple-950"
             type="search"
             defaultValue={nameFromUrl}
-            placeholder="Search..."
+            placeholder={t('placeholder')}
             name="search"
             id="search"
           />
@@ -66,7 +69,7 @@ export default function SearchForm({ className }: SearchFormProps) {
             className="pointer-events-none absolute left-4 top-1/2 block h-5 w-5 -translate-y-1/2 text-teal-400 dark:text-teal-500"
           />
         </div>
-        <Button type="submit">Search</Button>
+        <Button type="submit">{t('submit')}</Button>
       </form>
     </div>
   );

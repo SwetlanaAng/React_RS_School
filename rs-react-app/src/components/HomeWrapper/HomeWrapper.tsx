@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import Button from '@/components/Button/Button';
+import { useTranslations } from 'next-intl';
 
 function ErrorTrigger({ shouldThrow }: { shouldThrow: boolean }) {
   if (shouldThrow) throw new Error('Test error');
@@ -10,9 +11,16 @@ function ErrorTrigger({ shouldThrow }: { shouldThrow: boolean }) {
 
 export function HomeWrapper({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState(false);
+  const tErrors = useTranslations('errors');
+  const tHome = useTranslations('home');
+
   return (
     <>
-      <ErrorBoundary errorSwitcher={setError}>
+      <ErrorBoundary
+        errorSwitcher={setError}
+        errorMessage={tErrors('somethingWrong')}
+        returnLabel={tErrors('return')}
+      >
         <ErrorTrigger shouldThrow={error} />
         {children}
       </ErrorBoundary>
@@ -24,7 +32,7 @@ export function HomeWrapper({ children }: { children: React.ReactNode }) {
             setError(true);
           }}
         >
-          Error Button
+          {tHome('errorButton')}
         </Button>
       </div>
     </>

@@ -1,17 +1,19 @@
 'use client';
 
-import Link from 'next/link';
+import { Link, useRouter } from '@/i18n/routing';
 import logo from '@/assets/morty-smith.png';
 import light from '@/assets/light.png';
 import dark from '@/assets/dark.png';
 import reload from '@/assets/reload.png';
 import { useTheme } from '@/hooks/useTheme';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
+  const t = useTranslations('header');
 
   const handleReload = () => {
     router.refresh();
@@ -23,13 +25,18 @@ export default function Header() {
         <Image src={logo} alt="Morty" className="h-12 w-auto object-contain" />
       </Link>
       <div className="flex items-center gap-3">
+        <LanguageSwitcher />
         <Link
           href="/about"
           className="font-bold transition-colors hover:text-purple-700 dark:hover:text-fuchsia-300"
         >
-          About
+          {t('about')}
         </Link>
-        <button type="button" onClick={toggleTheme} aria-label="Toggle theme">
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={t('toggleTheme')}
+        >
           <Image
             src={theme === 'light' ? dark : light}
             alt="Sun"
@@ -40,7 +47,7 @@ export default function Header() {
       <button
         type="button"
         onClick={handleReload}
-        aria-label="Cache invalidation and refetch characters"
+        aria-label={t('reloadCache')}
         className="absolute top-full right-4 z-30 mt-6 flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border-2 border-teal-300 bg-white p-1.5 shadow-md transition-all duration-200 hover:scale-105 hover:border-purple-300 hover:bg-teal-50 hover:shadow-lg active:scale-95 dark:border-teal-400 dark:bg-slate-900 dark:hover:border-fuchsia-400 dark:hover:bg-slate-800"
       >
         <Image

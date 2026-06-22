@@ -6,11 +6,13 @@ import type { AppDispatch, RootState } from '@/store/store';
 import { clearAllSelected } from '@/store/charactersSlice';
 import { downloadCsvAction } from '@/app/actions/downloadCsvAction';
 import { triggerCsvDownload } from '@/shared/triggerCsvDownload';
+import { useTranslations } from 'next-intl';
 
 export const Flyout = () => {
   const charactersSelected = useSelector(
     (state: RootState) => state.characters.selected
   );
+  const t = useTranslations('flyout');
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,11 +33,11 @@ export const Flyout = () => {
   return (
     <div className="sticky bottom-0 left-0 z-50 flex w-full items-center justify-between gap-4 bg-teal-200/50 px-6 py-4 shadow-lg backdrop-blur-sm dark:bg-slate-900/80">
       <span className="font-semibold dark:text-teal-50">
-        {`Selected characters : ${String(charactersSelected.length)}`}
+        {t('selected', { count: charactersSelected.length })}
       </span>
       <div className="flex gap-3">
         <Button type="button" onClick={handleUnselectClick}>
-          Unselect all
+          {t('unselectAll')}
         </Button>
         <Button
           type="button"
@@ -43,7 +45,7 @@ export const Flyout = () => {
             void handleDownloadClick();
           }}
         >
-          Download
+          {t('download')}
         </Button>
       </div>
     </div>

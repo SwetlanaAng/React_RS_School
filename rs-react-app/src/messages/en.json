@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "Rick and Morty"
+  },
+  "header": {
+    "about": "About",
+    "toggleTheme": "Toggle theme",
+    "reloadCache": "Cache invalidation and refetch characters"
+  },
+  "language": {
+    "en": "EN",
+    "ru": "RU",
+    "switchTo": "Switch to {locale}"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "submit": "Search"
+  },
+  "pagination": {
+    "prev": "prev",
+    "next": "next"
+  },
+  "flyout": {
+    "selected": "Selected characters : {count}",
+    "unselectAll": "Unselect all",
+    "download": "Download"
+  },
+  "errors": {
+    "somethingWrong": "Something went wrong",
+    "return": "Return",
+    "charactersNotFound": "There is no matching characters or an error has occurred (4xx or 5xx)",
+    "characterNotFound": "There is no character or an error has occurred (4xx or 5xx)",
+    "invalidApiResponse": "Invalid API response"
+  },
+  "home": {
+    "errorButton": "Error Button"
+  },
+  "notFound": {
+    "title": "Oops! The page was not found",
+    "returnHome": "Return to home page"
+  },
+  "about": {
+    "createdBy": "This application was created by",
+    "authorName": "Svetlana Angeliuk",
+    "asPartOf": "as part of the",
+    "courseName": "RS School React Course",
+    "purpose": "It allows users to search for Rick and Morty characters",
+    "authorImageAlt": "author"
+  },
+  "card": {
+    "selectAria": "Select {name}"
+  },
+  "details": {
+    "close": "Close details"
+  }
+}

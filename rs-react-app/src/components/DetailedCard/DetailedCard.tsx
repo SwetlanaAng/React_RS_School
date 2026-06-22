@@ -1,6 +1,8 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
 import InfoSpan from '@/components/InfoSpan/InfoSpan';
+import { useTranslations } from 'next-intl';
 
 interface DetailedCardProps {
   name: string;
@@ -25,13 +27,14 @@ export default function DetailedCard({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations('details');
+
   return (
     <div className="relative w-full overflow-hidden rounded border-2 border-purple-200 bg-white dark:border-teal-800  text-teal-900 shadow-lg transition-colors duration-300 dark:border-purple-800 dark:bg-slate-900 dark:text-teal-50 dark:shadow-purple-950 sm:max-w-sm">
       <button
         type="button"
-        aria-label="Close details"
+        aria-label={t('close')}
         onClick={() => {
-          if (!pathname) return;
           const params = new URLSearchParams(searchParams.toString());
           params.delete('details');
           router.push(`${pathname}?${params.toString()}`);

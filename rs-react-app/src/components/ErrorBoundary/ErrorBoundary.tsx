@@ -10,6 +10,8 @@ export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
   fallback?: React.ReactNode;
   errorSwitcher: (error: boolean) => void;
+  errorMessage?: string;
+  returnLabel?: string;
 }> {
   state: State = { hasError: false };
 
@@ -25,13 +27,13 @@ export class ErrorBoundary extends Component<{
   render() {
     if (this.state.hasError) {
       return (
-        <>
-          <ErrorUI errorMessage="Something went wrong">
-            <Button type="button" onClick={this.onButtonClick.bind(this)}>
-              Return
-            </Button>
-          </ErrorUI>
-        </>
+        <ErrorUI
+          errorMessage={this.props.errorMessage ?? 'Something went wrong'}
+        >
+          <Button type="button" onClick={this.onButtonClick.bind(this)}>
+            {this.props.returnLabel ?? 'Return'}
+          </Button>
+        </ErrorUI>
       );
     }
 

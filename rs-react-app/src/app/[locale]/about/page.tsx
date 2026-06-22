@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import authorImage from '@/assets/author.png';
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
-export default function About() {
+export default async function About() {
+  const t = await getTranslations('about');
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 p-4 transition-colors duration-300 dark:bg-slate-950">
       <section
@@ -11,30 +13,30 @@ export default function About() {
       >
         <div className="text-2xl text-teal-700 dark:text-teal-100">
           <span>
-            This application was created by{' '}
-            <Link
-              className="text-yellow-400 cursor-pointer dark:text-yellow-300"
+            {t('createdBy')}{' '}
+            <a
+              className="cursor-pointer text-yellow-400 dark:text-yellow-300"
               href="https://github.com/SwetlanaAng"
               target="_blank"
               rel="noreferrer"
             >
-              Svetlana Angeliuk
-            </Link>{' '}
-            as part of the{' '}
-            <Link
-              className="text-yellow-400 cursor-pointer dark:text-yellow-300"
+              {t('authorName')}
+            </a>{' '}
+            {t('asPartOf')}{' '}
+            <a
+              className="cursor-pointer text-yellow-400 dark:text-yellow-300"
               href="https://rs.school/courses/reactjs"
               target="_blank"
               rel="noreferrer"
             >
-              RS School React Course
-            </Link>
-            . It allows users to search for Rick and Morty characters
+              {t('courseName')}
+            </a>
+            . {t('purpose')}
           </span>
         </div>
         <Image
           src={authorImage}
-          alt="author"
+          alt={t('authorImageAlt')}
           className="my-8 w-full max-w-md object-contain"
         />
       </section>

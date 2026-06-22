@@ -3,9 +3,11 @@ import { ResponseCharacter } from '@/shared/types';
 
 export const BASE_URL = 'https://rickandmortyapi.com/api';
 
+export type CharacterErrorCode = 'charactersNotFound' | 'invalidApiResponse';
+
 type CharactersResult =
   | { ok: true; data: ResponseCharacter }
-  | { ok: false; error: string };
+  | { ok: false; error: CharacterErrorCode };
 export async function getCharacters(
   search?: string,
   page?: number
@@ -27,13 +29,12 @@ export async function getCharacters(
   if (!response.ok) {
     return {
       ok: false,
-      error:
-        'There is no matching characters or an error has occurred (4xx or 5xx)',
+      error: 'charactersNotFound',
     };
   }
   const data: unknown = await response.json();
   if (!isResponseCharacter(data)) {
-    return { ok: false, error: 'Invalid API response' };
+    return { ok: false, error: 'invalidApiResponse' };
   }
   return { ok: true, data };
 }

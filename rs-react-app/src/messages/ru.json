@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "Рик и Морти"
+  },
+  "header": {
+    "about": "О проекте",
+    "toggleTheme": "Переключить тему",
+    "reloadCache": "Сброс кэша и повторная загрузка персонажей"
+  },
+  "language": {
+    "en": "EN",
+    "ru": "RU",
+    "switchTo": "Переключить на {locale}"
+  },
+  "search": {
+    "placeholder": "Поиск...",
+    "submit": "Искать"
+  },
+  "pagination": {
+    "prev": "назад",
+    "next": "вперёд"
+  },
+  "flyout": {
+    "selected": "Выбрано персонажей : {count}",
+    "unselectAll": "Снять выделение",
+    "download": "Скачать"
+  },
+  "errors": {
+    "somethingWrong": "Что-то пошло не так",
+    "return": "Вернуться",
+    "charactersNotFound": "Подходящих персонажей нет или произошла ошибка (4xx или 5xx)",
+    "characterNotFound": "Персонаж не найден или произошла ошибка (4xx или 5xx)",
+    "invalidApiResponse": "Некорректный ответ API"
+  },
+  "home": {
+    "errorButton": "Кнопка ошибки"
+  },
+  "notFound": {
+    "title": "Упс! Страница не найдена",
+    "returnHome": "Вернуться на главную"
+  },
+  "about": {
+    "createdBy": "Это приложение создано",
+    "authorName": "Светланой Ангелюк",
+    "asPartOf": "в рамках",
+    "courseName": "курса RS School React",
+    "purpose": "Оно позволяет искать персонажей Рика и Морти",
+    "authorImageAlt": "автор"
+  },
+  "card": {
+    "selectAria": "Выбрать {name}"
+  },
+  "details": {
+    "close": "Закрыть детали"
+  }
+}
