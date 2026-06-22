@@ -9,6 +9,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SEARCH_STORAGE_KEY } from '@/shared/searchStorage';
 import { Flyout } from '@/components/Flyout/Flyout';
+import { HomeWrapper } from '@/components/HomeWrapper/HomeWrapper';
 
 export default async function Home({
   searchParams,
@@ -37,62 +38,24 @@ export default async function Home({
 
   return (
     <>
-      <SearchForm />
-      <main>
-        <Suspense fallback={<PaginationSkeleton />}>
-          <PaginationServer page={page} search={search} />
-        </Suspense>
-        <div className="flex items-start">
-          <Suspense fallback={<Spinner />}>
-            <MainContent page={page} search={search} />
+      <HomeWrapper>
+        <SearchForm />
+        <main>
+          <Suspense fallback={<PaginationSkeleton />}>
+            <PaginationServer page={page} search={search} />
           </Suspense>
+          <div className="flex items-start">
+            <Suspense fallback={<Spinner />}>
+              <MainContent page={page} search={search} />
+            </Suspense>
 
-          <Suspense fallback={<Spinner />}>
-            <DetailedCardServer detailsId={id}></DetailedCardServer>
-          </Suspense>
-        </div>
-      </main>
-      <Flyout></Flyout>
-      {/* <ErrorBoundary errorSwitcher={setError}> */}
-      {/*  <SearchForm
-          error={error}
-          loading={loading}
-          onSubmit={onFormSubmit}
-          search={search}
-        /> */}
-      {/*  <main>
-          {!loading && !searchFailed && (
-            <Pagination
-              currentPage={currentPaginationPage}
-              count={paginationData.count}
-              pages={paginationData.pages}
-              next={paginationData.next}
-              prev={paginationData.prev}
-            />
-          )}
-          {searchFailed ? (
-            <ErrorUI errorMessage="There is no matching characters or an error has occurred(4xx or 5xx)"></ErrorUI>
-          ) : (
-            <div className="flex items-start">
-              <MainContent loading={loading} characters={characters} />
-              <Outlet context={{ characters }} />
-            </div>
-          )}
+            <Suspense fallback={<Spinner />}>
+              <DetailedCardServer detailsId={id}></DetailedCardServer>
+            </Suspense>
+          </div>
         </main>
-
-        <div className="flex justify-center">
-          <Button
-            onClick={() => {
-              setError(true);
-            }}
-            type="button"
-            className="mb-6"
-          >
-            Error Button
-          </Button>
-        </div>
-        <Flyout></Flyout> */}
-      {/* </ErrorBoundary> */}
+        <Flyout></Flyout>
+      </HomeWrapper>
     </>
   );
 }
