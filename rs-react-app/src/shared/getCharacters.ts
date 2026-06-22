@@ -1,5 +1,5 @@
 import { isResponseCharacter } from '@/utils/typeGuards';
-import { ResponseCharacter } from './types';
+import { ResponseCharacter } from '@/shared/types';
 
 export const BASE_URL = 'https://rickandmortyapi.com/api';
 

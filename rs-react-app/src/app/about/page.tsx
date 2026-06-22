@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import authorImage from '../../assets/author.png';
+import authorImage from '@/assets/author.png';
 import Link from 'next/link';
 
 export default function About() {

@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { expect } from 'vitest';
 import App from '../App';
-import { mockCharacters } from './mockCharacters';
+import { mockCharacters } from '@/test/mockCharacters';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '../contexts/ThemeContext/ThemeContextProvider';
-import { charactersApi } from '../store/apiSlice';
+import { ThemeProvider } from '@/contexts/ThemeContext/ThemeContextProvider';
+import { charactersApi } from '@/store/apiSlice';
 import {
   createMockSuccessResponse,
   createTestStore,
@@ -14,7 +14,7 @@ import {
   mockFetchError,
   mockFetchSuccess,
   mockPendingFetch,
-} from './utils/testUtils';
+} from '@/test/utils/testUtils';
 
 const mockInfo = {
   count: mockCharacters.length,

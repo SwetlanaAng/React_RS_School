@@ -1,5 +1,5 @@
-import DetailedCard from '../DetailedCard/DetailedCard';
-import ErrorUI from '../ErrorUI/ErrorUI';
+import DetailedCard from '@/components/DetailedCard/DetailedCard';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
 import { isCharacter } from '@/utils/typeGuards';
 
 export default async function DetailedCardServer({

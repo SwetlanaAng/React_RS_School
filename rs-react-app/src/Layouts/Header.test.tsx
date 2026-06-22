@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { ThemeProvider } from '../contexts/ThemeContext/ThemeContextProvider';
-import { store } from '../store/store';
+import { ThemeProvider } from '@/contexts/ThemeContext/ThemeContextProvider';
+import { store } from '@/store/store';
 import Header from './Header';
 
 describe('Header theme toggle', () => {

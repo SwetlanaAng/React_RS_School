@@ -2,18 +2,18 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import type { Character } from '../../shared/types';
+import type { Character } from '@/shared/types';
 import DetailedCardRoute from './DetailedCardServer';
-import { charactersApi } from '../../store/apiSlice';
-import { mockCharacters } from '../../test/mockCharacters';
+import { charactersApi } from '@/store/apiSlice';
+import { mockCharacters } from '@/test/mockCharacters';
 import {
   createTestStore,
   getFetchUrl,
   createMockJsonResponse,
   type TestStore,
   mockFetchError,
-} from '../../test/utils/testUtils';
-import { LocationDisplay } from '../../test/utils/LocationDisplay';
+} from '@/test/utils/testUtils';
+import { LocationDisplay } from '@/test/utils/LocationDisplay';
 
 function renderDetailedCardRoute(
   initialEntry: string,

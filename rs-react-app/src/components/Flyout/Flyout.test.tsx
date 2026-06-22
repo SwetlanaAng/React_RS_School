@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import type { Character } from '../../shared/types';
-import charactersReducer from '../../store/charactersSlice';
-import { mockCharacters } from '../../test/mockCharacters';
+import type { Character } from '@/shared/types';
+import charactersReducer from '@/store/charactersSlice';
+import { mockCharacters } from '@/test/mockCharacters';
 import { Flyout } from './Flyout';
 
 const downloadMock = vi.hoisted(() => vi.fn());

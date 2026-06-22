@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import CardsBox from './CardsBox';
 import { expect } from 'vitest';
-import { mockCharacters } from '../../test/mockCharacters';
+import { mockCharacters } from '@/test/mockCharacters';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import { store } from '../../store/store';
+import { store } from '@/store/store';
 
 describe('CardsBox', () => {
   it('renders CardsBox', () => {

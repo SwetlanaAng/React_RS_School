@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import ErrorUI from '../ErrorUI/ErrorUI';
-import Button from '../Button/Button';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
+import Button from '@/components/Button/Button';
 
 interface State {
   hasError: boolean;

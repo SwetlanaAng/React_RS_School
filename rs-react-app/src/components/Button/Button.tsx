@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { buttonClassName } from '../../shared/classes';
+import { buttonClassName } from '@/shared/classes';
 
 interface ButtonProps {
   className?: string;

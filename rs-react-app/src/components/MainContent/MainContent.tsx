@@ -1,6 +1,6 @@
-import CardsBox from '../CardsBox/CardsBox';
+import CardsBox from '@/components/CardsBox/CardsBox';
 import { getCharacters } from '@/shared/getCharacters';
-import ErrorUI from '../ErrorUI/ErrorUI';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
 
 export async function MainContent({
   page,

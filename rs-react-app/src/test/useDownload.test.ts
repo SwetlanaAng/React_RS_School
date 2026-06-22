@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { mockCharacters } from './mockCharacters';
-import { useDownload } from '../hooks/useDownload';
+import { mockCharacters } from '@/test/mockCharacters';
+import { useDownload } from '@/hooks/useDownload';
 
 describe('useDownload', () => {
   let anchor: HTMLAnchorElement;

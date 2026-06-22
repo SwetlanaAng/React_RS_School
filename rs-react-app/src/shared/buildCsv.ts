@@ -1,4 +1,4 @@
-import type { Character } from './types';
+import type { Character } from '@/shared/types';
 
 function stringifyCsvValue(value: Character[keyof Character]): string {
   if (typeof value === 'object') {

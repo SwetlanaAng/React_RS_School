@@ -1,6 +1,6 @@
-import { buttonClassName } from '../shared/classes';
+import { buttonClassName } from '@/shared/classes';
 import Image from 'next/image';
-import notFoundImage from '../assets/404.png';
+import notFoundImage from '@/assets/404.png';
 import Link from 'next/link';
 
 export default function NotFound() {

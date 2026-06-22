@@ -1,6 +1,6 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import InfoSpan from '../InfoSpan/InfoSpan';
+import InfoSpan from '@/components/InfoSpan/InfoSpan';
 
 interface DetailedCardProps {
   name: string;
@@ -31,7 +31,7 @@ export default function DetailedCard({
         type="button"
         aria-label="Close details"
         onClick={() => {
-          if (!searchParams || !pathname) return;
+          if (!pathname) return;
           const params = new URLSearchParams(searchParams.toString());
           params.delete('details');
           router.push(`${pathname}?${params.toString()}`);

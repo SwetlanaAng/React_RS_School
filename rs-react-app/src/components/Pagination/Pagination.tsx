@@ -1,5 +1,5 @@
 'use client';
-import type { Info } from '../../shared/types';
+import type { Info } from '@/shared/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 interface PaginationProps extends Info {
   currentPage: number;
@@ -27,7 +27,6 @@ export default function Pagination({
   const searchParams = useSearchParams();
 
   const setParams = (page: number) => {
-    if (!searchParams) return;
     const params = new URLSearchParams(searchParams.toString());
 
     params.set('page', String(page));
@@ -62,7 +61,6 @@ export default function Pagination({
   return (
     <div
       onClick={() => {
-        if (!searchParams || !pathname) return;
         const params = new URLSearchParams(searchParams.toString());
         params.delete('details');
         router.push(`${pathname}?${params.toString()}`);

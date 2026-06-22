@@ -1,8 +1,8 @@
 'use client';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCharacter } from '../../store/charactersSlice';
-import type { Character } from '../../shared/types';
-import type { AppDispatch, RootState } from '../../store/store';
+import { toggleCharacter } from '@/store/charactersSlice';
+import type { Character } from '@/shared/types';
+import type { AppDispatch, RootState } from '@/store/store';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -33,7 +33,6 @@ export default function Card({ character }: CardProps) {
     <div
       onClick={(event) => {
         event.stopPropagation();
-        if (!searchParams) return;
         const params = new URLSearchParams(searchParams.toString());
 
         params.set('details', String(id));

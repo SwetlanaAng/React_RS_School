@@ -1,6 +1,6 @@
 import { getCharacters } from '@/shared/getCharacters';
 import Pagination from './Pagination';
-import ErrorUI from '../ErrorUI/ErrorUI';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
 
 export async function PaginationServer({
   page,

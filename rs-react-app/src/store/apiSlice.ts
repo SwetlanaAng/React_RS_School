@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Character, ResponseCharacter } from '../shared/types';
+import type { Character, ResponseCharacter } from '@/shared/types';
 
 interface GetCharactersArgs {
   search?: string;

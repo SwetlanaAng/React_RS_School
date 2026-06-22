@@ -2,7 +2,7 @@ import charactersReducer, {
   clearAllSelected,
   toggleCharacter,
 } from './charactersSlice';
-import { mockCharacters } from '../test/mockCharacters';
+import { mockCharacters } from '@/test/mockCharacters';
 
 describe('charactersSlice', () => {
   it('returns initial state', () => {

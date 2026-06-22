@@ -1,4 +1,4 @@
-import type { Character, ResponseCharacter } from '../shared/types';
+import type { Character, ResponseCharacter } from '@/shared/types';
 
 export function isResponseCharacter(data: unknown): data is ResponseCharacter {
   return (

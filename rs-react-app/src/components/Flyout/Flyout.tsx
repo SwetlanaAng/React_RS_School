@@ -1,9 +1,9 @@
 'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../Button/Button';
-import type { AppDispatch, RootState } from '../../store/store';
-import { clearAllSelected } from '../../store/charactersSlice';
+import Button from '@/components/Button/Button';
+import type { AppDispatch, RootState } from '@/store/store';
+import { clearAllSelected } from '@/store/charactersSlice';
 import { downloadCsvAction } from '@/app/actions/downloadCsvAction';
 import { triggerCsvDownload } from '@/shared/triggerCsvDownload';
 

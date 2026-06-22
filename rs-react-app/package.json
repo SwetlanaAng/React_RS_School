@@ -29,6 +29,7 @@
     "@tailwindcss/vite": "^4.2.4",
     "@vitejs/plugin-react-swc": "^4.3.0",
     "next": "^16.2.9",
+    "next-intl": "^4.13.0",
     "postcss": "^8.5.15",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

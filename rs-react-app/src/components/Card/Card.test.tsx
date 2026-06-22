@@ -3,11 +3,11 @@ import userEvent from '@testing-library/user-event';
 import Card from './Card';
 import { expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
-import { mockCharacters } from '../../test/mockCharacters';
+import { mockCharacters } from '@/test/mockCharacters';
 import { Provider } from 'react-redux';
-import { toggleCharacter } from '../../store/charactersSlice';
-import { createTestStore, type TestStore } from '../../test/utils/testUtils';
-import { LocationDisplay } from '../../test/utils/LocationDisplay';
+import { toggleCharacter } from '@/store/charactersSlice';
+import { createTestStore, type TestStore } from '@/test/utils/testUtils';
+import { LocationDisplay } from '@/test/utils/LocationDisplay';
 
 function renderCard(
   initialEntry: string,

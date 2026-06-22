@@ -1,5 +1,5 @@
 import DetailedCardServer from '@/components/DetailedCardServer/DetailedCardServer';
-import { MainContent } from '../components/MainContent/MainContent';
+import { MainContent } from '@/components/MainContent/MainContent';
 import { Suspense } from 'react';
 import Spinner from '@/components/Spinner/Spinner';
 import { PaginationServer } from '@/components/Pagination/PaginationServer';

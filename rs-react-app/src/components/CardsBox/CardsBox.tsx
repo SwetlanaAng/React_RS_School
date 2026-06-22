@@ -1,6 +1,6 @@
 'use client';
-import type { Character } from '../../shared/types';
-import Card from '../Card/Card';
+import type { Character } from '@/shared/types';
+import Card from '@/components/Card/Card';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface CardsBoxProps {
@@ -17,7 +17,7 @@ export default function CardsBox({ characters }: CardsBoxProps) {
       {' '}
       <div
         onClick={() => {
-          if (!searchParams || !pathname) return;
+          if (!pathname) return;
           const params = new URLSearchParams(searchParams.toString());
           params.delete('details');
           router.push(`${pathname}?${params.toString()}`);

@@ -1,7 +1,7 @@
 'use client';
 
-import Input from '../Input/Input';
-import Button from '../Button/Button';
+import Input from '@/components/Input/Input';
+import Button from '@/components/Button/Button';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useStorage } from '@/hooks/useStorage';
@@ -15,10 +15,10 @@ export default function SearchForm({ className }: SearchFormProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { saveSearch } = useStorage();
-  const nameFromUrl = searchParams?.get('name') ?? '';
+  const nameFromUrl = searchParams.get('name') ?? '';
 
   const setParams = (name: string) => {
-    const params = new URLSearchParams(searchParams?.toString());
+    const params = new URLSearchParams(searchParams.toString());
 
     if (name) {
       params.set('name', name);
@@ -26,7 +26,7 @@ export default function SearchForm({ className }: SearchFormProps) {
       params.delete('name');
     }
     params.set('page', '1');
-    router.push(`${pathname ?? '/'}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (

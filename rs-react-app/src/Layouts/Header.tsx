@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import logo from '../assets/morty-smith.png';
-import light from '../assets/light.png';
-import dark from '../assets/dark.png';
-import reload from '../assets/reload.png';
-import { useTheme } from '../hooks/useTheme';
+import logo from '@/assets/morty-smith.png';
+import light from '@/assets/light.png';
+import dark from '@/assets/dark.png';
+import reload from '@/assets/reload.png';
+import { useTheme } from '@/hooks/useTheme';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 

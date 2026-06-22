@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { charactersApi } from '../../store/apiSlice';
-import charactersReducer from '../../store/charactersSlice';
-import type { ResponseCharacter } from '../../shared/types';
+import { charactersApi } from '@/store/apiSlice';
+import charactersReducer from '@/store/charactersSlice';
+import type { ResponseCharacter } from '@/shared/types';
 
 export function getFetchUrl(input: RequestInfo | URL): string {
   if (typeof input === 'string') {
