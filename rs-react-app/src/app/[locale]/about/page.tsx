@@ -1,9 +1,24 @@
 import Image from 'next/image';
 import authorImage from '@/assets/author.png';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
+import { resolveLocale } from '@/i18n/locale';
 
-export default async function About() {
-  const t = await getTranslations('about');
+interface AboutProps {
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function About({ params }: AboutProps) {
+  const { locale } = await params;
+  const validLocale = resolveLocale(locale);
+
+  setRequestLocale(validLocale);
+
+  const t = await getTranslations({ locale: validLocale, namespace: 'about' });
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 p-4 transition-colors duration-300 dark:bg-slate-950">

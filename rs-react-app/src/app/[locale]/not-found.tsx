@@ -2,10 +2,16 @@ import { buttonClassName } from '@/shared/classes';
 import Image from 'next/image';
 import notFoundImage from '@/assets/404.png';
 import { Link } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 export default async function NotFound() {
-  const t = await getTranslations('notFound');
+  setRequestLocale(routing.defaultLocale);
+
+  const t = await getTranslations({
+    locale: routing.defaultLocale,
+    namespace: 'notFound',
+  });
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-fuchsia-50 px-4 transition-colors duration-300 dark:bg-slate-950">

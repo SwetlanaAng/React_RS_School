@@ -1,7 +1,6 @@
 import { buttonClassName } from '@/shared/classes';
 import Image from 'next/image';
 import notFoundImage from '@/assets/404.png';
-import Link from 'next/link';
 
 export default function RootNotFound() {
   return (
@@ -16,9 +15,9 @@ export default function RootNotFound() {
             alt="404"
             className="my-8 w-full max-w-2xl object-contain"
           />
-          <Link href="/en" className={buttonClassName}>
+          <a href="/en" className={buttonClassName}>
             Return to home page
-          </Link>
+          </a>
         </section>
       </body>
     </html>

@@ -26,8 +26,6 @@ export function HomeWrapper({ children }: { children: React.ReactNode }) {
       >
         <ErrorTrigger shouldThrow={error} />
         {children}
-      </ErrorBoundary>
-      <div className="flex justify-center">
         <Button
           type="button"
           className="mb-6"
@@ -37,7 +35,7 @@ export function HomeWrapper({ children }: { children: React.ReactNode }) {
         >
           {tHome('errorButton')}
         </Button>
-      </div>
+      </ErrorBoundary>
     </>
   );
 }
