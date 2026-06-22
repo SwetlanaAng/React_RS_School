@@ -44,30 +44,14 @@ export function createMockJsonResponse(body: unknown) {
   });
 }
 
-export function createMockSuccessResponse(body: ResponseCharacter) {
-  return createMockJsonResponse(body);
-}
-
 export function createMockErrorResponse(status = 500) {
   return new Response(null, { status, statusText: 'Server Error' });
-}
-
-export function mockFetchSuccess(body: ResponseCharacter) {
-  return vi
-    .spyOn(globalThis, 'fetch')
-    .mockImplementation(() => Promise.resolve(createMockSuccessResponse(body)));
 }
 
 export function mockFetchError(status = 500) {
   return vi
     .spyOn(globalThis, 'fetch')
     .mockImplementation(() => Promise.resolve(createMockErrorResponse(status)));
-}
-
-export function mockPendingFetch() {
-  return vi
-    .spyOn(globalThis, 'fetch')
-    .mockImplementation(() => new Promise(vi.fn()));
 }
 
 interface RenderWithProvidersOptions extends Omit<RenderOptions, 'wrapper'> {

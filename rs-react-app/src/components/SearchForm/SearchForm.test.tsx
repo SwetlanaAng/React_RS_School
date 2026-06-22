@@ -13,7 +13,6 @@ vi.mock('@/app/actions/searchActions', () => ({
 vi.mock('@/hooks/useStorage', () => ({
   useStorage: () => ({
     saveSearch: saveSearchMock,
-    getSearch: vi.fn(() => null),
   }),
 }));
 
