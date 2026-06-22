@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { NextIntlClientProvider } from 'next-intl';
 import type { Character } from '@/shared/types';
 import charactersReducer from '@/store/charactersSlice';
 import { mockCharacters } from '@/test/mockCharacters';
+import en from '@/messages/en.json';
 import { Flyout } from './Flyout';
 
 const downloadCsvActionMock = vi.hoisted(() => vi.fn());
@@ -31,9 +33,11 @@ function renderFlyout(selected: Character[] = []) {
   });
 
   const view = render(
-    <Provider store={store}>
-      <Flyout />
-    </Provider>
+    <NextIntlClientProvider locale="en" messages={en}>
+      <Provider store={store}>
+        <Flyout />
+      </Provider>
+    </NextIntlClientProvider>
   );
 
   return { ...view, store };

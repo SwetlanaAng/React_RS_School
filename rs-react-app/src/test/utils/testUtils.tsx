@@ -1,6 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { render, type RenderOptions } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
+import { Provider } from 'react-redux';
+import type { ReactElement, ReactNode } from 'react';
 import charactersReducer from '@/store/charactersSlice';
 import type { ResponseCharacter } from '@/shared/types';
+import en from '@/messages/en.json';
+import {
+  resetNavigationMocks,
+  setMockSearchParams,
+} from '@/test/mocks/next-navigation';
 
 export function getFetchUrl(input: RequestInfo | URL): string {
   if (typeof input === 'string') {
@@ -58,5 +67,37 @@ export function mockFetchError(status = 500) {
 export function mockPendingFetch() {
   return vi
     .spyOn(globalThis, 'fetch')
-    .mockImplementation(() => new Promise(vi.fn));
+    .mockImplementation(() => new Promise(vi.fn()));
+}
+
+interface RenderWithProvidersOptions extends Omit<RenderOptions, 'wrapper'> {
+  store?: TestStore;
+  searchParams?: string;
+  locale?: 'en' | 'ru';
+}
+
+export function renderWithProviders(
+  ui: ReactElement,
+  {
+    store = createTestStore(),
+    searchParams = '',
+    locale = 'en',
+    ...options
+  }: RenderWithProvidersOptions = {}
+) {
+  resetNavigationMocks();
+  setMockSearchParams(searchParams);
+
+  function Wrapper({ children }: { children: ReactNode }) {
+    return (
+      <NextIntlClientProvider locale={locale} messages={en}>
+        <Provider store={store}>{children}</Provider>
+      </NextIntlClientProvider>
+    );
+  }
+
+  return {
+    store,
+    ...render(ui, { wrapper: Wrapper, ...options }),
+  };
 }

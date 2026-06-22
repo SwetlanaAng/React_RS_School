@@ -1,69 +1,79 @@
-import { render, screen } from '@testing-library/react';
-import SearchForm, { type SearchFormProps } from './SearchForm';
-import { expect } from 'vitest';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import SearchForm from './SearchForm';
+import { renderWithProviders } from '@/test/utils/testUtils';
+
+const searchActionMock = vi.hoisted(() => vi.fn());
+const saveSearchMock = vi.hoisted(() => vi.fn());
+
+vi.mock('@/app/actions/searchActions', () => ({
+  searchAction: searchActionMock,
+}));
+
+vi.mock('@/hooks/useStorage', () => ({
+  useStorage: () => ({
+    saveSearch: saveSearchMock,
+    getSearch: vi.fn(() => null),
+  }),
+}));
+
+vi.mock('react', async () => {
+  const actual = await vi.importActual<typeof import('react')>('react');
+
+  return {
+    ...actual,
+    useActionState: (
+      action: (prevState: null, formData: FormData) => Promise<null>,
+      initialState: null
+    ) => {
+      const formAction = (formData: FormData) => {
+        void action(initialState, formData);
+      };
+
+      return [initialState, formAction, false] as const;
+    },
+  };
+});
 
 describe('SearchForm', () => {
-  function renderSearchForm(props: SearchFormProps) {
-    return render(<SearchForm {...props} />);
-  }
+  beforeEach(() => {
+    searchActionMock.mockReset();
+    saveSearchMock.mockReset();
+  });
 
   it('renders SearchForm', () => {
-    renderSearchForm({ onSubmit: vi.fn(), error: false, search: '' });
+    renderWithProviders(<SearchForm />);
 
     expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
   });
 
-  it('throws error if error is true', () => {
-    expect(() =>
-      renderSearchForm({ onSubmit: vi.fn(), error: true, search: '' })
-    ).toThrow('ErrorBoundary test error');
+  it('uses search value from URL as default input value', () => {
+    renderWithProviders(<SearchForm />, { searchParams: 'name=Rick' });
+
+    expect(screen.getByPlaceholderText('Search...')).toHaveValue('Rick');
   });
 
-  it('calls onSubmit when form is submitted', async () => {
-    const onSubmit = vi.fn();
+  it('calls searchAction and saveSearch when form is submitted', async () => {
     const user = userEvent.setup();
 
-    renderSearchForm({ onSubmit, error: false, search: '' });
+    renderWithProviders(<SearchForm />);
 
+    await user.type(screen.getByPlaceholderText('Search...'), 'Rick');
     await user.click(screen.getByRole('button', { name: 'Search' }));
 
-    expect(onSubmit).toHaveBeenCalledWith('');
-  });
-
-  it('calls onSubmit when form is submitted with value', async () => {
-    const onSubmit = vi.fn();
-    const user = userEvent.setup();
-
-    renderSearchForm({ onSubmit, error: false, search: 'Rick' });
-
-    await user.click(screen.getByRole('button', { name: 'Search' }));
-
-    expect(onSubmit).toHaveBeenCalledWith('Rick');
-  });
-
-  it('updates input value when user types', async () => {
-    const user = userEvent.setup();
-
-    renderSearchForm({ onSubmit: vi.fn(), error: false, search: '' });
-
-    const input = screen.getByPlaceholderText('Search...');
-
-    await user.type(input, 'Rick');
-
-    expect(input).toHaveValue('Rick');
+    expect(searchActionMock).toHaveBeenCalledTimes(1);
+    expect(saveSearchMock).toHaveBeenCalledWith('Rick');
   });
 
   it('trims whitespace from submitted search value', async () => {
-    const onSubmit = vi.fn();
     const user = userEvent.setup();
 
-    renderSearchForm({ onSubmit, error: false, search: '' });
+    renderWithProviders(<SearchForm />);
 
     await user.type(screen.getByPlaceholderText('Search...'), '  Rick  ');
     await user.click(screen.getByRole('button', { name: 'Search' }));
 
-    expect(onSubmit).toHaveBeenCalledWith('Rick');
+    expect(saveSearchMock).toHaveBeenCalledWith('Rick');
   });
 });
