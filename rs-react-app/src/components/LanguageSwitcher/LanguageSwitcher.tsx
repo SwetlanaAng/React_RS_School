@@ -5,8 +5,11 @@ import { usePathname, useRouter, routing } from '@/i18n/routing';
 
 export function LanguageSwitcher() {
   const locale = useLocale();
+
   const router = useRouter();
+
   const pathname = usePathname();
+
   const t = useTranslations('language');
 
   return (

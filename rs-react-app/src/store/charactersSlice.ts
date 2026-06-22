@@ -33,4 +33,5 @@ const charactersSlice = createSlice({
 });
 
 export const { toggleCharacter, clearAllSelected } = charactersSlice.actions;
+
 export default charactersSlice.reducer;

@@ -1,4 +1,5 @@
 'use client';
+
 import type { Character } from '@/shared/types';
 import Card from '@/components/Card/Card';
 import { useSearchParams } from 'next/navigation';

@@ -1,4 +1,5 @@
 'use client';
+
 import type { Info } from '@/shared/types';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '@/i18n/routing';
@@ -45,6 +46,7 @@ export default function Pagination({
   } else {
     buttons.push(1);
     buttons.push(2);
+
     if (currentPage > 3) {
       buttons.push('ellipsis-start');
     }

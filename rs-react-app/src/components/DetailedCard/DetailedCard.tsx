@@ -1,8 +1,10 @@
 'use client';
+
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '@/i18n/routing';
 import InfoSpan from '@/components/InfoSpan/InfoSpan';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 interface DetailedCardProps {
   name: string;
@@ -43,7 +45,7 @@ export default function DetailedCard({
       >
         ×
       </button>
-      <img className="w-full" src={image} alt={name} />
+      <Image className="w-full" src={image} alt={name} />
       <div className="px-2 py-3 text-center sm:px-6 sm:py-4">
         <div className="mb-2 text-sm font-bold sm:w-[300px] sm:text-xl">
           {name}

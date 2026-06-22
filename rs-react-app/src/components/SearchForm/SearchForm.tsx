@@ -28,6 +28,7 @@ export default function SearchForm({ className }: SearchFormProps) {
     } else {
       params.delete('name');
     }
+
     params.set('page', '1');
     router.push(`${pathname}?${params.toString()}`);
   };

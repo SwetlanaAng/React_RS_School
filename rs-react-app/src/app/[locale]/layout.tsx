@@ -18,6 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+
   return {
     title: getMessagesForLocale(resolveLocale(locale)).metadata.title,
   };
@@ -27,6 +28,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const locale = resolveLocale((await params).locale);
 
   setRequestLocale(locale);
+
   const messages = await getMessages();
 
   return (

@@ -11,6 +11,7 @@ export async function PaginationServer({
   search: string;
 }) {
   const t = await getTranslations('errors');
+
   const data = await getCharacters(search, page);
 
   if (!data.ok) {

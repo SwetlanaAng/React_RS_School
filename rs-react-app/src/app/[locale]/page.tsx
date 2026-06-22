@@ -23,12 +23,15 @@ interface Props {
 
 export default async function Home({ params, searchParams }: Props) {
   const { locale } = await params;
+
   const routeParams = await searchParams;
 
   if (!routeParams.name) {
     const storedSearch = (await cookies()).get(SEARCH_STORAGE_KEY)?.value;
+
     if (storedSearch) {
       const query: Record<string, string> = { name: storedSearch };
+
       if (routeParams.page) query.page = routeParams.page;
       if (routeParams.details) query.details = routeParams.details;
 
@@ -40,7 +43,9 @@ export default async function Home({ params, searchParams }: Props) {
   }
 
   const page = Number(routeParams.page ?? 1);
+
   const id = routeParams.details ? Number(routeParams.details) : null;
+
   const search = routeParams.name ?? '';
 
   return (

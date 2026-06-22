@@ -8,6 +8,7 @@ export type CharacterErrorCode = 'charactersNotFound' | 'invalidApiResponse';
 type CharactersResult =
   | { ok: true; data: ResponseCharacter }
   | { ok: false; error: CharacterErrorCode };
+
 export async function getCharacters(
   search?: string,
   page?: number
@@ -17,6 +18,7 @@ export async function getCharacters(
   if (search) {
     url.searchParams.set('name', search);
   }
+
   if (page) {
     url.searchParams.set('page', String(page));
   }
@@ -32,9 +34,12 @@ export async function getCharacters(
       error: 'charactersNotFound',
     };
   }
+
   const data: unknown = await response.json();
+
   if (!isResponseCharacter(data)) {
     return { ok: false, error: 'invalidApiResponse' };
   }
+
   return { ok: true, data };
 }

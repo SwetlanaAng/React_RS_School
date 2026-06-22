@@ -13,6 +13,7 @@ export function resolveLocale(value: string): Locale {
   if (!hasLocale(routing.locales, value)) {
     notFound();
   }
+
   return value;
 }
 

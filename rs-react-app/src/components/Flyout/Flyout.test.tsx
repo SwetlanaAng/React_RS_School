@@ -7,12 +7,15 @@ import charactersReducer from '@/store/charactersSlice';
 import { mockCharacters } from '@/test/mockCharacters';
 import { Flyout } from './Flyout';
 
-const downloadMock = vi.hoisted(() => vi.fn());
+const downloadCsvActionMock = vi.hoisted(() => vi.fn());
+const triggerCsvDownloadMock = vi.hoisted(() => vi.fn());
 
-vi.mock('../../hooks/useDownload', () => ({
-  useDownload: () => ({
-    download: downloadMock,
-  }),
+vi.mock('@/app/actions/downloadCsvAction', () => ({
+  downloadCsvAction: downloadCsvActionMock,
+}));
+
+vi.mock('@/shared/triggerCsvDownload', () => ({
+  triggerCsvDownload: triggerCsvDownloadMock,
 }));
 
 function renderFlyout(selected: Character[] = []) {
@@ -38,7 +41,13 @@ function renderFlyout(selected: Character[] = []) {
 
 describe('Flyout', () => {
   beforeEach(() => {
-    downloadMock.mockClear();
+    downloadCsvActionMock.mockReset();
+    triggerCsvDownloadMock.mockReset();
+    downloadCsvActionMock.mockResolvedValue({
+      ok: true,
+      csv: 'csv-content',
+      filename: 'characters_2.csv',
+    });
   });
 
   it('does not render when no characters are selected', () => {
@@ -73,12 +82,16 @@ describe('Flyout', () => {
     expect(screen.queryByText(/selected characters/i)).not.toBeInTheDocument();
   });
 
-  it('downloads selected characters with selected amount', async () => {
+  it('downloads selected characters via server action', async () => {
     const user = userEvent.setup();
     renderFlyout(mockCharacters);
 
     await user.click(screen.getByRole('button', { name: /download/i }));
 
-    expect(downloadMock).toHaveBeenCalledWith(mockCharacters, 2);
+    expect(downloadCsvActionMock).toHaveBeenCalledWith(mockCharacters);
+    expect(triggerCsvDownloadMock).toHaveBeenCalledWith(
+      'csv-content',
+      'characters_2.csv'
+    );
   });
 });

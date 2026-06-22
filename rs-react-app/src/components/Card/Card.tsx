@@ -1,4 +1,5 @@
 'use client';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCharacter } from '@/store/charactersSlice';
 import type { Character } from '@/shared/types';
@@ -29,6 +30,7 @@ export default function Card({ character }: CardProps) {
   };
 
   const router = useRouter();
+
   const pathname = usePathname();
   const searchParams = useSearchParams();
 

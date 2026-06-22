@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { charactersApi } from '@/store/apiSlice';
 import charactersReducer from '@/store/charactersSlice';
 import type { ResponseCharacter } from '@/shared/types';
 
@@ -23,10 +22,7 @@ export function createTestStore() {
   return configureStore({
     reducer: {
       characters: charactersReducer,
-      [charactersApi.reducerPath]: charactersApi.reducer,
     },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(charactersApi.middleware),
   });
 }
 

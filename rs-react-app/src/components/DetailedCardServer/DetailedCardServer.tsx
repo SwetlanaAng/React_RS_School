@@ -34,6 +34,7 @@ export default async function DetailedCardServer({
   }
 
   const character: unknown = await res.json();
+
   if (!isCharacter(character)) {
     return (
       <div className={errorWrapperClassName}>
