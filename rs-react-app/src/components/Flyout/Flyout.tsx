@@ -1,19 +1,31 @@
+'use client';
+
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../Button/Button';
-import type { AppDispatch, RootState } from '../../store/store';
-import { clearAllSelected } from '../../store/charactersSlice';
-import { useDownload } from '../../hooks/useDownload';
+import Button from '@/components/Button/Button';
+import type { AppDispatch, RootState } from '@/store/store';
+import { clearAllSelected } from '@/store/charactersSlice';
+import { downloadCsvAction } from '@/app/actions/downloadCsvAction';
+import { triggerCsvDownload } from '@/shared/triggerCsvDownload';
+import { useTranslations } from 'next-intl';
 
 export const Flyout = () => {
   const charactersSelected = useSelector(
     (state: RootState) => state.characters.selected
   );
+  const t = useTranslations('flyout');
 
-  const { download } = useDownload();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleUnselectClick = () => {
     dispatch(clearAllSelected());
+  };
+
+  const handleDownloadClick = async () => {
+    const result = await downloadCsvAction(charactersSelected);
+
+    if (result.ok) {
+      triggerCsvDownload(result.csv, result.filename);
+    }
   };
 
   if (charactersSelected.length === 0) return null;
@@ -21,19 +33,19 @@ export const Flyout = () => {
   return (
     <div className="sticky bottom-0 left-0 z-50 flex w-full items-center justify-between gap-4 bg-teal-200/50 px-6 py-4 shadow-lg backdrop-blur-sm dark:bg-slate-900/80">
       <span className="font-semibold dark:text-teal-50">
-        {`Selected characters : ${String(charactersSelected.length)}`}
+        {t('selected', { count: charactersSelected.length })}
       </span>
       <div className="flex gap-3">
         <Button type="button" onClick={handleUnselectClick}>
-          Unselect all
+          {t('unselectAll')}
         </Button>
         <Button
           type="button"
           onClick={() => {
-            download(charactersSelected, charactersSelected.length);
+            void handleDownloadClick();
           }}
         >
-          Download
+          {t('download')}
         </Button>
       </div>
     </div>

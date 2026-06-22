@@ -1,5 +1,7 @@
-import buttonSpinner from '../../assets/buttonSpinner.svg';
-import { buttonClassName } from '../../shared/classes';
+'use client';
+
+import Image from 'next/image';
+import { buttonClassName } from '@/shared/classes';
 
 interface ButtonProps {
   className?: string;
@@ -26,9 +28,11 @@ export default function Button({
       }
     >
       {loading ? (
-        <img
-          src={buttonSpinner}
+        <Image
+          src="/buttonSpinner.svg"
           alt="spinner"
+          width={24}
+          height={24}
           className="mr-3 inline w-6 animate-spin"
         />
       ) : null}

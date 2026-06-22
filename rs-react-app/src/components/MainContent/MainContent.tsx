@@ -1,19 +1,30 @@
-import type { AppState } from '../../shared/types';
-import Spinner from '../Spinner/Spinner';
-import CardsBox from '../CardsBox/CardsBox';
+import CardsBox from '@/components/CardsBox/CardsBox';
+import { getCharacters } from '@/shared/getCharacters';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
+import { getTranslations } from 'next-intl/server';
 
-type MainContentProps = Omit<AppState, 'searchFailed' | 'search' | 'error'>;
+export async function MainContent({
+  page,
+  search,
+}: {
+  page: number;
+  search: string;
+}) {
+  const t = await getTranslations('errors');
 
-export function MainContent({ loading, characters }: MainContentProps) {
+  const data = await getCharacters(search, page);
+
+  if (!data.ok) {
+    return (
+      <section className="min-w-0 flex-1">
+        <ErrorUI errorMessage={t(data.error)} />
+      </section>
+    );
+  }
+
   return (
     <section className="min-w-0 flex-1">
-      {loading ? (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      ) : (
-        <CardsBox characters={characters} />
-      )}
+      <CardsBox characters={data.data.results} />
     </section>
   );
 }

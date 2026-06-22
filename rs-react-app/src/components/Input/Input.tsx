@@ -1,9 +1,10 @@
 interface InputProps {
   className?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   type: 'search' | 'text';
   placeholder: string;
   value?: string;
+  defaultValue?: string;
   name: string;
   id: string;
 }

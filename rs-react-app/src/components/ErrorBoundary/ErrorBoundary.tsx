@@ -1,20 +1,45 @@
 import { Component } from 'react';
-import ErrorUI from '../ErrorUI/ErrorUI';
-import Button from '../Button/Button';
+import ErrorUI from '@/components/ErrorUI/ErrorUI';
+import Button from '@/components/Button/Button';
 
 interface State {
   hasError: boolean;
+}
+
+function isNavigationError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const digest = (error as Error & { digest?: string }).digest;
+
+  return (
+    typeof digest === 'string' &&
+    (digest.startsWith('NEXT_REDIRECT') || digest.startsWith('NEXT_NOT_FOUND'))
+  );
 }
 
 export class ErrorBoundary extends Component<{
   children?: React.ReactNode;
   fallback?: React.ReactNode;
   errorSwitcher: (error: boolean) => void;
+  errorMessage?: string;
+  returnLabel?: string;
 }> {
   state: State = { hasError: false };
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(error: unknown) {
+    if (isNavigationError(error)) {
+      return null;
+    }
+
     return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    if (isNavigationError(error)) {
+      throw error;
+    }
   }
 
   onButtonClick() {
@@ -25,13 +50,13 @@ export class ErrorBoundary extends Component<{
   render() {
     if (this.state.hasError) {
       return (
-        <>
-          <ErrorUI errorMessage="Something went wrong">
-            <Button type="button" onClick={this.onButtonClick.bind(this)}>
-              Return
-            </Button>
-          </ErrorUI>
-        </>
+        <ErrorUI
+          errorMessage={this.props.errorMessage ?? 'Something went wrong'}
+        >
+          <Button type="button" onClick={this.onButtonClick.bind(this)}>
+            {this.props.returnLabel ?? 'Return'}
+          </Button>
+        </ErrorUI>
       );
     }
 

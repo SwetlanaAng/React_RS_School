@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Character } from '../shared/types';
+import type { Character } from '@/shared/types';
 
 interface CharactersState {
   selected: Character[];
@@ -33,4 +33,5 @@ const charactersSlice = createSlice({
 });
 
 export const { toggleCharacter, clearAllSelected } = charactersSlice.actions;
+
 export default charactersSlice.reducer;

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import gif from './brokenRobot.gif';
 
 interface ErrorUIProps {
@@ -11,7 +12,7 @@ export default function ErrorUI({ errorMessage, children }: ErrorUIProps) {
       <p className="mt-6 text-xl text-fuchsia-600 dark:text-fuchsia-300">
         {errorMessage}
       </p>
-      <img className="block" src={gif} alt="Error image" />
+      <Image className="block" src={gif} alt="Error image" />
       {children}
     </div>
   );

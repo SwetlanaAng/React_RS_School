@@ -1,29 +1,59 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import CardsBox from './CardsBox';
-import { expect } from 'vitest';
-import { mockCharacters } from '../../test/mockCharacters';
-import { MemoryRouter } from 'react-router';
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
+import { mockCharacters } from '@/test/mockCharacters';
+import { renderWithProviders } from '@/test/utils/testUtils';
+
+const clearDetailsActionMock = vi.hoisted(() => vi.fn());
+const selectDetailsActionMock = vi.hoisted(() => vi.fn());
+
+vi.mock('@/app/actions/searchActions', () => ({
+  clearDetailsAction: clearDetailsActionMock,
+  selectDetailsAction: selectDetailsActionMock,
+}));
 
 describe('CardsBox', () => {
+  beforeEach(() => {
+    clearDetailsActionMock.mockReset();
+  });
+
   it('renders CardsBox', () => {
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <CardsBox characters={mockCharacters} />
-        </Provider>
-      </MemoryRouter>
+    renderWithProviders(<CardsBox characters={mockCharacters} />);
+
+    expect(screen.getByAltText('Rick Sanchez')).toBeInTheDocument();
+    expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
+    expect(screen.getByAltText('Morty Smith')).toBeInTheDocument();
+    expect(screen.getByText('Morty Smith')).toBeInTheDocument();
+  });
+
+  it('calls clearDetailsAction when background is clicked', async () => {
+    const user = userEvent.setup();
+    const { container } = renderWithProviders(
+      <CardsBox characters={mockCharacters} />,
+      { searchParams: 'name=Rick&page=2&details=1' }
     );
 
-    const cardImg = screen.getByAltText('Rick Sanchez');
-    const cardTitle = screen.getByText('Rick Sanchez');
-    const cardImg2 = screen.getByAltText('Morty Smith');
-    const cardTitle2 = screen.getByText('Morty Smith');
+    const background = container.querySelector('.mx-1.my-4.rounded-2xl');
 
-    expect(cardImg).toBeInTheDocument();
-    expect(cardTitle).toBeInTheDocument();
-    expect(cardImg2).toBeInTheDocument();
-    expect(cardTitle2).toBeInTheDocument();
+    expect(background).toBeInstanceOf(HTMLElement);
+    if (!(background instanceof HTMLElement)) {
+      throw new Error('Expected cards background to be rendered');
+    }
+
+    await user.click(background);
+
+    expect(clearDetailsActionMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not clear details when a card is clicked', async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<CardsBox characters={mockCharacters} />, {
+      searchParams: 'page=1&details=1',
+    });
+
+    await user.click(screen.getByAltText('Rick Sanchez'));
+
+    expect(clearDetailsActionMock).not.toHaveBeenCalled();
   });
 });
